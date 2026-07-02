@@ -3,125 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>m4rc.aep</title>
+<title>m4rc.aep // plugins</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --amber: #d4922e;
-    --gold:  #fff0a0;
-    --cyan:  #00f5ff;
-    --magenta: #ff2d95;
-    --rust:  #a03010;
-    --dim:   #4a3418;
-    --card-bg: rgba(6, 4, 12, 0.72);
+    --amber: #d4922e; --gold: #fff0a0; --cyan: #00f5ff;
+    --magenta: #ff2d95; --rust: #a03010; --dim: #4a3418;
+    --card-bg: rgba(6, 4, 12, 0.80);
   }
   html, body { min-height: 100%; background: #05030a; font-family: 'Rajdhani', sans-serif; color: var(--gold); overflow-x: hidden; }
 
-  /* Image sits at the very bottom, fully visible */
-  #bg-image {
-    position: fixed; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; z-index: 0;
-  }
-  /* Glow layer driven by JS - screen-blended neon bloom sampled from image */
+  #bg-image { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
   #glow-canvas { position: fixed; inset: 0; width:100%; height:100%; z-index: 1; mix-blend-mode: screen; pointer-events:none; }
-  /* Particle cyberspace layer */
   #particle-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
-  #markers-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 3; opacity: 0.5; }
+  #markers-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 3; opacity: 0.45; }
 
-  .scanlines {
-    position: fixed; inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px);
-    pointer-events: none; z-index: 4;
-  }
-  .vignette {
-    position: fixed; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,0.68) 100%);
-    pointer-events: none; z-index: 5;
-  }
-  .glitch-strip {
-    position: fixed; left: 0; right: 0; height: 2px;
-    background: var(--cyan); opacity: 0; pointer-events: none; z-index: 6;
-    animation: strip-flash 9s infinite;
-  }
+  .scanlines { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px); pointer-events: none; z-index: 4; }
+  .vignette { position: fixed; inset: 0; background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.78) 100%); pointer-events: none; z-index: 5; }
+  .glitch-strip { position: fixed; left: 0; right: 0; height: 2px; background: var(--cyan); opacity: 0; pointer-events: none; z-index: 6; animation: strip-flash 9s infinite; }
   @keyframes strip-flash { 0%,88%,100%{opacity:0} 89%{opacity:.7;top:28%} 90%{opacity:0} 92%{opacity:.4;top:63%} 93%{opacity:0} }
 
-  .page { position: relative; z-index: 10; max-width: 480px; margin: 0 auto; padding: 56px 22px 80px; display: flex; flex-direction: column; align-items: center; }
+  .page { position: relative; z-index: 10; max-width: 620px; margin: 0 auto; padding: 40px 20px 90px; }
 
-  .header { text-align: center; margin-bottom: 36px; }
-  .avatar-ring { width: 88px; height: 88px; margin: 0 auto 18px; position: relative; }
-  .avatar-ring svg { width: 100%; height: 100%; animation: ring-spin 14s linear infinite; }
-  @keyframes ring-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-  .avatar-inner {
-    position: absolute; inset: 11px; border-radius: 50%;
-    background: radial-gradient(circle at 38% 32%, rgba(0,245,255,0.35), rgba(255,45,149,0.35) 50%, rgba(6,3,12,0.95));
-    border: 1px solid var(--cyan);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Share Tech Mono', monospace; font-size: 14px; font-weight: bold;
-    color: #fff; text-shadow: 0 0 8px var(--cyan);
-    box-shadow: inset 0 0 12px rgba(0,245,255,0.25);
-  }
+  /* NAV */
+  .nav { display:flex; align-items:center; gap:8px; margin-bottom: 30px; }
+  .nav a { font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:.15em; text-transform:uppercase;
+    color:#fff; text-decoration:none; padding:8px 14px; border:1px solid rgba(0,245,255,.25);
+    background:rgba(0,0,0,.5); transition:all .2s; text-shadow:0 0 8px rgba(0,245,255,.4); }
+  .nav a:hover { border-color:var(--cyan); background:rgba(0,245,255,.08); }
+  .nav a.active { border-color:var(--cyan); color:var(--cyan); background:rgba(0,245,255,.06); }
+  .nav .spacer { flex:1; }
 
-  .name {
-    font-size: clamp(34px,9vw,48px); font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; line-height: 1; color: #fff;
-    text-shadow: 0 0 22px rgba(0,245,255,.6), 0 0 44px rgba(255,45,149,.4), 0 2px 0 rgba(0,0,0,1);
-    position: relative; display: inline-block;
-  }
-  .name .ext { color: var(--cyan); font-weight: 300; text-shadow: 0 0 16px rgba(0,245,255,1), 0 2px 0 rgba(0,0,0,1); }
-  .name::before,.name::after { content: attr(data-text); position: absolute; top:0; left:0; width:100%; overflow:hidden; clip-path:inset(100% 0 0 0); }
-  .name::before { color:var(--cyan); animation:glitch-a 5s infinite steps(1); mix-blend-mode:screen; }
-  .name::after  { color:var(--magenta); animation:glitch-b 5s infinite steps(1); mix-blend-mode:screen; }
-  @keyframes glitch-a { 0%,84%,100%{clip-path:inset(100% 0 0 0);transform:translate(0)} 85%{clip-path:inset(8% 0 62% 0);transform:translate(-3px,1px)} 87%{clip-path:inset(38% 0 32% 0);transform:translate(3px,-1px)} 89%{clip-path:inset(100% 0 0 0)} }
-  @keyframes glitch-b { 0%,86%,100%{clip-path:inset(100% 0 0 0);transform:translate(0)} 87%{clip-path:inset(53% 0 22% 0);transform:translate(4px,0)} 90%{clip-path:inset(18% 0 68% 0);transform:translate(-4px,2px)} 92%{clip-path:inset(100% 0 0 0)} }
+  /* HEADER */
+  .phead { margin-bottom: 26px; }
+  .phead h1 { font-size: clamp(28px,7vw,40px); font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#fff;
+    text-shadow:0 0 22px rgba(0,245,255,.6), 0 0 44px rgba(255,45,149,.35), 0 2px 0 rgba(0,0,0,1);
+    position:relative; display:inline-block; }
+  .phead h1::before,.phead h1::after { content:attr(data-text); position:absolute; top:0; left:0; width:100%; overflow:hidden; clip-path:inset(100% 0 0 0); }
+  .phead h1::before { color:var(--cyan); animation:glitch-a 6s infinite steps(1); mix-blend-mode:screen; }
+  .phead h1::after { color:var(--magenta); animation:glitch-b 6s infinite steps(1); mix-blend-mode:screen; }
+  @keyframes glitch-a { 0%,86%,100%{clip-path:inset(100% 0 0 0);transform:translate(0)} 87%{clip-path:inset(8% 0 62% 0);transform:translate(-3px,1px)} 89%{clip-path:inset(38% 0 32% 0);transform:translate(3px,-1px)} 91%{clip-path:inset(100% 0 0 0)} }
+  @keyframes glitch-b { 0%,88%,100%{clip-path:inset(100% 0 0 0);transform:translate(0)} 89%{clip-path:inset(53% 0 22% 0);transform:translate(4px,0)} 92%{clip-path:inset(18% 0 68% 0);transform:translate(-4px,2px)} 94%{clip-path:inset(100% 0 0 0)} }
+  .phead .sub { font-family:'Share Tech Mono',monospace; font-size:11px; color:#fff; letter-spacing:.14em;
+    margin-top:10px; background:rgba(0,0,0,.5); display:inline-block; padding:3px 8px; text-shadow:0 0 10px rgba(0,245,255,.6); }
 
-  .tagline {
-    font-family:'Share Tech Mono',monospace; font-size:11px; color:#fff;
-    letter-spacing:.18em; margin-top:11px;
-    text-shadow:0 0 10px rgba(0,245,255,.7), 0 1px 4px rgba(0,0,0,1);
-    background:rgba(0,0,0,.55); display:inline-block; padding:3px 8px;
-  }
-  .cursor{animation:blink 1s step-end infinite}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+  /* README / notice */
+  .notice { border:1px solid rgba(212,146,46,.4); background:rgba(20,10,0,.6); backdrop-filter:blur(4px);
+    padding:14px 16px; margin-bottom:26px; position:relative; }
+  .notice::before { content:''; position:absolute; top:5px; right:5px; width:12px; height:12px; border-top:1px solid var(--amber); border-right:1px solid var(--amber); opacity:.6; }
+  .notice .n-title { font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:.2em; color:var(--amber); text-transform:uppercase; margin-bottom:6px; text-shadow:0 0 6px var(--amber); }
+  .notice .n-body { font-size:14px; line-height:1.5; color:#f0e0c0; }
+  .notice .n-body b { color:var(--cyan); text-shadow:0 0 8px rgba(0,245,255,.5); }
+  .notice .pw { font-family:'Share Tech Mono',monospace; background:rgba(0,245,255,.1); border:1px solid rgba(0,245,255,.3); padding:1px 7px; color:var(--cyan); letter-spacing:.1em; }
 
-  .divider { width:100%; display:flex; align-items:center; gap:10px; margin-bottom:28px; }
-  .divider-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--cyan),transparent); opacity:.5; }
-  .divider-diamond { width:6px; height:6px; border:1px solid var(--cyan); transform:rotate(45deg); flex-shrink:0; }
+  /* STATS BAR */
+  .stats { display:flex; gap:10px; margin-bottom:22px; flex-wrap:wrap; }
+  .stat { flex:1; min-width:90px; border:1px solid rgba(0,245,255,.2); background:rgba(0,0,0,.45); padding:10px 12px; }
+  .stat .num { font-family:'Share Tech Mono',monospace; font-size:22px; color:var(--cyan); text-shadow:0 0 10px rgba(0,245,255,.6); line-height:1; }
+  .stat .lbl { font-family:'Share Tech Mono',monospace; font-size:8px; letter-spacing:.2em; color:#9a8a6a; text-transform:uppercase; margin-top:5px; }
 
-  .section-label {
-    font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:.3em;
-    color:#fff; text-shadow:0 0 6px var(--cyan); text-transform:uppercase;
-    align-self:flex-start; margin-bottom:10px; background:rgba(0,0,0,.6); padding:2px 6px;
-  }
+  /* SEARCH */
+  .search-wrap { position:relative; margin-bottom:24px; }
+  .search-wrap input { width:100%; background:rgba(0,0,0,.55); border:1px solid rgba(0,245,255,.3); color:#fff;
+    font-family:'Share Tech Mono',monospace; font-size:13px; letter-spacing:.05em; padding:12px 14px 12px 38px; outline:none; }
+  .search-wrap input::placeholder { color:#6a7a7a; }
+  .search-wrap input:focus { border-color:var(--cyan); box-shadow:0 0 12px rgba(0,245,255,.2); }
+  .search-wrap .s-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:var(--cyan); font-size:14px; }
 
-  .links { width:100%; display:flex; flex-direction:column; gap:12px; margin-bottom:36px; }
-  .link-card {
-    display:block; position:relative; width:100%; padding:16px 20px;
-    text-decoration:none; color:inherit;
-    border:1px solid rgba(0,245,255,.30); background:var(--card-bg);
-    overflow:hidden; transition:border-color .2s,background .2s; backdrop-filter:blur(5px);
-  }
-  .link-card::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(0,245,255,.14),transparent); transition:left .45s; }
-  .link-card:hover::before{left:100%}
-  .link-card:hover{border-color:var(--cyan);background:rgba(8,6,18,.85)}
-  .link-card::after { content:''; position:absolute; top:6px; right:6px; width:14px; height:14px; border-top:1px solid var(--cyan); border-right:1px solid var(--cyan); opacity:.5; transition:opacity .2s; }
-  .link-card:hover::after{opacity:1}
-  .card-corner-bl { position:absolute; bottom:6px; left:6px; width:14px; height:14px; border-bottom:1px solid var(--cyan); border-left:1px solid var(--cyan); opacity:.5; pointer-events:none; transition:opacity .2s; }
-  .link-card:hover .card-corner-bl{opacity:1}
-  .card-header{display:flex;align-items:center;gap:14px}
-  .card-icon{font-size:20px;width:26px;text-align:center;flex-shrink:0;filter:drop-shadow(0 0 6px var(--cyan))}
-  .card-title{ font-size:18px;font-weight:700;letter-spacing:.12em;text-transform:uppercase; color:#fff;text-shadow:0 0 12px rgba(0,245,255,.6),0 1px 3px rgba(0,0,0,1); }
-  .card-sub{ font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--cyan); margin-top:4px;letter-spacing:.1em;text-shadow:0 1px 4px rgba(0,0,0,1); }
-  .card-arrow{ margin-left:auto;font-size:16px;color:var(--cyan); opacity:0;transform:translateX(-6px); transition:opacity .2s,transform .2s;flex-shrink:0; text-shadow:0 0 8px var(--cyan); }
-  .link-card:hover .card-arrow{opacity:1;transform:translateX(0)}
+  /* VENDOR CARDS */
+  .vendors { display:flex; flex-direction:column; gap:10px; }
+  .vendor { border:1px solid rgba(0,245,255,.22); background:var(--card-bg); backdrop-filter:blur(4px); overflow:hidden; transition:border-color .2s; }
+  .vendor:hover { border-color:rgba(0,245,255,.5); }
+  .vendor.open { border-color:var(--cyan); }
+  .vendor-head { width:100%; text-align:left; background:none; border:none; cursor:pointer; padding:15px 17px; position:relative; color:inherit; display:block; }
+  .vendor-corner-bl { position:absolute; bottom:5px; left:5px; width:12px; height:12px; border-bottom:1px solid var(--cyan); border-left:1px solid var(--cyan); opacity:0; transition:opacity .2s; }
+  .vendor.open .vendor-corner-bl, .vendor:hover .vendor-corner-bl { opacity:.6; }
+  .vendor-title-row { display:flex; align-items:center; gap:10px; }
+  .vendor-name { font-size:19px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:#fff; text-shadow:0 0 10px rgba(0,245,255,.4), 0 1px 2px rgba(0,0,0,1); }
+  .vendor-tag { font-family:'Share Tech Mono',monospace; font-size:8px; letter-spacing:.15em; color:var(--magenta); border:1px solid rgba(255,45,149,.4); padding:2px 6px; text-shadow:0 0 6px rgba(255,45,149,.5); }
+  .vendor-desc { font-size:13px; color:#c8b890; margin-top:5px; letter-spacing:.02em; }
+  .vendor-meta { display:flex; align-items:center; justify-content:space-between; margin-top:9px; }
+  .vendor-count { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:.15em; color:var(--cyan); opacity:.75; }
+  .vendor-chevron { font-family:'Share Tech Mono',monospace; color:var(--cyan); font-size:14px; transition:transform .25s; }
+  .vendor.open .vendor-chevron { transform:rotate(90deg); }
 
-  .pulse-bar { width:100%;height:1px; background:linear-gradient(90deg,transparent,var(--cyan),var(--magenta),var(--amber),transparent); margin-bottom:36px;position:relative;overflow:hidden; }
-  .pulse-bar::after{ content:'';position:absolute;top:0;left:-50%;width:50%;height:100%; background:rgba(255,255,255,.7);animation:bar-sweep 3.5s ease-in-out infinite; }
-  @keyframes bar-sweep{0%{left:-50%}100%{left:150%}}
+  .vendor-body { max-height:0; overflow:hidden; transition:max-height .35s ease; }
+  .vendor.open .vendor-body { max-height:1600px; }
+  .item-list { list-style:none; padding:4px 17px 0; margin:0; border-top:1px solid rgba(0,245,255,.12); }
+  .item-list li { font-family:'Share Tech Mono',monospace; font-size:12px; color:#e8d8b8; padding:7px 0 7px 18px; position:relative; letter-spacing:.02em; border-bottom:1px solid rgba(255,255,255,.04); }
+  .item-list li::before { content:'▪'; position:absolute; left:0; color:var(--cyan); opacity:.7; }
+  .item-list li:last-child { border-bottom:none; }
 
-  .footer{ font-family:'Share Tech Mono',monospace;font-size:9px; color:rgba(0,245,255,.4);letter-spacing:.2em;text-align:center;line-height:2; }
+  .dl-btn { display:flex; align-items:center; justify-content:center; gap:10px; margin:14px 17px 17px;
+    padding:12px; text-decoration:none; border:1px solid var(--cyan); background:rgba(0,245,255,.06);
+    color:var(--cyan); font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.18em; text-transform:uppercase;
+    transition:all .2s; position:relative; overflow:hidden; }
+  .dl-btn::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(0,245,255,.25),transparent); transition:left .4s; }
+  .dl-btn:hover::before { left:100%; }
+  .dl-btn:hover { background:rgba(0,245,255,.14); box-shadow:0 0 16px rgba(0,245,255,.3); text-shadow:0 0 8px var(--cyan); }
+  .dl-arrow { font-size:14px; }
 
-  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+  .no-results { text-align:center; padding:40px 20px; font-family:'Share Tech Mono',monospace; font-size:12px; color:#6a7a7a; letter-spacing:.1em; display:none; }
+
+  .footer { font-family:'Share Tech Mono',monospace; font-size:9px; color:rgba(0,245,255,.4); letter-spacing:.2em; text-align:center; line-height:2; margin-top:40px; }
+
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}}
 </style>
 </head>
 <body>
@@ -134,275 +121,740 @@
 <div class="glitch-strip"></div>
 
 <div class="page">
-  <div class="header">
-    <div class="avatar-ring">
-      <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="45" cy="45" r="42" stroke="#00f5ff" stroke-width="0.5" stroke-dasharray="4 7" opacity="0.7"/>
-        <circle cx="45" cy="45" r="37" stroke="#ff2d95" stroke-width="0.3" stroke-dasharray="2 16" opacity="0.35"/>
-        <line x1="3" y1="45" x2="9" y2="45" stroke="#00f5ff" stroke-width="1" opacity="0.9"/>
-        <line x1="81" y1="45" x2="87" y2="45" stroke="#00f5ff" stroke-width="1" opacity="0.9"/>
-        <line x1="45" y1="3" x2="45" y2="8" stroke="#00f5ff" stroke-width="1" opacity="0.9"/>
-        <line x1="45" y1="82" x2="45" y2="87" stroke="#00f5ff" stroke-width="1" opacity="0.9"/>
-      </svg>
-      <div class="avatar-inner">AEP</div>
+  <div class="nav">
+    <a href="index.html">&#8592; HOME</a>
+    <a href="plugins.html" class="active">PLUGINS</a>
+    <div class="spacer"></div>
+  </div>
+
+  <div class="phead">
+    <h1 data-text="PLUGINS">PLUGINS</h1>
+    <div class="sub">// after effects &#8212; windows &#8212; the arsenal</div>
+  </div>
+
+  <div class="notice">
+    <div class="n-title">[ README // INSTRUCTIONS ]</div>
+    <div class="n-body">
+      These are my personal plugin <b>settings & presets</b>. You'll need to grab the actual plugin from the official vendor site, then drop these in. Archive password: <span class="pw">star</span>
     </div>
-    <div class="name" data-text="m4rc.aep">m4rc<span class="ext">.aep</span></div>
-    <div class="tagline">// motion designer &amp; ae plugin dev <span class="cursor">_</span></div>
   </div>
 
-  <div class="divider">
-    <div class="divider-line"></div>
-    <div class="divider-diamond"></div>
-    <div class="divider-line"></div>
+  <div class="stats">
+    <div class="stat"><div class="num">25</div><div class="lbl">Vendors</div></div>
+    <div class="stat"><div class="num">84</div><div class="lbl">Plugins</div></div>
+    <div class="stat"><div class="num">WIN</div><div class="lbl">Platform</div></div>
   </div>
 
-  <div class="section-label">[ AE, PLUGINS, AND PRESETS ]</div>
-  <div class="links">
-    <a class="link-card" href="plugins.html">
-      <div class="card-corner-bl"></div>
-      <div class="card-header">
-        <div class="card-icon" style="color:#00f5ff;">&#11041;</div>
-        <div>
-          <div class="card-title">AE Plugins &amp; Presets</div>
-          <div class="card-sub">25 vendors / 84 plugins / windows</div>
+  <div class="search-wrap">
+    <span class="s-icon">&#9906;</span>
+    <input id="search" type="text" placeholder="SEARCH PLUGINS..." oninput="filterVendors()" autocomplete="off">
+  </div>
+
+  <div class="vendors" id="vendors">
+
+    <div class="vendor" data-name="andrew kramer / andrew yang" data-items="andrew yang plugin bundle">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Andrew Kramer / Andrew Yang</span>
+          <span class="vendor-tag">BUNDLE</span>
         </div>
-        <div class="card-arrow">&#8594;</div>
+        <div class="vendor-desc">Plugin bundle.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">1 ITEM</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Andrew Yang plugin bundle</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/sItxRZyR#aVco_Fqldi7Svv2lnU0Gqw" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
       </div>
-    </a>
+    </div>
+    <div class="vendor" data-name="autokroma" data-items="aftercodecs v1.21.1 autokroma bundle 2025 influx v1.6.1">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">AutoKroma</span>
+          <span class="vendor-tag">SUITE</span>
+        </div>
+        <div class="vendor-desc">Encoding, workflow & rendering tools.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">3 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>AfterCodecs v1.21.1</li>
+          <li>AutoKroma Bundle 2025</li>
+          <li>Influx v1.6.1</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/5RNSwJwa#NOIKh4i1yf6ewNvNKKsfWQ" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="bao" data-items="bao plugins bundle 2025">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">BAO</span>
+          <span class="vendor-tag">BUNDLE</span>
+        </div>
+        <div class="vendor-desc">Bao plugins bundle 2025.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">1 ITEM</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Bao Plugins Bundle 2025</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/kQNU0YBY#fh8O96XJzbNBXnLkvt2I4g" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="baskl" data-items="bskl suite (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">BASKL</span>
+          <span class="vendor-tag">SUITE</span>
+        </div>
+        <div class="vendor-desc">BSKL suite for Windows.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">1 ITEM</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>BSKL Suite (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/FE9WwC7K#mN2WZ9ZGIXxTj_7IzB71vg" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="bgra entertainment" data-items="retro dither v1.10 l3tt3rm4pp3r2 v2.8">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">BGRA Entertainment</span>
+          <span class="vendor-tag">PLUGINS</span>
+        </div>
+        <div class="vendor-desc">Retro dithering & typography displacement.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">2 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Retro Dither v1.10</li>
+          <li>L3TT3RM4pp3r2 v2.8</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/5d0AFCAQ#WN2ncq55dNFXgYiJt7Hi3g" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="blace" data-items="depth scanner 2 v2.4.42 (win) i ate mushrooms v6.24 (win) mask prompter 3 v3.0.3 (win/mac)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">BLACE</span>
+          <span class="vendor-tag">PLUGINS</span>
+        </div>
+        <div class="vendor-desc">Depth, texture & masking AI tools.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">3 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Depth Scanner 2 v2.4.42 (Win)</li>
+          <li>I Ate Mushrooms v6.24 (Win)</li>
+          <li>Mask Prompter 3 v3.0.3 (Win/Mac)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/9ZE2TbYZ#jsIzXRziQ7VtqGN3uqbWdA" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="boris fx" data-items="sapphire ae win 2026.0 silhouette 2025.5.1 (win) continuum 2026 adobe v19.0.1 (win) mocha pro adobe 2026.0.1 (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Boris FX</span>
+          <span class="vendor-tag">SUITE</span>
+        </div>
+        <div class="vendor-desc">Industry-standard VFX, tracking & finishing.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">4 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Sapphire AE Win 2026.0</li>
+          <li>Silhouette 2025.5.1 (Win)</li>
+          <li>Continuum 2026 Adobe v19.0.1 (Win)</li>
+          <li>Mocha Pro Adobe 2026.0.1 (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/sAEVgAwL#W4xdmX0ztI23fEgEJ2Y1pw" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="crossphere" data-items="crossphere bokeh 1.4.1 (win) crossphere plugins bundle (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Crossphere</span>
+          <span class="vendor-tag">PLUGINS</span>
+        </div>
+        <div class="vendor-desc">Optical bokeh & lens effects.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">2 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Crossphere Bokeh 1.4.1 (Win)</li>
+          <li>Crossphere Plugins Bundle (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/NMkRyYKT#Ysn9IbwPokMT0DBFZTPi1w" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="dragoy" data-items="bevelizer 1.0.1 (win) tracery v1.1 (win/mac)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Dragoy</span>
+          <span class="vendor-tag">PLUGINS</span>
+        </div>
+        <div class="vendor-desc">Beveling & generative line art.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">2 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Bevelizer 1.0.1 (Win)</li>
+          <li>Tracery v1.1 (Win/Mac)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/sZ9hhKKB#sNwp91TL9vezD3Pxf2nEFA" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="element supply co" data-items="glitchify (win/mac) polytrace (win/mac)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Element Supply Co</span>
+          <span class="vendor-tag">PLUGINS</span>
+        </div>
+        <div class="vendor-desc">Glitch & trace stylization.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">2 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Glitchify (Win/Mac)</li>
+          <li>Polytrace (Win/Mac)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/5Zcx1aCB#6ehC4ojGxmxUBthvKQ1mBg" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="filmconvert" data-items="filmconvert bundle (adobe/ofx, win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">FilmConvert</span>
+          <span class="vendor-tag">BUNDLE</span>
+        </div>
+        <div class="vendor-desc">Film emulation & color grading.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">1 ITEM</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>FilmConvert Bundle (Adobe/OFX, Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/0I9w0KjC#5Tna_q3VC0cKRYOnhyx3hA" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="frischluft" data-items="frischluft (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Frischluft</span>
+          <span class="vendor-tag">PLUGINS</span>
+        </div>
+        <div class="vendor-desc">Lens care, depth of field & distortion.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">1 ITEM</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Frischluft (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/0ItFiZrB#50ggjKenpwY6xtYbJf_LCA" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="irrealix" data-items="irrealix bundle 260215 (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Irrealix</span>
+          <span class="vendor-tag">BUNDLE</span>
+        </div>
+        <div class="vendor-desc">Transitions & motion design tools.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">1 ITEM</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Irrealix Bundle 260215 (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/YRlUlKYb#UxFcjff_aVA7KxtOKlYiOg" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="maxon / red giant" data-items="red giant v2026.3.0">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Maxon / Red Giant</span>
+          <span class="vendor-tag">SUITE</span>
+        </div>
+        <div class="vendor-desc">The complete Red Giant creative suite.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">1 ITEM</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Red Giant v2026.3.0</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/1RMGGK5Q#AbJBO8N1z0ZlvZCJshOZ8w" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="mettle" data-items="mettle plugins bundle win 2024.2">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Mettle</span>
+          <span class="vendor-tag">BUNDLE</span>
+        </div>
+        <div class="vendor-desc">360°/VR & 3D object tools.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">1 ITEM</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Mettle Plugins Bundle Win 2024.2</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/ZUkyULaA#IxVwkQ3-EkS1Pxoc5zmHYQ" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="pixel sorter studio" data-items="ballpoint 1.2.1 (win) pixel sorter studio bundle (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Pixel Sorter Studio</span>
+          <span class="vendor-tag">PLUGINS</span>
+        </div>
+        <div class="vendor-desc">Datamosh-style pixel sorting & glitch.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">2 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>BallPoint 1.2.1 (Win)</li>
+          <li>Pixel Sorter Studio Bundle (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/0AkAXICC#_Fgy6ucsw4sZ5hQ4DkkXPA" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="plugin everything" data-items="autofill v2.0.2 (win/mac) cartoon moblur v1.6.3 (win/mac) deep glow 2 v1.1.0 deep glow v1.6.6 (win/mac) discotext v1.2.6 (win/mac) displacer pro v1.5.0 (win/mac) extrude (win) shadow studio 3 v1.0.7 (win/mac) textbox 2 v1.2 (win) textdelay v1.7.5 (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Plugin Everything</span>
+          <span class="vendor-tag">SUITE</span>
+        </div>
+        <div class="vendor-desc">Glow, text & motion utility staples.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">10 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Autofill v2.0.2 (Win/Mac)</li>
+          <li>Cartoon Moblur v1.6.3 (Win/Mac)</li>
+          <li>Deep Glow 2 v1.1.0</li>
+          <li>Deep Glow v1.6.6 (Win/Mac)</li>
+          <li>Discotext v1.2.6 (Win/Mac)</li>
+          <li>Displacer Pro v1.5.0 (Win/Mac)</li>
+          <li>Extrude (Win)</li>
+          <li>Shadow Studio 3 v1.0.7 (Win/Mac)</li>
+          <li>TextBox 2 v1.2 (Win)</li>
+          <li>TextDelay v1.7.5 (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/0RNjEDZC#CiBWYdxkcFzfdqkwpedyEQ" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="production crate" data-items="crates godrays & light wrap (win/mac) laforge suite win 1.4.8.1">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Production Crate</span>
+          <span class="vendor-tag">SUITE</span>
+        </div>
+        <div class="vendor-desc">Light wraps, godrays & VFX asset suite.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">2 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Crates Godrays & Light Wrap (Win/Mac)</li>
+          <li>LaForge Suite Win 1.4.8.1</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/NJVCgY7S#Pgx_DGMJx8UUU4QekoxY5g" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="re:vision fx" data-items="re:vision fx bundle 23.08 (win) — twixtor pro, rsmb, etc. effections plus v25.08 (win) twixtor v8.1.0 (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">RE:Vision FX</span>
+          <span class="vendor-tag">SUITE</span>
+        </div>
+        <div class="vendor-desc">Twixtor retiming, motion blur & more.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">3 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>RE:Vision FX Bundle 23.08 (Win) — Twixtor Pro, RSMB, etc.</li>
+          <li>Effections Plus v25.08 (Win)</li>
+          <li>Twixtor v8.1.0 (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/UENlEKRZ#7NE18lKKgo4GGxC_-EXQDw" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="rowbyte" data-items="rowbyte plugins bundle 2025.8 (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Rowbyte</span>
+          <span class="vendor-tag">BUNDLE</span>
+        </div>
+        <div class="vendor-desc">Data glitch, plexus & particle tools.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">1 ITEM</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Rowbyte Plugins Bundle 2025.8 (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/4Uthib5Q#8a8SXJisJ_qMnKUmQNUg6A" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="satori" data-items="satori bundle win 250912.1">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Satori</span>
+          <span class="vendor-tag">BUNDLE</span>
+        </div>
+        <div class="vendor-desc">Generative pattern & design bundle.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">1 ITEM</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Satori Bundle Win 250912.1</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/pN11GJaT#Xod5InJwmTkIf56PFEz4FQ" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="video copilot" data-items="element 3d v2.2.3 (win) heat distortion (win) pro shaders 1 (win/mac) pro shaders 2 (win/mac) saber v1.0.40 (win) saber v1.0.40 (mac) twitch (win) vc optical flares v1.3.8 (win/mac) vc color vibrance v1.0.7 (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Video Copilot</span>
+          <span class="vendor-tag">SUITE</span>
+        </div>
+        <div class="vendor-desc">Element 3D, Saber, Optical Flares & classics.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">9 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Element 3D v2.2.3 (Win)</li>
+          <li>Heat Distortion (Win)</li>
+          <li>Pro Shaders 1 (Win/Mac)</li>
+          <li>Pro Shaders 2 (Win/Mac)</li>
+          <li>Saber v1.0.40 (Win)</li>
+          <li>Saber v1.0.40 (Mac)</li>
+          <li>Twitch (Win)</li>
+          <li>VC Optical Flares v1.3.8 (Win/Mac)</li>
+          <li>VC Color Vibrance v1.0.7 (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/8ds0CTaL#XYlxhHBMJuO9z4B6NkQ1RA" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="vimager" data-items="vimager bundle 1.6.60209 (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Vimager</span>
+          <span class="vendor-tag">BUNDLE</span>
+        </div>
+        <div class="vendor-desc">Image & motion utility bundle.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">1 ITEM</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Vimager Bundle 1.6.60209 (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/4Z1FUJAQ#2YFZqIERMhCZMdk4Jm-5QQ" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="zaebects" data-items="jpeg glitch v1.0.4 (win) modulation v2.1 (win) physarum v1.3 (win/mac) signal v1.2.3 (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Zaebects</span>
+          <span class="vendor-tag">PLUGINS</span>
+        </div>
+        <div class="vendor-desc">Glitch, simulation & signal distortion.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">4 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>JPEG Glitch v1.0.4 (Win)</li>
+          <li>Modulation v2.1 (Win)</li>
+          <li>Physarum v1.3 (Win/Mac)</li>
+          <li>Signal v1.2.3 (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/EUUQ1TZL#bW0Nk3D6QGFuONV8iPX_Qw" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+    <div class="vendor" data-name="unsorted / misc" data-items="aescripts varifont 2 (win/mac) bendio v1.0.1 (win) color llama v1.1.0 (win) colour scheme generator (win/mac) composite brush v1.6.7 (win/mac) cycorefx bundle v1.3.2 (win) dehancer pro v7.3.4 (win) despill maestro v1.0.0 (win) digieffects suite v3.0 ce (win) diopter v1.0.5 (win) dust transition v1.1.0 (win) fluidmap (win) furikake v1.0.5 (win) hitfilm plugins (win) ignite pro 2021.1 (adobe & ofx, win) lockdown v2.8.7 (win) memleak v1.1.1 (win) neat video pro (win) newton 4.0 (win) pathblurfx (win) pixdither (win) pixel extender v1.0 (win) superluminal stardust v1.6.0c (win) thesaucecode v1.1.1 (win) xcloner v1.2.1 (win)">
+      <button class="vendor-head" onclick="toggleVendor(this)">
+        <div class="vendor-corner-bl"></div>
+        <div class="vendor-title-row">
+          <span class="vendor-name">Unsorted / Misc</span>
+          <span class="vendor-tag">MIXED</span>
+        </div>
+        <div class="vendor-desc">A deep grab-bag of standalone plugins & tools.</div>
+        <div class="vendor-meta">
+          <span class="vendor-count">25 ITEMS</span>
+          <span class="vendor-chevron">▸</span>
+        </div>
+      </button>
+      <div class="vendor-body">
+        <ul class="item-list">
+          <li>Aescripts VariFont 2 (Win/Mac)</li>
+          <li>Bendio v1.0.1 (Win)</li>
+          <li>Color Llama v1.1.0 (Win)</li>
+          <li>Colour Scheme Generator (Win/Mac)</li>
+          <li>Composite Brush v1.6.7 (Win/Mac)</li>
+          <li>CycoreFX Bundle v1.3.2 (Win)</li>
+          <li>Dehancer Pro v7.3.4 (Win)</li>
+          <li>Despill Maestro v1.0.0 (Win)</li>
+          <li>DigiEffects Suite v3.0 CE (Win)</li>
+          <li>Diopter v1.0.5 (Win)</li>
+          <li>Dust Transition v1.1.0 (Win)</li>
+          <li>FluidMap (Win)</li>
+          <li>Furikake v1.0.5 (Win)</li>
+          <li>HitFilm Plugins (Win)</li>
+          <li>Ignite Pro 2021.1 (Adobe & OFX, Win)</li>
+          <li>Lockdown v2.8.7 (Win)</li>
+          <li>Memleak v1.1.1 (Win)</li>
+          <li>Neat Video Pro (Win)</li>
+          <li>Newton 4.0 (Win)</li>
+          <li>PathBlurFX (Win)</li>
+          <li>PixDither (Win)</li>
+          <li>Pixel Extender v1.0 (Win)</li>
+          <li>Superluminal Stardust v1.6.0c (Win)</li>
+          <li>TheSauceCode v1.1.1 (Win)</li>
+          <li>xCloner v1.2.1 (Win)</li>
+        </ul>
+        <a class="dl-btn" href="https://mega.nz/folder/9cd11Y4b#-bzrc2NhQ41UrLNFJGlIQw" target="_blank" rel="noopener">
+          <span>DOWNLOAD FOLDER</span>
+          <span class="dl-arrow">↓</span>
+        </a>
+      </div>
+    </div>
   </div>
+  <div class="no-results" id="noResults">// NO MATCHES FOUND</div>
 
-  <div class="pulse-bar"></div>
-  <div class="footer"><div>SYSTEM :: m4rc.aep // NIGHT CITY EDIT LAB</div></div>
+  <div class="footer"><div>SYSTEM :: m4rc.aep // PLUGIN ARSENAL // NIGHT CITY</div></div>
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════
-//  NIGHT CITY CYBERSPACE
-//  Layers (bottom -> top):
-//   0. <img> the Cyberpunk skyline, fully visible
-//   1. glow-canvas: neon bloom sampled from bright image
-//      pixels, screen-blended so the CITY ITSELF glows
-//   2. particle-canvas: dense fine points snapped to the
-//      image's bright pixels (its "data" form), drifting
-//      and twinkling like the cyberspace mesh references
-//   3. markers-canvas: AE tracking markers
-// ══════════════════════════════════════════════════════
+function toggleVendor(btn){ btn.parentElement.classList.toggle('open'); }
 
-const bgImg = document.getElementById('bg-image');
-
-// ---- sampler (reads image pixels) ----
-const sampler = document.createElement('canvas');
-const sCtx = sampler.getContext('2d', { willReadFrequently: true });
-let imgData = null;
-
-function buildSampler() {
-  if (!bgImg.complete || !bgImg.naturalWidth) return false;
-  const W = window.innerWidth, H = window.innerHeight;
-  const SW = Math.max(1, Math.floor(W/2)), SH = Math.max(1, Math.floor(H/2));
-  sampler.width = SW; sampler.height = SH;
-  // object-fit: cover mapping
-  const scale = Math.max(SW/bgImg.naturalWidth, SH/bgImg.naturalHeight);
-  const w = bgImg.naturalWidth*scale, h = bgImg.naturalHeight*scale;
-  const x = (SW-w)/2, y = (SH-h)/2;
-  sCtx.clearRect(0,0,SW,SH);
-  sCtx.drawImage(bgImg, x, y, w, h);
-  imgData = sCtx.getImageData(0,0,SW,SH);
-  return true;
-}
-function sampleAt(px, py) {
-  if (!imgData) return [0,0,0];
-  const SW = imgData.width, SH = imgData.height;
-  const sx = Math.max(0,Math.min(SW-1, Math.floor(px/window.innerWidth*SW)));
-  const sy = Math.max(0,Math.min(SH-1, Math.floor(py/window.innerHeight*SH)));
-  const i = (sy*SW+sx)*4;
-  return [imgData.data[i], imgData.data[i+1], imgData.data[i+2]];
+function filterVendors(){
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const cards = document.querySelectorAll('.vendor');
+  let shown = 0;
+  cards.forEach(c=>{
+    const hay = (c.dataset.name + ' ' + c.dataset.items);
+    const match = q==='' || hay.indexOf(q) !== -1;
+    c.style.display = match ? '' : 'none';
+    if (match) shown++;
+    if (q!=='' && match) c.classList.add('open'); else if(q==='') c.classList.remove('open');
+  });
+  document.getElementById('noResults').style.display = shown===0 ? 'block' : 'none';
 }
 
-// ══ LAYER 1: NEON GLOW BLOOM from the image ══
-const glowCanvas = document.getElementById('glow-canvas');
-const glCtx = glowCanvas.getContext('2d');
-let glowSpots = [];   // precomputed bright spots to bloom
-
-function buildGlow() {
-  glowSpots = [];
-  if (!imgData) return;
-  const SW = imgData.width, SH = imgData.height;
-  const W = window.innerWidth, H = window.innerHeight;
-  // scan grid, find bright/saturated pixels = neon signs
-  const step = 6;
-  for (let sy=0; sy<SH; sy+=step) {
-    for (let sx=0; sx<SW; sx+=step) {
-      const i=(sy*SW+sx)*4;
-      const r=imgData.data[i],g=imgData.data[i+1],b=imgData.data[i+2];
-      const lum=(r+g+b)/765;
-      const maxc=Math.max(r,g,b), minc=Math.min(r,g,b);
-      const sat=maxc===0?0:(maxc-minc)/maxc;
-      // neon = bright AND (saturated OR very bright white light)
-      if (lum>0.42 && (sat>0.35 || lum>0.62)) {
-        glowSpots.push({
-          x: sx/SW*W, y: sy/SH*H,
-          r: 8+Math.random()*22,
-          col:[r,g,b],
-          base: Math.min(1, (lum-0.4)*1.3),
-          fPhase: Math.random()*Math.PI*2,
-          fSpeed: 0.5+Math.random()*3.5,     // flicker speed
-          fType: Math.random(),               // determines flicker character
-        });
-      }
-    }
-  }
-}
-
-function drawGlow(time) {
-  const W=glowCanvas.width, H=glowCanvas.height;
-  glCtx.clearRect(0,0,W,H);
-  for (const s of glowSpots) {
-    // flicker: some steady, some strobe, some occasional dropout (broken sign)
-    let f;
-    if (s.fType < 0.15) {
-      // broken sign: mostly on, random hard dropouts
-      f = (Math.sin(time*12+s.fPhase) > -0.7) ? 1 : 0.15;
-    } else if (s.fType < 0.4) {
-      // fast strobe
-      f = 0.55 + 0.45*Math.sin(time*s.fSpeed*2.2 + s.fPhase);
-    } else {
-      // gentle breathe
-      f = 0.75 + 0.25*Math.sin(time*s.fSpeed*0.5 + s.fPhase);
-    }
-    const a = s.base * f * 0.5;
-    if (a <= 0.02) continue;
-    const [r,g,b]=s.col;
-    const grd = glCtx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r);
-    grd.addColorStop(0, `rgba(${r},${g},${b},${a})`);
-    grd.addColorStop(0.5, `rgba(${r},${g},${b},${a*0.4})`);
-    grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
-    glCtx.beginPath(); glCtx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    glCtx.fillStyle=grd; glCtx.fill();
-  }
-}
-
-// ══ LAYER 2: CYBERSPACE PARTICLE MESH ══
-// Dense fine points snapped to bright image pixels, drifting/twinkling
-const pCanvas = document.getElementById('particle-canvas');
-const pCtx = pCanvas.getContext('2d');
-let particles = [];
-
-function buildParticles() {
-  particles = [];
-  if (!imgData) return;
-  const SW=imgData.width, SH=imgData.height;
-  const W=window.innerWidth, H=window.innerHeight;
-  const step = 3;  // very dense
-  for (let sy=0; sy<SH; sy+=step) {
-    for (let sx=0; sx<SW; sx+=step) {
-      const i=(sy*SW+sx)*4;
-      const r=imgData.data[i],g=imgData.data[i+1],b=imgData.data[i+2];
-      const lum=(r+g+b)/765;
-      // place a point where the city has light; denser where brighter
-      if (lum > 0.16 && Math.random() < (lum*0.9)) {
-        particles.push({
-          x: sx/SW*W, y: sy/SH*H,
-          ox: sx/SW*W, oy: sy/SH*H,
-          col:[r,g,b], lum,
-          size: lum>0.55 ? (0.8+Math.random()*1.2) : (0.5+Math.random()*0.8),
-          tw: Math.random()*Math.PI*2,        // twinkle phase
-          twSpeed: 0.5+Math.random()*3,
-          driftPhase: Math.random()*Math.PI*2,
-          driftSpeed: 0.2+Math.random()*0.6,
-          driftAmp: 0.6+Math.random()*2.2,
-        });
-      }
-    }
-  }
-}
-
-function drawParticles(time) {
-  const W=pCanvas.width, H=pCanvas.height;
-  pCtx.clearRect(0,0,W,H);
-  pCtx.globalCompositeOperation='screen';
-  for (const p of particles) {
-    // gentle drift (like the cyberspace mesh breathing)
-    const dx = Math.sin(time*p.driftSpeed + p.driftPhase)*p.driftAmp;
-    const dy = Math.cos(time*p.driftSpeed*0.8 + p.driftPhase)*p.driftAmp*0.6;
-    const x = p.ox+dx, y = p.oy+dy;
-    // twinkle
-    const tw = 0.45 + 0.55*Math.sin(time*p.twSpeed + p.tw);
-    const a = (0.3 + p.lum*0.7) * tw;
-    const [r,g,b]=p.col;
-    // brighten toward white-hot core for bright ones
-    const br = Math.min(255, r+p.lum*90);
-    const bg = Math.min(255, g+p.lum*90);
-    const bb = Math.min(255, b+p.lum*90);
-    pCtx.beginPath();
-    pCtx.arc(x, y, p.size, 0, Math.PI*2);
-    pCtx.fillStyle = `rgba(${br|0},${bg|0},${bb|0},${a})`;
-    pCtx.fill();
-    // occasional bright point gets a tiny cross-glow spike
-    if (p.lum>0.6 && tw>0.9) {
-      pCtx.strokeStyle = `rgba(${br|0},${bg|0},${bb|0},${a*0.5})`;
-      pCtx.lineWidth = 0.6;
-      const L = p.size*3.5;
-      pCtx.beginPath(); pCtx.moveTo(x-L,y); pCtx.lineTo(x+L,y);
-      pCtx.moveTo(x,y-L); pCtx.lineTo(x,y+L); pCtx.stroke();
-    }
-  }
-  pCtx.globalCompositeOperation='source-over';
-}
-
-// ══ MAIN LOOP ══
-function resizeAll() {
-  const W=window.innerWidth, H=window.innerHeight;
-  for (const c of [glowCanvas,pCanvas]) { c.width=W; c.height=H; }
-  if (buildSampler()) { buildGlow(); buildParticles(); }
-}
-
+// ══ shared background FX (same engine as home) ══
+const bgImg=document.getElementById('bg-image');
+const sampler=document.createElement('canvas'); const sCtx=sampler.getContext('2d',{willReadFrequently:true}); let imgData=null;
+function buildSampler(){ if(!bgImg.complete||!bgImg.naturalWidth)return false;
+  const W=innerWidth,H=innerHeight,SW=Math.max(1,W/2|0),SH=Math.max(1,H/2|0); sampler.width=SW;sampler.height=SH;
+  const sc=Math.max(SW/bgImg.naturalWidth,SH/bgImg.naturalHeight),w=bgImg.naturalWidth*sc,h=bgImg.naturalHeight*sc;
+  sCtx.clearRect(0,0,SW,SH); sCtx.drawImage(bgImg,(SW-w)/2,(SH-h)/2,w,h); imgData=sCtx.getImageData(0,0,SW,SH); return true; }
+const glowCanvas=document.getElementById('glow-canvas'),glCtx=glowCanvas.getContext('2d'); let glowSpots=[];
+function buildGlow(){ glowSpots=[]; if(!imgData)return; const SW=imgData.width,SH=imgData.height,W=innerWidth,H=innerHeight,step=6;
+  for(let sy=0;sy<SH;sy+=step)for(let sx=0;sx<SW;sx+=step){const i=(sy*SW+sx)*4,r=imgData.data[i],g=imgData.data[i+1],b=imgData.data[i+2],lum=(r+g+b)/765,mx=Math.max(r,g,b),mn=Math.min(r,g,b),sat=mx===0?0:(mx-mn)/mx;
+    if(lum>0.42&&(sat>0.35||lum>0.62))glowSpots.push({x:sx/SW*W,y:sy/SH*H,r:8+Math.random()*22,col:[r,g,b],base:Math.min(1,(lum-0.4)*1.3),fPhase:Math.random()*6.28,fSpeed:0.5+Math.random()*3.5,fType:Math.random()});} }
+function drawGlow(t){const W=glowCanvas.width,H=glowCanvas.height;glCtx.clearRect(0,0,W,H);
+  for(const s of glowSpots){let f;if(s.fType<0.15)f=(Math.sin(t*12+s.fPhase)>-0.7)?1:0.15;else if(s.fType<0.4)f=0.55+0.45*Math.sin(t*s.fSpeed*2.2+s.fPhase);else f=0.75+0.25*Math.sin(t*s.fSpeed*0.5+s.fPhase);
+    const a=s.base*f*0.5;if(a<=0.02)continue;const[r,g,b]=s.col,gr=glCtx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r);
+    gr.addColorStop(0,`rgba(${r},${g},${b},${a})`);gr.addColorStop(0.5,`rgba(${r},${g},${b},${a*0.4})`);gr.addColorStop(1,`rgba(${r},${g},${b},0)`);
+    glCtx.beginPath();glCtx.arc(s.x,s.y,s.r,0,6.28);glCtx.fillStyle=gr;glCtx.fill();} }
+const pCanvas=document.getElementById('particle-canvas'),pCtx=pCanvas.getContext('2d'); let particles=[];
+function buildParticles(){particles=[];if(!imgData)return;const SW=imgData.width,SH=imgData.height,W=innerWidth,H=innerHeight,step=3;
+  for(let sy=0;sy<SH;sy+=step)for(let sx=0;sx<SW;sx+=step){const i=(sy*SW+sx)*4,r=imgData.data[i],g=imgData.data[i+1],b=imgData.data[i+2],lum=(r+g+b)/765;
+    if(lum>0.16&&Math.random()<lum*0.9)particles.push({ox:sx/SW*W,oy:sy/SH*H,col:[r,g,b],lum,size:lum>0.55?0.8+Math.random()*1.2:0.5+Math.random()*0.8,tw:Math.random()*6.28,twSpeed:0.5+Math.random()*3,dP:Math.random()*6.28,dS:0.2+Math.random()*0.6,dA:0.6+Math.random()*2.2});} }
+function drawParticles(t){const W=pCanvas.width,H=pCanvas.height;pCtx.clearRect(0,0,W,H);pCtx.globalCompositeOperation='screen';
+  for(const p of particles){const dx=Math.sin(t*p.dS+p.dP)*p.dA,dy=Math.cos(t*p.dS*0.8+p.dP)*p.dA*0.6,x=p.ox+dx,y=p.oy+dy,tw=0.45+0.55*Math.sin(t*p.twSpeed+p.tw),a=(0.3+p.lum*0.7)*tw,[r,g,b]=p.col,br=Math.min(255,r+p.lum*90),bg=Math.min(255,g+p.lum*90),bb=Math.min(255,b+p.lum*90);
+    pCtx.beginPath();pCtx.arc(x,y,p.size,0,6.28);pCtx.fillStyle=`rgba(${br|0},${bg|0},${bb|0},${a})`;pCtx.fill();
+    if(p.lum>0.6&&tw>0.9){pCtx.strokeStyle=`rgba(${br|0},${bg|0},${bb|0},${a*0.5})`;pCtx.lineWidth=0.6;const L=p.size*3.5;pCtx.beginPath();pCtx.moveTo(x-L,y);pCtx.lineTo(x+L,y);pCtx.moveTo(x,y-L);pCtx.lineTo(x,y+L);pCtx.stroke();}}
+  pCtx.globalCompositeOperation='source-over';}
 let ready=false;
-function tryInit(){ if (buildSampler()){ buildGlow(); buildParticles(); ready=true; } }
-if (bgImg.complete) tryInit(); else bgImg.onload = tryInit;
-window.addEventListener('resize', resizeAll);
+function initBG(){if(buildSampler()){buildGlow();buildParticles();ready=true;}}
+if(bgImg.complete)initBG();else bgImg.onload=initBG;
+function loop(ts){const t=ts/1000,W=innerWidth,H=innerHeight;if(glowCanvas.width!==W){glowCanvas.width=W;glowCanvas.height=H;pCanvas.width=W;pCanvas.height=H;}if(ready){drawGlow(t);drawParticles(t);}requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+addEventListener('resize',()=>{if(buildSampler()){buildGlow();buildParticles();}});
 
-function mainLoop(ts) {
-  const time = ts/1000;
-  const W=window.innerWidth, H=window.innerHeight;
-  if (glowCanvas.width!==W){ glowCanvas.width=W; glowCanvas.height=H; pCanvas.width=W; pCanvas.height=H; }
-  if (ready) { drawGlow(time); drawParticles(time); }
-  requestAnimationFrame(mainLoop);
-}
-requestAnimationFrame(mainLoop);
-
-
-// ══ AE TRACKING MARKERS ══
-const mkCanvas=document.getElementById('markers-canvas');
-const mkCtx=mkCanvas.getContext('2d');
-function resizeMk(){ mkCanvas.width=window.innerWidth; mkCanvas.height=window.innerHeight; }
-resizeMk(); window.addEventListener('resize', resizeMk);
-const MK_CYAN='#00f5ff', MK_WHITE='#ffffffaa', MK_MAG='#ff2d95', MK_AMBER='#d4922e';
-class Marker{
-  constructor(){this.reset(true);}
-  reset(s){ this.x=Math.random()*mkCanvas.width; this.y=Math.random()*mkCanvas.height;
-    this.size=5+Math.random()*13; this.vx=(Math.random()-.5)*.22; this.vy=(Math.random()-.5)*.22;
-    const roll=Math.random(); this.color=roll>.7?MK_CYAN:roll>.5?MK_MAG:roll>.3?MK_WHITE:MK_AMBER;
-    this.alpha=.45+Math.random()*.45; this.maxLife=300+Math.random()*500;
-    this.life=s?Math.floor(Math.random()*this.maxLife):0; this.glitching=false; this.glitchTimer=0;
-    this.type=Math.random()>.55?'rect':'bracket'; }
-  drawBracket(cx,cy,s,a){const gap=s*.32;mkCtx.save();mkCtx.globalAlpha=a;mkCtx.strokeStyle=this.glitching?MK_CYAN:this.color;mkCtx.lineWidth=.9;
-    mkCtx.beginPath();mkCtx.moveTo(cx-s,cy-gap);mkCtx.lineTo(cx-s,cy-s);mkCtx.lineTo(cx-gap,cy-s);mkCtx.stroke();
-    mkCtx.beginPath();mkCtx.moveTo(cx+gap,cy-s);mkCtx.lineTo(cx+s,cy-s);mkCtx.lineTo(cx+s,cy-gap);mkCtx.stroke();
-    mkCtx.beginPath();mkCtx.moveTo(cx+s,cy+gap);mkCtx.lineTo(cx+s,cy+s);mkCtx.lineTo(cx+gap,cy+s);mkCtx.stroke();
-    mkCtx.beginPath();mkCtx.moveTo(cx-gap,cy+s);mkCtx.lineTo(cx-s,cy+s);mkCtx.lineTo(cx-s,cy+gap);mkCtx.stroke();
-    mkCtx.beginPath();mkCtx.arc(cx,cy,1.2,0,Math.PI*2);mkCtx.fillStyle=this.color;mkCtx.fill();mkCtx.restore();}
-  drawRect(cx,cy,s,a){const w=s*2.3,h=s*1.5;mkCtx.save();mkCtx.globalAlpha=a*.65;mkCtx.strokeStyle=this.glitching?MK_CYAN:this.color;mkCtx.lineWidth=.7;
-    mkCtx.strokeRect(cx-w/2,cy-h/2,w,h);mkCtx.beginPath();mkCtx.arc(cx,cy,1.2,0,Math.PI*2);mkCtx.fillStyle=this.color;mkCtx.fill();mkCtx.restore();}
-  draw(){const fi=Math.min(this.life/25,1),fo=Math.min((this.maxLife-this.life)/25,1),a=this.alpha*fi*fo;if(a<=0)return;
-    if(this.type==='rect')this.drawRect(this.x,this.y,this.size,a);else this.drawBracket(this.x,this.y,this.size,a);}
-  update(){this.x+=this.vx;this.y+=this.vy;this.life++;this.glitchTimer--;
-    if(this.glitchTimer<=0){this.glitching=Math.random()<.04;this.glitchTimer=8+Math.random()*40;
-      if(this.glitching){this.x+=(Math.random()-.5)*10;this.y+=(Math.random()-.5)*5;}}
-    if(this.life>this.maxLife)this.reset(false);}
-}
-const markers=Array.from({length:26},()=>new Marker());
-function mkLoop(){mkCtx.clearRect(0,0,mkCanvas.width,mkCanvas.height);markers.forEach(m=>{m.update();m.draw();});requestAnimationFrame(mkLoop);}
-mkLoop();
+// AE markers
+const mk=document.getElementById('markers-canvas'),mc=mk.getContext('2d');
+function rmk(){mk.width=innerWidth;mk.height=innerHeight;}rmk();addEventListener('resize',rmk);
+const C=['#00f5ff','#ff2d95','#ffffffaa','#d4922e'];
+class M{constructor(){this.r(1);}r(s){this.x=Math.random()*mk.width;this.y=Math.random()*mk.height;this.s=5+Math.random()*13;this.vx=(Math.random()-.5)*.22;this.vy=(Math.random()-.5)*.22;this.c=C[Math.random()*C.length|0];this.a=.4+Math.random()*.4;this.ml=300+Math.random()*500;this.l=s?Math.random()*this.ml|0:0;this.g=0;this.gt=0;this.t=Math.random()>.55?'rect':'br';}
+  db(x,y,s,a){const gp=s*.32;mc.save();mc.globalAlpha=a;mc.strokeStyle=this.g?'#00f5ff':this.c;mc.lineWidth=.9;
+    mc.beginPath();mc.moveTo(x-s,y-gp);mc.lineTo(x-s,y-s);mc.lineTo(x-gp,y-s);mc.stroke();mc.beginPath();mc.moveTo(x+gp,y-s);mc.lineTo(x+s,y-s);mc.lineTo(x+s,y-gp);mc.stroke();
+    mc.beginPath();mc.moveTo(x+s,y+gp);mc.lineTo(x+s,y+s);mc.lineTo(x+gp,y+s);mc.stroke();mc.beginPath();mc.moveTo(x-gp,y+s);mc.lineTo(x-s,y+s);mc.lineTo(x-s,y+gp);mc.stroke();
+    mc.beginPath();mc.arc(x,y,1.2,0,6.28);mc.fillStyle=this.c;mc.fill();mc.restore();}
+  dr(x,y,s,a){const w=s*2.3,h=s*1.5;mc.save();mc.globalAlpha=a*.65;mc.strokeStyle=this.g?'#00f5ff':this.c;mc.lineWidth=.7;mc.strokeRect(x-w/2,y-h/2,w,h);mc.beginPath();mc.arc(x,y,1.2,0,6.28);mc.fillStyle=this.c;mc.fill();mc.restore();}
+  d(){const fi=Math.min(this.l/25,1),fo=Math.min((this.ml-this.l)/25,1),a=this.a*fi*fo;if(a<=0)return;this.t==='rect'?this.dr(this.x,this.y,this.s,a):this.db(this.x,this.y,this.s,a);}
+  u(){this.x+=this.vx;this.y+=this.vy;this.l++;if(--this.gt<=0){this.g=Math.random()<.04;this.gt=8+Math.random()*40;if(this.g){this.x+=(Math.random()-.5)*10;this.y+=(Math.random()-.5)*5;}}if(this.l>this.ml)this.r(0);}}
+const ms=Array.from({length:24},()=>new M());
+(function ml(){mc.clearRect(0,0,mk.width,mk.height);ms.forEach(m=>{m.u();m.d();});requestAnimationFrame(ml);})();
 </script>
 </body>
 </html>

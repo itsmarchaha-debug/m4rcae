@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>m4rc.aep // extensions</title>
+<link rel="preload" href="bg.webp" as="image" type="image/webp">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--amber:#d4922e;--gold:#fff0a0;--cyan:#00f5ff;--magenta:#ff2d95;--card-bg:rgba(6,4,12,.8)}
+  html,body{min-height:100%;background:#05030a;font-family:'Rajdhani',sans-serif;color:var(--gold);overflow-x:hidden}
+  #bg-image{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  #glow-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:1;mix-blend-mode:screen;pointer-events:none}
+  #particle-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+  #markers-canvas{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:.45}
+  .scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.07) 3px,rgba(0,0,0,.07) 4px);pointer-events:none;z-index:4}
+  .vignette{position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.78) 100%);pointer-events:none;z-index:5}
+  .glitch-strip{position:fixed;left:0;right:0;height:2px;background:var(--cyan);opacity:0;pointer-events:none;z-index:6;animation:strip-flash 9s infinite}
+  @keyframes strip-flash{0%,88%,100%{opacity:0}89%{opacity:.7;top:28%}90%{opacity:0}92%{opacity:.4;top:63%}93%{opacity:0}}
+  .page{position:relative;z-index:10;max-width:620px;margin:0 auto;padding:40px 20px 90px}
+  .nav{display:flex;align-items:center;gap:8px;margin-bottom:30px;flex-wrap:wrap}
+  .nav a{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#fff;text-decoration:none;padding:8px 14px;border:1px solid rgba(0,245,255,.25);background:rgba(0,0,0,.5);transition:all .2s;text-shadow:0 0 8px rgba(0,245,255,.4)}
+  .nav a:hover{border-color:var(--cyan);background:rgba(0,245,255,.08)}
+  .nav a.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,245,255,.06)}
+  .phead{margin-bottom:26px}
+  .phead h1{font-size:clamp(28px,7vw,40px);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;text-shadow:0 0 22px rgba(0,245,255,.6),0 0 44px rgba(255,45,149,.35),0 2px 0 #000;position:relative;display:inline-block}
+  .phead h1::before,.phead h1::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;overflow:hidden;clip-path:inset(100% 0 0 0)}
+  .phead h1::before{color:var(--cyan);animation:glitch-a 6s infinite steps(1);mix-blend-mode:screen}
+  .phead h1::after{color:var(--magenta);animation:glitch-b 6s infinite steps(1);mix-blend-mode:screen}
+  @keyframes glitch-a{0%,86%,100%{clip-path:inset(100% 0 0 0);transform:translate(0)}87%{clip-path:inset(8% 0 62% 0);transform:translate(-3px,1px)}89%{clip-path:inset(38% 0 32% 0);transform:translate(3px,-1px)}91%{clip-path:inset(100% 0 0 0)}}
+  @keyframes glitch-b{0%,88%,100%{clip-path:inset(100% 0 0 0);transform:translate(0)}89%{clip-path:inset(53% 0 22% 0);transform:translate(4px,0)}92%{clip-path:inset(18% 0 68% 0);transform:translate(-4px,2px)}94%{clip-path:inset(100% 0 0 0)}}
+  .phead .sub{font-family:'Share Tech Mono',monospace;font-size:11px;color:#fff;letter-spacing:.14em;margin-top:10px;background:rgba(0,0,0,.5);display:inline-block;padding:3px 8px;text-shadow:0 0 10px rgba(0,245,255,.6)}
+  .folder-cta{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 24px;padding:14px;text-decoration:none;border:1px solid var(--magenta);background:rgba(255,45,149,.08);color:#fff;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;transition:all .2s;position:relative;overflow:hidden;text-shadow:0 0 8px rgba(255,45,149,.7)}
+  .folder-cta::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,45,149,.3),transparent);transition:left .45s}
+  .folder-cta:hover::before{left:100%}
+  .folder-cta:hover{background:rgba(255,45,149,.16);box-shadow:0 0 18px rgba(255,45,149,.3)}
+  .stats{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap}
+  .stat{flex:1;min-width:90px;border:1px solid rgba(0,245,255,.2);background:rgba(0,0,0,.45);padding:10px 12px}
+  .stat .num{font-family:'Share Tech Mono',monospace;font-size:22px;color:var(--cyan);text-shadow:0 0 10px rgba(0,245,255,.6);line-height:1}
+  .stat .lbl{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:.2em;color:#9a8a6a;text-transform:uppercase;margin-top:5px}
+  .search-wrap{position:relative;margin-bottom:24px}
+  .search-wrap input{width:100%;background:rgba(0,0,0,.55);border:1px solid rgba(0,245,255,.3);color:#fff;font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:.05em;padding:12px 14px 12px 38px;outline:none}
+  .search-wrap input::placeholder{color:#6a7a7a}
+  .search-wrap input:focus{border-color:var(--cyan);box-shadow:0 0 12px rgba(0,245,255,.2)}
+  .s-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--cyan);font-size:14px}
+  .vendors{display:flex;flex-direction:column;gap:10px}
+  .vendor{border:1px solid rgba(0,245,255,.22);background:var(--card-bg);backdrop-filter:blur(4px);overflow:hidden;transition:border-color .2s;content-visibility:auto;contain-intrinsic-size:auto 82px}
+  .vendor:hover,.vendor[open]{border-color:var(--cyan)}
+  .vendor-head{list-style:none;cursor:pointer;padding:15px 17px;position:relative;color:inherit;display:block}
+  .vendor-head::-webkit-details-marker{display:none}
+  .vendor-corner-bl{position:absolute;bottom:5px;left:5px;width:12px;height:12px;border-bottom:1px solid var(--cyan);border-left:1px solid var(--cyan);opacity:0;transition:opacity .2s}
+  .vendor:hover .vendor-corner-bl,.vendor[open] .vendor-corner-bl{opacity:.6}
+  .vendor-title-row{display:flex;align-items:center;gap:10px}
+  .vendor-name{font-size:19px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;text-shadow:0 0 10px rgba(0,245,255,.4),0 1px 2px #000;flex:1}
+  .vendor-tag{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:.15em;color:var(--magenta);border:1px solid rgba(255,45,149,.4);padding:2px 6px;text-shadow:0 0 6px rgba(255,45,149,.5)}
+  .vendor-desc{font-size:13px;color:#c8b890;margin-top:5px;letter-spacing:.02em}
+  .vendor-meta{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
+  .vendor-count{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--cyan);opacity:.75}
+  .vendor-chevron{font-family:'Share Tech Mono',monospace;color:var(--cyan);font-size:14px;transition:transform .25s}
+  .vendor[open] .vendor-chevron{transform:rotate(90deg)}
+  .item-list{list-style:none;padding:4px 17px 10px;margin:0;border-top:1px solid rgba(0,245,255,.12)}
+  .item-list li{font-family:'Share Tech Mono',monospace;font-size:12px;color:#e8d8b8;padding:7px 0 7px 18px;position:relative;letter-spacing:.02em;border-bottom:1px solid rgba(255,255,255,.04)}
+  .item-list li::before{content:'▪';position:absolute;left:0;color:var(--cyan);opacity:.7}
+  .item-list li:last-child{border-bottom:none}
+  .no-results{text-align:center;padding:40px 20px;font-family:'Share Tech Mono',monospace;font-size:12px;color:#6a7a7a;letter-spacing:.1em;display:none}
+  .footer{font-family:'Share Tech Mono',monospace;font-size:9px;color:rgba(0,245,255,.4);letter-spacing:.2em;text-align:center;line-height:2;margin-top:40px}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}#glow-canvas,#particle-canvas,#markers-canvas{display:none!important}}
+</style>
+</head>
+<body>
+<img id="bg-image" src="bg.webp" alt="" decoding="async" fetchpriority="high">
+<canvas id="glow-canvas"></canvas><canvas id="particle-canvas"></canvas><canvas id="markers-canvas"></canvas>
+<div class="scanlines"></div><div class="vignette"></div><div class="glitch-strip"></div>
+<main class="page">
+  <nav class="nav" aria-label="Main navigation">
+    <a href="index.html">← HOME</a><a href="plugins.html">PLUGINS (WIN)</a><a href="software.html">SOFTWARE (WIN)</a><a class="active" href="extensions.html">EXTENSIONS</a><a href="plugins-mac.html">PLUGINS (MAC)</a><a href="software-mac.html">SOFTWARE (MAC)</a>
+  </nav>
+  <header class="phead"><h1 data-text="EXTENSIONS">EXTENSIONS</h1><div class="sub">// after effects — scripts — workflow arsenal</div></header>
+  <a class="folder-cta" href="https://mega.nz/folder/0ZFCARZC#-zHMEG9RXBfS6lzal5Ct1g" rel="noopener" target="_blank"><span>OPEN EXTENSIONS FOLDER</span><span>↗</span></a>
+  <div class="stats"><div class="stat"><div class="num">4</div><div class="lbl">Sections</div></div><div class="stat"><div class="num">51</div><div class="lbl">Extensions</div></div><div class="stat"><div class="num">WIN+MAC</div><div class="lbl">Platform</div></div></div>
+  <div class="search-wrap"><span class="s-icon">⌕</span><input id="search" type="search" autocomplete="off" placeholder="SEARCH EXTENSIONS..." aria-label="Search extensions"></div>
+  <div class="vendors" id="vendors">
+    <details class="vendor" data-name="a-c" data-items="aescript imgpaster v1 aescripts dresser aescripts bleed v1.5 aescripts liquids 1.0 aeviewer pro v2.2 anubis1.0.4 battle axe overlord v1.27 beatedit bundle 2 win mac camera3d toolkit pro 2.2 chromefx 1.0.0 crt emulator cut'n'pack 1.0.0 cyclops 3.0.8">
+      <summary class="vendor-head"><div class="vendor-corner-bl"></div><div class="vendor-title-row"><span class="vendor-name">A — C</span><span class="vendor-tag">13 ITEMS</span></div><div class="vendor-desc">Extensions indexed from A through C.</div><div class="vendor-meta"><span class="vendor-count">EXPAND LIST</span><span class="vendor-chevron">▸</span></div></summary>
+      <ul class="item-list"><li>Aescript imgPaster V1</li><li>Aescripts - Dresser</li><li>Aescripts Bleed v1.5</li><li>Aescripts Liquids 1.0</li><li>AEviewer Pro V2.2</li><li>Anubis1.0.4</li><li>Battle Axe Overlord v1.27</li><li>BeatEdit Bundle 2 Win Mac</li><li>Camera3D Toolkit Pro 2.2</li><li>ChromeFX 1.0.0</li><li>CRT EMULATOR</li><li>Cut'n'Pack 1.0.0</li><li>Cyclops 3.0.8</li></ul>
+    </details>
+    <details class="vendor" data-name="d-f" data-items="datamosh 2 v2.6.1 win mac deekay tool v1.1.5 dupli-kit v1.1 dynamicshadow 2 expresscode 1.0.0 face 3d v1.1.0 winmac flow 1.5.2 flow v1.4.2 flowers bloom 1.1.2 fractal.noise.browser.1.0.1 fredpelle vhscam 1.1.0 fxconsole 1.0.6 installer mac 2026 fxconsole 1.0.6 installer win 2026">
+      <summary class="vendor-head"><div class="vendor-corner-bl"></div><div class="vendor-title-row"><span class="vendor-name">D — F</span><span class="vendor-tag">13 ITEMS</span></div><div class="vendor-desc">Extensions indexed from D through F.</div><div class="vendor-meta"><span class="vendor-count">EXPAND LIST</span><span class="vendor-chevron">▸</span></div></summary>
+      <ul class="item-list"><li>Datamosh 2 v2.6.1 Win Mac</li><li>Deekay Tool v1.1.5</li><li>Dupli-Kit v1.1</li><li>DynamicShadow 2</li><li>expressCode 1.0.0</li><li>Face 3D v1.1.0 WinMac</li><li>Flow 1.5.2</li><li>Flow v1.4.2</li><li>Flowers Bloom 1.1.2</li><li>Fractal.Noise.Browser.1.0.1</li><li>FredPelle VHScam 1.1.0</li><li>FXConsole 1.0.6 Installer Mac 2026</li><li>FXConsole 1.0.6 Installer Win 2026</li></ul>
+    </details>
+    <details class="vendor" data-name="g-m" data-items="geolayers 3 v1.14.1.1 jerryflow v2 karton v1.2.2 win mac kbar v3.1.1 lofi matrix matte tool v1.7 mobar 3.1.0 win mac motion bro win mac motion tools pro v2.0.15 moveanchorpoint 4 mxm v1.0.1 win mac">
+      <summary class="vendor-head"><div class="vendor-corner-bl"></div><div class="vendor-title-row"><span class="vendor-name">G — M</span><span class="vendor-tag">12 ITEMS</span></div><div class="vendor-desc">Extensions indexed from G through M.</div><div class="vendor-meta"><span class="vendor-count">EXPAND LIST</span><span class="vendor-chevron">▸</span></div></summary>
+      <ul class="item-list"><li>GEOlayers 3 v1.14.1.1</li><li>Jerryflow V2</li><li>Karton v1.2.2 Win Mac</li><li>kbar v3.1.1</li><li>LoFi</li><li>Matrix</li><li>Matte Tool v1.7</li><li>Mobar 3.1.0 Win Mac</li><li>Motion Bro Win Mac</li><li>Motion Tools Pro v2.0.15</li><li>MoveAnchorPoint 4</li><li>MXM v1.0.1 Win Mac</li></ul>
+    </details>
+    <details class="vendor" data-name="n-z" data-items="novelpro v1.0.4 primetools 0.0.1 pro io 2.17.6 win mac project.sorter.1.7.3.1 railcut v1.0.0 reach pro 3.0.00 rollback8 pro shake sauce soft body 2 textlab pro 1.0.0 uwu2x-9.0-mac uwu2x-9.0-win xoscillator pro 1.0.0">
+      <summary class="vendor-head"><div class="vendor-corner-bl"></div><div class="vendor-title-row"><span class="vendor-name">N — Z</span><span class="vendor-tag">13 ITEMS</span></div><div class="vendor-desc">Extensions indexed from N through Z.</div><div class="vendor-meta"><span class="vendor-count">EXPAND LIST</span><span class="vendor-chevron">▸</span></div></summary>
+      <ul class="item-list"><li>NovelPro v1.0.4</li><li>PrimeTools 0.0.1</li><li>Pro IO 2.17.6 Win Mac</li><li>Project.Sorter.1.7.3.1</li><li>Railcut v1.0.0</li><li>REACH Pro 3.0.00</li><li>Rollback8 Pro</li><li>Shake Sauce</li><li>Soft Body 2</li><li>Textlab Pro 1.0.0</li><li>uwu2x-9.0-mac</li><li>uwu2x-9.0-win</li><li>XOscillator Pro 1.0.0</li></ul>
+    </details>
+  </div>
+  <div class="no-results" id="noResults">NO EXTENSIONS FOUND //</div>
+  <footer class="footer"><div>m4rc.aep // NIGHT CITY EDIT LOUNGE</div><div>EXTENSIONS DATABASE :: ONLINE</div></footer>
+</main>
+<script>
+const search=document.getElementById('search');
+function filterExtensions(){const q=search.value.toLowerCase().trim();let shown=0;document.querySelectorAll('.vendor').forEach(card=>{const match=!q||(card.dataset.name+' '+card.dataset.items).includes(q);card.style.display=match?'':'none';card.open=Boolean(q&&match);if(match)shown++;});document.getElementById('noResults').style.display=shown?'none':'block'}
+search.addEventListener('input',filterExtensions);
+const bgImg=document.getElementById('bg-image'),motionQuery=matchMedia('(prefers-reduced-motion: reduce)');let reduceMotion=motionQuery.matches;
+const sampler=document.createElement('canvas'),sCtx=sampler.getContext('2d',{willReadFrequently:true});let imgData=null;
+const MAX_GLOW=innerWidth<700?80:140,MAX_PARTICLES=innerWidth<700?650:1200;
+function buildSampler(){if(!bgImg.complete||!bgImg.naturalWidth)return false;const W=innerWidth,H=innerHeight,scale=Math.min(.5,640/Math.max(W,H)),SW=Math.max(1,W*scale|0),SH=Math.max(1,H*scale|0);sampler.width=SW;sampler.height=SH;const sc=Math.max(SW/bgImg.naturalWidth,SH/bgImg.naturalHeight),w=bgImg.naturalWidth*sc,h=bgImg.naturalHeight*sc;sCtx.clearRect(0,0,SW,SH);sCtx.drawImage(bgImg,(SW-w)/2,(SH-h)/2,w,h);imgData=sCtx.getImageData(0,0,SW,SH);return true}
+const glowCanvas=document.getElementById('glow-canvas'),glCtx=glowCanvas.getContext('2d');let glowSpots=[];
+function buildGlow(){glowSpots=[];if(!imgData)return;const SW=imgData.width,SH=imgData.height,W=innerWidth,H=innerHeight;let seen=0;for(let sy=0;sy<SH;sy+=6)for(let sx=0;sx<SW;sx+=6){const i=(sy*SW+sx)*4,r=imgData.data[i],g=imgData.data[i+1],b=imgData.data[i+2],lum=(r+g+b)/765,mx=Math.max(r,g,b),mn=Math.min(r,g,b),sat=mx?(mx-mn)/mx:0;if(lum>.42&&(sat>.35||lum>.62)){const spot={x:sx/SW*W,y:sy/SH*H,r:8+Math.random()*22,col:[r,g,b],base:Math.min(1,(lum-.4)*1.3),phase:Math.random()*6.28,speed:.5+Math.random()*3.5},slot=seen<MAX_GLOW?seen:Math.random()*(seen+1)|0;if(slot<MAX_GLOW)glowSpots[slot]=spot;seen++}}}
+function drawGlow(t){glCtx.clearRect(0,0,glowCanvas.width,glowCanvas.height);for(const s of glowSpots){const f=.65+.35*Math.sin(t*s.speed+s.phase),a=s.base*f*.45,[r,g,b]=s.col,gr=glCtx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r);gr.addColorStop(0,`rgba(${r},${g},${b},${a})`);gr.addColorStop(1,`rgba(${r},${g},${b},0)`);glCtx.fillStyle=gr;glCtx.beginPath();glCtx.arc(s.x,s.y,s.r,0,6.28);glCtx.fill()}}
+const pCanvas=document.getElementById('particle-canvas'),pCtx=pCanvas.getContext('2d');let particles=[];
+function buildParticles(){particles=[];if(!imgData)return;const SW=imgData.width,SH=imgData.height,W=innerWidth,H=innerHeight;let seen=0;for(let sy=0;sy<SH;sy+=3)for(let sx=0;sx<SW;sx+=3){const i=(sy*SW+sx)*4,r=imgData.data[i],g=imgData.data[i+1],b=imgData.data[i+2],lum=(r+g+b)/765;if(lum>.16&&Math.random()<lum*.9){const p={x:sx/SW*W,y:sy/SH*H,col:[r,g,b],lum,size:.5+Math.random()*1.2,phase:Math.random()*6.28,speed:.2+Math.random()*.6},slot=seen<MAX_PARTICLES?seen:Math.random()*(seen+1)|0;if(slot<MAX_PARTICLES)particles[slot]=p;seen++}}}
+function drawParticles(t){pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);pCtx.globalCompositeOperation='screen';for(const p of particles){const x=p.x+Math.sin(t*p.speed+p.phase)*1.6,y=p.y+Math.cos(t*p.speed+p.phase)*1.1,[r,g,b]=p.col,a=.25+p.lum*.55;pCtx.fillStyle=`rgba(${r},${g},${b},${a})`;pCtx.beginPath();pCtx.arc(x,y,p.size,0,6.28);pCtx.fill()}pCtx.globalCompositeOperation='source-over'}
+const mk=document.getElementById('markers-canvas'),mc=mk.getContext('2d'),markers=Array.from({length:20},()=>({x:Math.random(),y:Math.random(),s:5+Math.random()*10,c:['#00f5ff','#ff2d95','#fff0a0'][Math.random()*3|0]}));
+function sizeCanvases(){const W=innerWidth,H=innerHeight;glowCanvas.width=pCanvas.width=mk.width=W;glowCanvas.height=pCanvas.height=mk.height=H}
+function drawMarkers(){mc.clearRect(0,0,mk.width,mk.height);for(const m of markers){const x=m.x*mk.width,y=m.y*mk.height;mc.strokeStyle=m.c;mc.globalAlpha=.4;mc.strokeRect(x-m.s,y-m.s,m.s*2,m.s*2)}mc.globalAlpha=1}
+let ready=false,lastFrame=0;function initBG(){if(!reduceMotion&&buildSampler()){buildGlow();buildParticles();ready=true}}
+function loop(ts){requestAnimationFrame(loop);if(reduceMotion||document.hidden||ts-lastFrame<33)return;lastFrame=ts;if(glowCanvas.width!==innerWidth||glowCanvas.height!==innerHeight)sizeCanvases();if(ready){drawGlow(ts/1000);drawParticles(ts/1000);drawMarkers()}}
+sizeCanvases();if(bgImg.complete)initBG();else bgImg.onload=initBG;requestAnimationFrame(loop);
+let resizeTimer;addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{sizeCanvases();initBG()},160)},{passive:true});motionQuery.addEventListener?.('change',e=>{reduceMotion=e.matches;if(!reduceMotion)initBG()});
+</script>
+</body>
+</html>

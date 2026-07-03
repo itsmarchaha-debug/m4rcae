@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>m4rc.aep // software</title>
+<title>m4rc.aep // software (mac)</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -86,6 +86,7 @@
   .vendor-corner-bl { position:absolute; bottom:5px; left:5px; width:12px; height:12px; border-bottom:1px solid var(--cyan); border-left:1px solid var(--cyan); opacity:0; transition:opacity .2s; }
   .vendor.open .vendor-corner-bl, .vendor:hover .vendor-corner-bl { opacity:.6; }
   .vendor-title-row { display:flex; align-items:center; gap:10px; }
+  .m1-warn { font-family:'Share Tech Mono',monospace; font-size:9px; color:#ffb020; border:1px solid #ffb02055; background:rgba(255,176,32,.06); padding:1px 6px; margin-left:8px; letter-spacing:.08em; white-space:nowrap; border-radius:3px; }
   .sw-badge { flex-shrink:0; width:38px; height:38px; display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; font-size:13px; font-weight:bold; border:1px solid; border-radius:6px; letter-spacing:.02em; box-shadow:0 0 10px rgba(0,0,0,.6); }
   .vendor-name { font-size:19px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:#fff; text-shadow:0 0 10px rgba(0,245,255,.4),0 1px 2px rgba(0,0,0,1); flex:1; }
   .vendor-tag { font-family:'Share Tech Mono',monospace; font-size:8px; letter-spacing:.12em; color:var(--magenta); border:1px solid rgba(255,45,149,.4); padding:2px 6px; text-shadow:0 0 6px rgba(255,45,149,.5); white-space:nowrap; }
@@ -127,14 +128,14 @@
   <div class="nav">
     <a href="index.html">&#8592; HOME</a>
     <a href="plugins.html">PLUGINS (WIN)</a>
-    <a href="software.html" class="active">SOFTWARE (WIN)</a>
+    <a href="software.html">SOFTWARE (WIN)</a>
     <a href="plugins-mac.html">PLUGINS (MAC)</a>
-    <a href="software-mac.html">SOFTWARE (MAC)</a>
+    <a href="software-mac.html" class="active">SOFTWARE (MAC)</a>
   </div>
 
   <div class="phead">
-    <h1 data-text="SOFTWARE">SOFTWARE</h1>
-    <div class="sub">// the full stack &#8212; windows</div>
+    <h1 data-text="SOFTWARE (MAC)">SOFTWARE (MAC)</h1>
+    <div class="sub">// the mac stack &#8212; macos</div>
   </div>
 
   <div class="notice">
@@ -159,9 +160,9 @@
   </details>
 
   <div class="stats">
-    <div class="stat"><div class="num">13</div><div class="lbl">Apps</div></div>
-    <div class="stat"><div class="num">24</div><div class="lbl">Builds</div></div>
-    <div class="stat"><div class="num">WIN</div><div class="lbl">Platform</div></div>
+    <div class="stat"><div class="num">8</div><div class="lbl">Apps</div></div>
+    <div class="stat"><div class="num">29</div><div class="lbl">Builds</div></div>
+    <div class="stat"><div class="num">MAC</div><div class="lbl">Platform</div></div>
   </div>
 
   <div class="search-wrap">
@@ -171,301 +172,192 @@
 
   <div class="vendors" id="vendors">
 
-    <div class="vendor" data-name="after effects" data-items="after effects 2020 – 2026 (settings)">
+    <div class="vendor" data-name="after effects mac" data-items="after effects 2020 2021 2022 2023.5 2024 2025.6 26.0 macos media encoder">
       <button class="vendor-head" onclick="toggleVendor(this)">
         <div class="vendor-corner-bl"></div>
         <div class="vendor-title-row">
           <span class="sw-badge" style="background:#00051f;color:#9a9dff;border-color:#9a9dff55;">Ae</span>
           <span class="vendor-name">After Effects</span>
-          <span class="vendor-tag">2020–2026</span>
+          <span class="vendor-tag">2020&#8211;2026</span>
         </div>
-        <div class="vendor-desc">Motion graphics & compositing.</div>
+        <div class="vendor-desc">Motion graphics &amp; compositing &#8212; macOS builds.</div>
         <div class="vendor-meta">
-          <span class="vendor-count">1 ITEM</span>
-          <span class="vendor-chevron">▸</span>
+          <span class="vendor-count">7 ITEMS</span>
+          <span class="vendor-chevron">&#9656;</span>
         </div>
       </button>
       <div class="vendor-body">
         <ul class="item-list">
-          <li>After Effects 2020 – 2026 (settings)</li>
+          <li>After Effects + Media Encoder 2020 MacOS</li>
+          <li>After Effects + Media Encoder 2021 MacOS</li>
+          <li>After Effects 2022 MacOS</li>
+          <li>After Effects 2023.5 MacOS</li>
+          <li>After Effects 2024 Mac</li>
+          <li data-warn="1">After Effects 2025.6 Mac</li>
+          <li data-warn="1">After Effects 26.0 Mac</li>
         </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/lIkUkYLa#PvDCe2_IVH63x5e81nCAuw" target="_blank" rel="noopener">
+        <a class="dl-btn" href="https://mega.nz/folder/ldMU1Sya#LpEBBQ3Px_VRsGSLl7wS4Q" target="_blank" rel="noopener">
           <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
+          <span class="dl-arrow">&#8595;</span>
         </a>
       </div>
     </div>
-    <div class="vendor" data-name="davinci resolve" data-items="davinci resolve (windows)">
-      <button class="vendor-head" onclick="toggleVendor(this)">
-        <div class="vendor-corner-bl"></div>
-        <div class="vendor-title-row">
-          <span class="sw-badge" style="background:#0a0a0a;color:#ff6a3d;border-color:#ff6a3d55;">◉</span>
-          <span class="vendor-name">DaVinci Resolve</span>
-          <span class="vendor-tag">WIN</span>
-        </div>
-        <div class="vendor-desc">Blackmagic color, edit & finishing suite.</div>
-        <div class="vendor-meta">
-          <span class="vendor-count">1 ITEM</span>
-          <span class="vendor-chevron">▸</span>
-        </div>
-      </button>
-      <div class="vendor-body">
-        <ul class="item-list">
-          <li>DaVinci Resolve (Windows)</li>
-        </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/EFUG0CxT#tdL5W7g8mOnaIENU7gmWlQ" target="_blank" rel="noopener">
-          <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
-        </a>
-      </div>
-    </div>
-    <div class="vendor" data-name="cinema 4d" data-items="cinema 4d 2026.0">
-      <button class="vendor-head" onclick="toggleVendor(this)">
-        <div class="vendor-corner-bl"></div>
-        <div class="vendor-title-row">
-          <span class="sw-badge" style="background:#0a0a12;color:#5a9dff;border-color:#5a9dff55;">C4D</span>
-          <span class="vendor-name">Cinema 4D</span>
-          <span class="vendor-tag">2026.0</span>
-        </div>
-        <div class="vendor-desc">3D modeling, animation & rendering.</div>
-        <div class="vendor-meta">
-          <span class="vendor-count">1 ITEM</span>
-          <span class="vendor-chevron">▸</span>
-        </div>
-      </button>
-      <div class="vendor-body">
-        <ul class="item-list">
-          <li>Cinema 4D 2026.0</li>
-        </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/sclBnaBR#hRJh6YmBXDDk4siAfZgC_Q" target="_blank" rel="noopener">
-          <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
-        </a>
-      </div>
-    </div>
-    <div class="vendor" data-name="fl studio" data-items="fl studio v25.1.6 xfer records serum v2.0.20">
-      <button class="vendor-head" onclick="toggleVendor(this)">
-        <div class="vendor-corner-bl"></div>
-        <div class="vendor-title-row">
-          <span class="sw-badge" style="background:#1a0a00;color:#ff9a3d;border-color:#ff9a3d55;">FL</span>
-          <span class="vendor-name">FL Studio</span>
-          <span class="vendor-tag">v25.1.6</span>
-        </div>
-        <div class="vendor-desc">DAW for music production + Serum synth.</div>
-        <div class="vendor-meta">
-          <span class="vendor-count">2 ITEMS</span>
-          <span class="vendor-chevron">▸</span>
-        </div>
-      </button>
-      <div class="vendor-body">
-        <ul class="item-list">
-          <li>FL Studio v25.1.6</li>
-          <li>Xfer Records Serum v2.0.20</li>
-        </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/wYVn3TpI#aFKMBZDJZGI8S1cBaXdisA" target="_blank" rel="noopener">
-          <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
-        </a>
-      </div>
-    </div>
-    <div class="vendor" data-name="magix vegas pro" data-items="vegas pro deep learning model v23.1.0.1-r2r vegas pro v23.0.0.278 incl. emulator-r2r">
-      <button class="vendor-head" onclick="toggleVendor(this)">
-        <div class="vendor-corner-bl"></div>
-        <div class="vendor-title-row">
-          <span class="sw-badge" style="background:#12001a;color:#c46aff;border-color:#c46aff55;">V</span>
-          <span class="vendor-name">MAGIX Vegas Pro</span>
-          <span class="vendor-tag">v23</span>
-        </div>
-        <div class="vendor-desc">Video editing & rendering.</div>
-        <div class="vendor-meta">
-          <span class="vendor-count">2 ITEMS</span>
-          <span class="vendor-chevron">▸</span>
-        </div>
-      </button>
-      <div class="vendor-body">
-        <ul class="item-list">
-          <li>VEGAS Pro Deep Learning Model v23.1.0.1-R2R</li>
-          <li>VEGAS Pro v23.0.0.278 Incl. Emulator-R2R</li>
-        </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/8YkQATSb#Mbm0d_Qhjz6S9Ux7jwaw6A" target="_blank" rel="noopener">
-          <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
-        </a>
-      </div>
-    </div>
-    <div class="vendor" data-name="marvelous designer" data-items="marvelous designer v2025.2.81">
-      <button class="vendor-head" onclick="toggleVendor(this)">
-        <div class="vendor-corner-bl"></div>
-        <div class="vendor-title-row">
-          <span class="sw-badge" style="background:#001a14;color:#3dffb0;border-color:#3dffb055;">MD</span>
-          <span class="vendor-name">Marvelous Designer</span>
-          <span class="vendor-tag">v2025.2.81</span>
-        </div>
-        <div class="vendor-desc">3D garment & cloth simulation.</div>
-        <div class="vendor-meta">
-          <span class="vendor-count">1 ITEM</span>
-          <span class="vendor-chevron">▸</span>
-        </div>
-      </button>
-      <div class="vendor-body">
-        <ul class="item-list">
-          <li>Marvelous Designer v2025.2.81</li>
-        </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/Ydk1yLaD#_iaziKw03CrYyn0_v2iJvw" target="_blank" rel="noopener">
-          <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
-        </a>
-      </div>
-    </div>
-    <div class="vendor" data-name="media encoder" data-items="media encoder 2020 – 2026">
+    <div class="vendor" data-name="media encoder mac" data-items="media encoder 2022 2023.5 2024.3 2025.6 26.0 macos">
       <button class="vendor-head" onclick="toggleVendor(this)">
         <div class="vendor-corner-bl"></div>
         <div class="vendor-title-row">
           <span class="sw-badge" style="background:#00051f;color:#9a6aff;border-color:#9a6aff55;">Me</span>
           <span class="vendor-name">Media Encoder</span>
-          <span class="vendor-tag">2020–2026</span>
+          <span class="vendor-tag">2022&#8211;2026</span>
         </div>
-        <div class="vendor-desc">Batch encoding & render queue.</div>
+        <div class="vendor-desc">Batch encoding &amp; rendering &#8212; macOS builds.</div>
         <div class="vendor-meta">
-          <span class="vendor-count">1 ITEM</span>
-          <span class="vendor-chevron">▸</span>
+          <span class="vendor-count">5 ITEMS</span>
+          <span class="vendor-chevron">&#9656;</span>
         </div>
       </button>
       <div class="vendor-body">
         <ul class="item-list">
-          <li>Media Encoder 2020 – 2026</li>
+          <li>Media Encoder 2022 MacOS</li>
+          <li>Media Encoder 2023.5 Mac</li>
+          <li>Media Encoder 2024.3 Mac</li>
+          <li data-warn="1">Media Encoder 2025.6 Mac</li>
+          <li data-warn="1">Media Encoder 26.0 Mac</li>
         </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/AJsnFLxR#d8KZlXJSevAOb1xYK4ttqQ" target="_blank" rel="noopener">
+        <a class="dl-btn" href="https://mega.nz/folder/MIdxUApS#wOIgSg_qSeQ7lcNxc--AJA" target="_blank" rel="noopener">
           <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
+          <span class="dl-arrow">&#8595;</span>
         </a>
       </div>
     </div>
-    <div class="vendor" data-name="premiere pro" data-items="premiere pro 2024 – 2026">
+    <div class="vendor" data-name="premiere pro mac" data-items="premiere pro 2024 2025.5 25.0 speech 26.0 macos">
       <button class="vendor-head" onclick="toggleVendor(this)">
         <div class="vendor-corner-bl"></div>
         <div class="vendor-title-row">
           <span class="sw-badge" style="background:#00081a;color:#8a7dff;border-color:#8a7dff55;">Pr</span>
           <span class="vendor-name">Premiere Pro</span>
-          <span class="vendor-tag">2024–2026</span>
+          <span class="vendor-tag">2024&#8211;2026</span>
         </div>
-        <div class="vendor-desc">Timeline video editing.</div>
+        <div class="vendor-desc">Video editing &#8212; macOS builds.</div>
         <div class="vendor-meta">
-          <span class="vendor-count">1 ITEM</span>
-          <span class="vendor-chevron">▸</span>
+          <span class="vendor-count">4 ITEMS</span>
+          <span class="vendor-chevron">&#9656;</span>
         </div>
       </button>
       <div class="vendor-body">
         <ul class="item-list">
-          <li>Premiere Pro 2024 – 2026</li>
+          <li>Premiere Pro 2024 MacOS</li>
+          <li data-warn="1">Adobe Premiere Pro v25.0 Speech Mac</li>
+          <li data-warn="1">Premiere Pro 2025.5 MacOS</li>
+          <li data-warn="1">Premiere Pro 26.0 Mac</li>
         </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/sM0QiRiY#WW6ljx6G29SVjOWBYK6FLw" target="_blank" rel="noopener">
+        <a class="dl-btn" href="https://mega.nz/folder/MN8gxI7S#Srhtig6BwQZuAM6LY292Xg" target="_blank" rel="noopener">
           <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
+          <span class="dl-arrow">&#8595;</span>
         </a>
       </div>
     </div>
-    <div class="vendor" data-name="photoshop" data-items="photoshop 2024 – 2026">
+    <div class="vendor" data-name="photoshop mac" data-items="photoshop 2024 2025 v26.11 2026 27.3 macos">
       <button class="vendor-head" onclick="toggleVendor(this)">
         <div class="vendor-corner-bl"></div>
         <div class="vendor-title-row">
           <span class="sw-badge" style="background:#001833;color:#3d9aff;border-color:#3d9aff55;">Ps</span>
           <span class="vendor-name">Photoshop</span>
-          <span class="vendor-tag">2024–2026</span>
+          <span class="vendor-tag">2024&#8211;2026</span>
         </div>
-        <div class="vendor-desc">Image editing & compositing.</div>
+        <div class="vendor-desc">Image editing &amp; design &#8212; macOS builds.</div>
         <div class="vendor-meta">
-          <span class="vendor-count">1 ITEM</span>
-          <span class="vendor-chevron">▸</span>
+          <span class="vendor-count">3 ITEMS</span>
+          <span class="vendor-chevron">&#9656;</span>
         </div>
       </button>
       <div class="vendor-body">
         <ul class="item-list">
-          <li>Photoshop 2024 – 2026</li>
+          <li>Photoshop 2024 MacOS</li>
+          <li data-warn="1">Photoshop 2025 v26.11 MacOS</li>
+          <li data-warn="1">Photoshop 2026 (27.3) Mac</li>
         </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/sQ93zbbb#q7inGON3n-z4wfzU25fWmQ" target="_blank" rel="noopener">
+        <a class="dl-btn" href="https://mega.nz/folder/oM0ATJTb#02zQLmZGZ3jZ9XI-IfIE3g" target="_blank" rel="noopener">
           <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
+          <span class="dl-arrow">&#8595;</span>
         </a>
       </div>
     </div>
-    <div class="vendor" data-name="substance 3d" data-items="substance designer v15.1.2 substance modeler v1.22.6 substance painter v11.1.2">
+    <div class="vendor" data-name="davinci resolve mac" data-items="davinci resolve macos">
       <button class="vendor-head" onclick="toggleVendor(this)">
         <div class="vendor-corner-bl"></div>
         <div class="vendor-title-row">
-          <span class="sw-badge" style="background:#1a0a00;color:#ff8a3d;border-color:#ff8a3d55;">Sb</span>
-          <span class="vendor-name">Substance 3D</span>
-          <span class="vendor-tag">SUITE</span>
+          <span class="sw-badge" style="background:#0a0a0a;color:#ff6a3d;border-color:#ff6a3d55;">&#9673;</span>
+          <span class="vendor-name">DaVinci Resolve</span>
+          <span class="vendor-tag">MAC</span>
         </div>
-        <div class="vendor-desc">Texturing, material & 3D modeling suite.</div>
+        <div class="vendor-desc">Blackmagic color, edit &amp; finishing suite.</div>
         <div class="vendor-meta">
-          <span class="vendor-count">3 ITEMS</span>
-          <span class="vendor-chevron">▸</span>
+          <span class="vendor-count">1 ITEM</span>
+          <span class="vendor-chevron">&#9656;</span>
         </div>
       </button>
       <div class="vendor-body">
         <ul class="item-list">
-          <li>Substance Designer v15.1.2</li>
-          <li>Substance Modeler v1.22.6</li>
-          <li>Substance Painter v11.1.2</li>
+          <li>DaVinci Resolve Mac</li>
         </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/hA8mEJBL#K49YBuNADMf9Et39GYPjBg" target="_blank" rel="noopener">
+        <a class="dl-btn" href="https://mega.nz/folder/pA8yHaTJ#jcRpaUsncwlBT5CFIxnJIg" target="_blank" rel="noopener">
           <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
+          <span class="dl-arrow">&#8595;</span>
         </a>
       </div>
     </div>
-    <div class="vendor" data-name="topaz labs" data-items="topaz video ai topaz photo ai topaz gigapixel">
+    <div class="vendor" data-name="topaz labs mac" data-items="topaz gigapixel patch photo patch video patch macos">
       <button class="vendor-head" onclick="toggleVendor(this)">
         <div class="vendor-corner-bl"></div>
         <div class="vendor-title-row">
           <span class="sw-badge" style="background:#001a1a;color:#3dfff0;border-color:#3dfff055;">TZ</span>
           <span class="vendor-name">Topaz Labs</span>
-          <span class="vendor-tag">BUNDLE</span>
+          <span class="vendor-tag">MAC</span>
         </div>
-        <div class="vendor-desc">AI upscaling & enhancement tools.</div>
+        <div class="vendor-desc">AI upscaling &amp; enhancement patches.</div>
         <div class="vendor-meta">
           <span class="vendor-count">3 ITEMS</span>
-          <span class="vendor-chevron">▸</span>
+          <span class="vendor-chevron">&#9656;</span>
         </div>
       </button>
       <div class="vendor-body">
         <ul class="item-list">
-          <li>Topaz Video AI</li>
-          <li>Topaz Photo AI</li>
-          <li>Topaz Gigapixel</li>
+          <li>Topaz Gigapixel Patch Mac</li>
+          <li>Topaz Photo Patch Mac</li>
+          <li>Topaz Video Patch Mac</li>
         </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/wFU1RAQJ#dTyOww7neivOapNyc4wWYA" target="_blank" rel="noopener">
+        <a class="dl-btn" href="https://mega.nz/folder/0IE1kYRJ#dMQQah8jjY68cb0TX4rL0Q" target="_blank" rel="noopener">
           <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
+          <span class="dl-arrow">&#8595;</span>
         </a>
       </div>
     </div>
-    <div class="vendor" data-name="touchdesigner" data-items="touchdesigner pro 2023.12230">
+    <div class="vendor" data-name="touchdesigner mac" data-items="touchdesigner 2023.12230 arm macos">
       <button class="vendor-head" onclick="toggleVendor(this)">
         <div class="vendor-corner-bl"></div>
         <div class="vendor-title-row">
           <span class="sw-badge" style="background:#0a0a0a;color:#c0c0c0;border-color:#c0c0c055;">TD</span>
           <span class="vendor-name">TouchDesigner</span>
-          <span class="vendor-tag">Pro 2023</span>
+          <span class="vendor-tag">2023</span>
         </div>
-        <div class="vendor-desc">Realtime interactive & generative visuals.</div>
+        <div class="vendor-desc">Node-based visual programming.</div>
         <div class="vendor-meta">
           <span class="vendor-count">1 ITEM</span>
-          <span class="vendor-chevron">▸</span>
+          <span class="vendor-chevron">&#9656;</span>
         </div>
       </button>
       <div class="vendor-body">
         <ul class="item-list">
-          <li>TouchDesigner Pro 2023.12230</li>
+          <li>TouchDesigner 2023.12230 (ARM) MacOS</li>
         </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/QBkGySKS#ZEG3ZmDoz0Zlh5WeU7ZmHg" target="_blank" rel="noopener">
+        <a class="dl-btn" href="https://mega.nz/folder/xA1XHIBJ#PmuD1D_e6ca8VH_Boh4waw" target="_blank" rel="noopener">
           <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
+          <span class="dl-arrow">&#8595;</span>
         </a>
       </div>
     </div>
-    <div class="vendor" data-name="adobe / unsorted" data-items="adobe animate 2024.0.12 adobe audition 2025.3 (win) illustrator 2026 (win) incopy 2026 indesign 2026 (win) lightroom classic 2026 v15.1.1 (win)">
+    <div class="vendor" data-name="adobe unsorted mac" data-items="adobe animate 2024 lightroom classic v15.1.1 c4d 2024.2 illustrator 30.1 indesign 2026 v21.2 macos">
       <button class="vendor-head" onclick="toggleVendor(this)">
         <div class="vendor-corner-bl"></div>
         <div class="vendor-title-row">
@@ -473,31 +365,30 @@
           <span class="vendor-name">Adobe / Unsorted</span>
           <span class="vendor-tag">MIXED</span>
         </div>
-        <div class="vendor-desc">The rest of the Adobe ecosystem.</div>
+        <div class="vendor-desc">The rest of the Adobe (+ C4D) ecosystem &#8212; macOS.</div>
         <div class="vendor-meta">
-          <span class="vendor-count">6 ITEMS</span>
-          <span class="vendor-chevron">▸</span>
+          <span class="vendor-count">5 ITEMS</span>
+          <span class="vendor-chevron">&#9656;</span>
         </div>
       </button>
       <div class="vendor-body">
         <ul class="item-list">
-          <li>Adobe Animate 2024.0.12</li>
-          <li>Adobe Audition 2025.3 (Win)</li>
-          <li>Illustrator 2026 (Win)</li>
-          <li>InCopy 2026</li>
-          <li>InDesign 2026 (Win)</li>
-          <li>Lightroom Classic 2026 v15.1.1 (Win)</li>
+          <li>Adobe Animate 2024 MacOS</li>
+          <li>Adobe Lightroom Classic v15.1.1 Mac</li>
+          <li>C4D 2024.2 Mac</li>
+          <li>Illustrator 30.1 Mac</li>
+          <li>InDesign 2026 (v21.2) Mac</li>
         </ul>
-        <a class="dl-btn" href="https://mega.nz/folder/8Q9m2Ioa#sbuXGWP5lPJImVs__DK37A" target="_blank" rel="noopener">
+        <a class="dl-btn" href="https://mega.nz/folder/cc8DxADB#yXBLjD2_Ro1cdyVN-CuO6Q" target="_blank" rel="noopener">
           <span>DOWNLOAD FOLDER</span>
-          <span class="dl-arrow">↓</span>
+          <span class="dl-arrow">&#8595;</span>
         </a>
       </div>
     </div>
   </div>
   <div class="no-results" id="noResults">// NO MATCHES FOUND</div>
 
-  <div class="footer"><div>SYSTEM :: m4rc.aep // SOFTWARE STACK // NIGHT CITY</div></div>
+  <div class="footer"><div>SYSTEM :: m4rc.aep // MAC SOFTWARE STACK // NIGHT CITY</div></div>
 </div>
 
 <script>
@@ -509,8 +400,9 @@ function addYouTubeLinks(){
     const vendorName = vendor.querySelector('.vendor-name')?.textContent.trim() || '';
     vendor.querySelectorAll('.item-list li').forEach(li=>{
       const itemText = li.textContent.trim();
+      const needsM1 = li.dataset.warn === '1';
       const query = encodeURIComponent(`${vendorName} ${itemText} tutorial`);
-      li.innerHTML = `<span class="item-text">${itemText}</span>
+      li.innerHTML = `<span class="item-text">${itemText}${needsM1 ? ' <span class="m1-warn">&#9888; NEEDS M1+</span>' : ''}</span>
         <a class="yt-link" href="https://www.youtube.com/results?search_query=${query}" target="_blank" rel="noopener" title="Search YouTube tutorials" onclick="event.stopPropagation()">
           <svg viewBox="0 0 24 24"><path d="M23.5 6.2s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.4-1C16.9 2.6 12 2.6 12 2.6h0s-4.9 0-8.2.3c-.5 0-1.5.1-2.4 1C.7 4.6.5 6.2.5 6.2S.3 8 .3 9.9v1.9c0 1.9.2 3.8.2 3.8s.2 1.6.9 2.3c.9.9 2 .9 2.6 1 1.9.2 8 .3 8 .3s4.9 0 8.2-.3c.5 0 1.5-.1 2.4-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8V9.9c0-1.9-.2-3.7-.2-3.7zM9.7 14.7V7.8l6.5 3.5-6.5 3.4z"/></svg>
         </a>`;

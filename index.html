@@ -114,7 +114,12 @@
   .card-sub{ font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--cyan); margin-top:4px;letter-spacing:.1em;text-shadow:0 1px 4px rgba(0,0,0,1); }
   .card-arrow{ margin-left:auto;font-size:16px;color:var(--cyan); opacity:0;transform:translateX(-6px); transition:opacity .2s,transform .2s;flex-shrink:0; text-shadow:0 0 8px var(--cyan); }
   .link-card:hover .card-arrow{opacity:1;transform:translateX(0)}
-  .lounge-banner{width:100%;margin:-8px 0 30px;padding:12px 18px;border-top:1px solid rgba(255,45,149,.3);border-bottom:1px solid rgba(0,245,255,.3);background:rgba(0,0,0,.38)}
+  .lounge-banner{width:100%;margin:8px 0 30px;padding:18px 20px;text-align:center;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(255,45,149,.18),rgba(0,245,255,.12) 52%,rgba(212,146,46,.16));border:1px solid rgba(255,240,160,.28);box-shadow:0 0 26px rgba(255,45,149,.20),inset 0 0 18px rgba(0,245,255,.10)}
+  .lounge-banner::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent);transform:translateX(-100%);animation:lounge-shine 4.5s ease-in-out infinite;pointer-events:none}
+  .lounge-banner .card-title{color:#fff0a0;text-shadow:0 0 14px rgba(255,45,149,.85),0 0 28px rgba(0,245,255,.45),0 1px 4px rgba(0,0,0,1)}
+  .lounge-banner .card-sub{color:#ff9ed1;text-shadow:0 0 10px rgba(255,45,149,.75),0 1px 4px rgba(0,0,0,1)}
+  .lounge-copy{position:relative;z-index:1}
+  @keyframes lounge-shine{0%,45%{transform:translateX(-100%)}70%,100%{transform:translateX(100%)}}
 
   .pulse-bar { width:100%;height:1px; background:linear-gradient(90deg,transparent,var(--cyan),var(--magenta),var(--amber),transparent); margin-bottom:36px;position:relative;overflow:hidden; }
   .pulse-bar::after{ content:'';position:absolute;top:0;left:-50%;width:50%;height:100%; background:rgba(255,255,255,.7);animation:bar-sweep 3.5s ease-in-out infinite; }
@@ -209,20 +214,17 @@
         <div class="card-icon" style="color:#ff2d95;">&#9672;</div>
         <div>
           <div class="card-title">AE Extensions &amp; Scripts</div>
-          <div class="card-sub">51 tools / win + mac / after effects</div>
+          <div class="card-sub">40 scripts + extensions / win + mac</div>
         </div>
         <div class="card-arrow">&#8594;</div>
       </div>
     </a>
   </div>
   <div class="lounge-banner">
-      <div class="card-header">
-        <div class="card-icon" style="color:#fff0a0;">&#9638;</div>
-        <div>
-          <div class="card-title">Night City Edit Lounge</div>
-          <div class="card-sub">after hours / creative hub / night city</div>
-        </div>
-      </div>
+    <div class="lounge-copy">
+      <div class="card-title">Night City Edit Lounge</div>
+      <div class="card-sub">after hours / creative hub / night city</div>
+    </div>
   </div>
 
   <div class="pulse-bar"></div>

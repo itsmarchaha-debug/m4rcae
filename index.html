@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>m4rc.aep</title>
+<meta name="theme-color" content="#05030a">
+<meta name="description" content="V3LTRA.xyz — a neon archive for After Effects plugins, scripts, extensions, presets, and creative software.">
+<title>V3LTRA.xyz</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -61,6 +63,7 @@
     color: #fff; text-shadow: 0 0 8px var(--cyan);
     box-shadow: inset 0 0 12px rgba(0,245,255,0.25);
   }
+  .avatar-inner span{color:var(--magenta);text-shadow:0 0 10px var(--magenta)}
 
   .name {
     font-size: clamp(34px,9vw,48px); font-weight: 700; letter-spacing: .1em;
@@ -68,7 +71,8 @@
     text-shadow: 0 0 22px rgba(0,245,255,.6), 0 0 44px rgba(255,45,149,.4), 0 2px 0 rgba(0,0,0,1);
     position: relative; display: inline-block;
   }
-  .name .ext { color: var(--cyan); font-weight: 300; text-shadow: 0 0 16px rgba(0,245,255,1), 0 2px 0 rgba(0,0,0,1); }
+  .name .core{background:linear-gradient(105deg,#fff 0%,#d8fbff 42%,#ffb3d9 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(0,245,255,.28))}
+  .name .ext{color:var(--cyan);font-weight:300;letter-spacing:.04em;text-shadow:0 0 16px rgba(0,245,255,1),0 0 30px rgba(255,45,149,.35),0 2px 0 rgba(0,0,0,1)}
   .name::before,.name::after { content: attr(data-text); position: absolute; top:0; left:0; width:100%; overflow:hidden; clip-path:inset(100% 0 0 0); }
   .name::before { color:var(--cyan); animation:glitch-a 5s infinite steps(1); mix-blend-mode:screen; }
   .name::after  { color:var(--magenta); animation:glitch-b 5s infinite steps(1); mix-blend-mode:screen; }
@@ -81,6 +85,9 @@
     text-shadow:0 0 10px rgba(0,245,255,.7), 0 1px 4px rgba(0,0,0,1);
     background:rgba(0,0,0,.55); display:inline-block; padding:3px 8px;
   }
+  .domain-status{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--cyan);text-shadow:0 0 8px rgba(0,245,255,.75)}
+  .domain-status::before{content:'';width:6px;height:6px;border-radius:50%;background:#75ffb0;box-shadow:0 0 10px #75ffb0;animation:status-pulse 2s ease-in-out infinite}
+  @keyframes status-pulse{0%,100%{opacity:.45;transform:scale(.75)}50%{opacity:1;transform:scale(1)}}
   .cursor{animation:blink 1s step-end infinite}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
@@ -150,10 +157,11 @@
         <line x1="45" y1="3" x2="45" y2="8" stroke="#00f5ff" stroke-width="1" opacity="0.9"/>
         <line x1="45" y1="82" x2="45" y2="87" stroke="#00f5ff" stroke-width="1" opacity="0.9"/>
       </svg>
-      <div class="avatar-inner">AEP</div>
+      <div class="avatar-inner">V<span>3</span></div>
     </div>
-    <div class="name" data-text="m4rc.aep">m4rc<span class="ext">.aep</span></div>
-    <div class="tagline">// motion designer &amp; ae plugin connoisseur <span class="cursor">_</span></div>
+    <div class="name" data-text="V3LTRA.xyz"><span class="core">V3LTRA</span><span class="ext">.xyz</span></div>
+    <div class="tagline">// visual systems / motion / after effects <span class="cursor">_</span></div>
+    <div class="domain-status">DOMAIN SIGNAL LOCKED</div>
   </div>
 
   <div class="divider">
@@ -228,7 +236,7 @@
   </div>
 
   <div class="pulse-bar"></div>
-  <div class="footer"><div>SYSTEM :: m4rc.aep // NIGHT CITY EDIT LAB</div></div>
+  <div class="footer"><div>SYSTEM :: V3LTRA.xyz // NIGHT CITY EDIT LAB</div></div>
 </div>
 
 <script>

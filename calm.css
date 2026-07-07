@@ -1,0 +1,142 @@
+/*
+ * V3LTRA calm visual draft
+ * Local proposal only â€” not linked from the live site.
+ * Goal: retain the cyberpunk identity while lowering constant visual demand.
+ */
+
+:root {
+  --cyan: #67c8cd;
+  --magenta: #cf6b9f;
+  --amber: #b98d50;
+  --gold: #eee4c7;
+  --card-bg: rgba(7, 7, 13, 0.93);
+}
+
+/* Keep the city, but turn it into atmosphere rather than foreground content. */
+#bg-image {
+  filter: brightness(0.42) saturate(0.68) contrast(0.94);
+}
+
+/* Remove the always-moving effects. Hover/focus transitions still work. */
+#glow-canvas,
+#particle-canvas,
+#markers-canvas,
+.glitch-strip {
+  display: none !important;
+}
+
+*,
+*::before,
+*::after {
+  animation: none !important;
+}
+
+.scanlines {
+  opacity: 0.12;
+}
+
+.vignette {
+  background:
+    linear-gradient(rgba(3, 4, 9, 0.44), rgba(3, 4, 9, 0.62)),
+    radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.76) 100%) !important;
+}
+
+/* Disable duplicate glitch-letter layers and decorative sweeps. */
+.name::before,
+.name::after,
+.phead h1::before,
+.phead h1::after,
+.link-card::before,
+.dl-btn::before,
+.yt-btn::before,
+.folder-cta::before,
+.lounge-banner::before,
+.satvrn > summary::before,
+.locked-files-banner::before,
+.pulse-bar::after {
+  display: none !important;
+}
+
+/* Use glow as a small accent, not a second copy of the text. */
+.name,
+.phead h1,
+.card-title,
+.vendor-name,
+.locked-files-title {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 8px rgba(103, 200, 205, 0.18) !important;
+}
+
+.tagline,
+.sub,
+.section-label,
+.card-sub,
+.vendor-count,
+.footer,
+.domain-status {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Increase surface opacity so the background no longer fights the content. */
+.link-card,
+.vendor,
+.stat,
+.notice,
+.search-wrap input,
+.type-tab,
+.folder-cta,
+.lounge-banner,
+.satvrn,
+.locked-files-banner {
+  background: var(--card-bg) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(5px);
+}
+
+.link-card,
+.vendor,
+.stat,
+.search-wrap input,
+.type-tab {
+  border-color: rgba(103, 200, 205, 0.24) !important;
+}
+
+.link-card:hover,
+.link-card:focus-visible,
+.vendor:hover,
+.type-tab:hover,
+.type-tab:focus-visible {
+  background: rgba(11, 12, 19, 0.97) !important;
+  border-color: rgba(103, 200, 205, 0.58) !important;
+  box-shadow: none !important;
+}
+
+/* Keep the important locked-files notice visible, but stop its pulse. */
+.locked-files-banner {
+  border-color: rgba(207, 107, 159, 0.72) !important;
+  background: linear-gradient(110deg, rgba(86, 26, 58, 0.94), rgba(8, 8, 14, 0.96)) !important;
+}
+
+/* Reduce density and give each section a little room to breathe. */
+.links,
+.vendors {
+  gap: 14px !important;
+}
+
+.page {
+  padding-bottom: 72px !important;
+}
+
+.nav {
+  row-gap: 10px !important;
+}
+
+/* Accessibility fallback remains explicit even if this stylesheet changes. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

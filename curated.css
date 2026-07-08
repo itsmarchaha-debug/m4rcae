@@ -455,3 +455,24 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+
+.archive-help {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 245, 255, 0.12);
+  color: #b8c3ca;
+  line-height: 1.6;
+}
+
+.archive-help a {
+  color: #92e8ec;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 245, 255, 0.38);
+  text-underline-offset: 3px;
+}
+
+.archive-help a:hover {
+  color: #d9fbfd;
+  text-decoration-color: var(--cyan);
+}

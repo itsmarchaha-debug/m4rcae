@@ -20,14 +20,14 @@
   }
   html, body { min-height: 100%; background: #05030a; font-family: 'Rajdhani', sans-serif; color: var(--gold); overflow-x: hidden; }
 
-  /* Image sits at the very bottom, fully visible */
+   
   #bg-image {
     position: fixed; inset: 0; width: 100%; height: 100%;
     object-fit: cover; z-index: 0;
   }
-  /* Glow layer driven by JS - screen-blended neon bloom sampled from image */
+   
   #glow-canvas { position: fixed; inset: 0; width:100%; height:100%; z-index: 1; mix-blend-mode: screen; pointer-events:none; }
-  /* Particle cyberspace layer */
+   
   #particle-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
   #markers-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 3; opacity: 0.5; }
 
@@ -252,21 +252,21 @@
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════
-//  NIGHT CITY CYBERSPACE
-//  Layers (bottom -> top):
-//   0. <img> the Cyberpunk skyline, fully visible
-//   1. glow-canvas: neon bloom sampled from bright image
-//      pixels, screen-blended so the CITY ITSELF glows
-//   2. particle-canvas: dense fine points snapped to the
-//      image's bright pixels (its "data" form), drifting
-//      and twinkling like the cyberspace mesh references
-//   3. markers-canvas: AE tracking markers
-// ══════════════════════════════════════════════════════
+
+
+
+
+
+
+
+
+
+
+
 
 const bgImg = document.getElementById('bg-image');
 
-// ---- sampler (reads image pixels) ----
+
 const sampler = document.createElement('canvas');
 const sCtx = sampler.getContext('2d', { willReadFrequently: true });
 let imgData = null;
@@ -276,7 +276,7 @@ function buildSampler() {
   const W = window.innerWidth, H = window.innerHeight;
   const SW = Math.max(1, Math.floor(W/2)), SH = Math.max(1, Math.floor(H/2));
   sampler.width = SW; sampler.height = SH;
-  // object-fit: cover mapping
+  
   const scale = Math.max(SW/bgImg.naturalWidth, SH/bgImg.naturalHeight);
   const w = bgImg.naturalWidth*scale, h = bgImg.naturalHeight*scale;
   const x = (SW-w)/2, y = (SH-h)/2;
@@ -294,17 +294,17 @@ function sampleAt(px, py) {
   return [imgData.data[i], imgData.data[i+1], imgData.data[i+2]];
 }
 
-// ══ LAYER 1: NEON GLOW BLOOM from the image ══
+
 const glowCanvas = document.getElementById('glow-canvas');
 const glCtx = glowCanvas.getContext('2d');
-let glowSpots = [];   // precomputed bright spots to bloom
+let glowSpots = [];   
 
 function buildGlow() {
   glowSpots = [];
   if (!imgData) return;
   const SW = imgData.width, SH = imgData.height;
   const W = window.innerWidth, H = window.innerHeight;
-  // scan grid, find bright/saturated pixels = neon signs
+  
   const step = 9;
   for (let sy=0; sy<SH; sy+=step) {
     for (let sx=0; sx<SW; sx+=step) {
@@ -313,7 +313,7 @@ function buildGlow() {
       const lum=(r+g+b)/765;
       const maxc=Math.max(r,g,b), minc=Math.min(r,g,b);
       const sat=maxc===0?0:(maxc-minc)/maxc;
-      // neon = bright AND (saturated OR very bright white light)
+      
       if (lum>0.42 && (sat>0.35 || lum>0.62)) {
         glowSpots.push({
           x: sx/SW*W, y: sy/SH*H,
@@ -321,8 +321,8 @@ function buildGlow() {
           col:[r,g,b],
           base: Math.min(1, (lum-0.4)*1.3),
           fPhase: Math.random()*Math.PI*2,
-          fSpeed: 0.5+Math.random()*3.5,     // flicker speed
-          fType: Math.random(),               // determines flicker character
+          fSpeed: 0.5+Math.random()*3.5,     
+          fType: Math.random(),               
         });
       }
     }
@@ -333,16 +333,16 @@ function drawGlow(time) {
   const W=glowCanvas.width, H=glowCanvas.height;
   glCtx.clearRect(0,0,W,H);
   for (const s of glowSpots) {
-    // flicker: some steady, some strobe, some occasional dropout (broken sign)
+    
     let f;
     if (s.fType < 0.15) {
-      // broken sign: mostly on, random hard dropouts
+      
       f = (Math.sin(time*12+s.fPhase) > -0.7) ? 1 : 0.15;
     } else if (s.fType < 0.4) {
-      // fast strobe
+      
       f = 0.55 + 0.45*Math.sin(time*s.fSpeed*2.2 + s.fPhase);
     } else {
-      // gentle breathe
+      
       f = 0.75 + 0.25*Math.sin(time*s.fSpeed*0.5 + s.fPhase);
     }
     const a = s.base * f * 0.5;
@@ -357,8 +357,8 @@ function drawGlow(time) {
   }
 }
 
-// ══ LAYER 2: CYBERSPACE PARTICLE MESH ══
-// Dense fine points snapped to bright image pixels, drifting/twinkling
+
+
 const pCanvas = document.getElementById('particle-canvas');
 const pCtx = pCanvas.getContext('2d');
 let particles = [];
@@ -368,20 +368,20 @@ function buildParticles() {
   if (!imgData) return;
   const SW=imgData.width, SH=imgData.height;
   const W=window.innerWidth, H=window.innerHeight;
-  const step = 4;  // dense but performance-friendly
+  const step = 4;  
   for (let sy=0; sy<SH; sy+=step) {
     for (let sx=0; sx<SW; sx+=step) {
       const i=(sy*SW+sx)*4;
       const r=imgData.data[i],g=imgData.data[i+1],b=imgData.data[i+2];
       const lum=(r+g+b)/765;
-      // place a point where the city has light; denser where brighter
+      
       if (lum > 0.18 && Math.random() < (lum*0.6)) {
         particles.push({
           x: sx/SW*W, y: sy/SH*H,
           ox: sx/SW*W, oy: sy/SH*H,
           col:[r,g,b], lum,
           size: lum>0.55 ? (0.8+Math.random()*1.2) : (0.5+Math.random()*0.8),
-          tw: Math.random()*Math.PI*2,        // twinkle phase
+          tw: Math.random()*Math.PI*2,        
           twSpeed: 0.5+Math.random()*3,
           driftPhase: Math.random()*Math.PI*2,
           driftSpeed: 0.2+Math.random()*0.6,
@@ -397,15 +397,15 @@ function drawParticles(time) {
   pCtx.clearRect(0,0,W,H);
   pCtx.globalCompositeOperation='screen';
   for (const p of particles) {
-    // gentle drift (like the cyberspace mesh breathing)
+    
     const dx = Math.sin(time*p.driftSpeed + p.driftPhase)*p.driftAmp;
     const dy = Math.cos(time*p.driftSpeed*0.8 + p.driftPhase)*p.driftAmp*0.6;
     const x = p.ox+dx, y = p.oy+dy;
-    // twinkle
+    
     const tw = 0.45 + 0.55*Math.sin(time*p.twSpeed + p.tw);
     const a = (0.3 + p.lum*0.7) * tw;
     const [r,g,b]=p.col;
-    // brighten toward white-hot core for bright ones
+    
     const br = Math.min(255, r+p.lum*90);
     const bg = Math.min(255, g+p.lum*90);
     const bb = Math.min(255, b+p.lum*90);
@@ -413,7 +413,7 @@ function drawParticles(time) {
     pCtx.arc(x, y, p.size, 0, Math.PI*2);
     pCtx.fillStyle = `rgba(${br|0},${bg|0},${bb|0},${a})`;
     pCtx.fill();
-    // occasional bright point gets a tiny cross-glow spike
+    
     if (p.lum>0.6 && tw>0.9) {
       pCtx.strokeStyle = `rgba(${br|0},${bg|0},${bb|0},${a*0.5})`;
       pCtx.lineWidth = 0.6;
@@ -425,7 +425,7 @@ function drawParticles(time) {
   pCtx.globalCompositeOperation='source-over';
 }
 
-// ══ MAIN LOOP ══
+
 function resizeAll() {
   const W=window.innerWidth, H=window.innerHeight;
   for (const c of [glowCanvas,pCanvas]) { c.width=W; c.height=H; }
@@ -437,12 +437,12 @@ function tryInit(){ if (buildSampler()){ buildGlow(); buildParticles(); ready=tr
 if (bgImg.complete) tryInit(); else bgImg.onload = tryInit;
 window.addEventListener('resize', resizeAll);
 
-const FRAME_MS = 1000/30;   // cap background FX at 30fps
+const FRAME_MS = 1000/30;   
 let lastFrame = 0;
 function mainLoop(ts) {
   requestAnimationFrame(mainLoop);
-  if (document.hidden) return;               // pause when tab not visible
-  if (ts - lastFrame < FRAME_MS) return;      // 30fps throttle
+  if (document.hidden) return;               
+  if (ts - lastFrame < FRAME_MS) return;      
   lastFrame = ts;
   const time = ts/1000;
   const W=window.innerWidth, H=window.innerHeight;
@@ -452,7 +452,7 @@ function mainLoop(ts) {
 requestAnimationFrame(mainLoop);
 
 
-// ══ AE TRACKING MARKERS ══
+
 const mkCanvas=document.getElementById('markers-canvas');
 const mkCtx=mkCanvas.getContext('2d');
 function resizeMk(){ mkCanvas.width=window.innerWidth; mkCanvas.height=window.innerHeight; }

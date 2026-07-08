@@ -1,13 +1,13 @@
-/*
-  V3LTRA editorial refinement
-  Shared visual overrides only: existing page structure, links, and scripts stay untouched.
-*/
+
+
+
+
 
 :root {
   --card-bg: rgba(7, 10, 17, 0.88);
 }
 
-/* Keep the city visible, but make foreground text the first thing you see. */
+ 
 #bg-image {
   filter: blur(2px) brightness(0.48) saturate(0.82) !important;
   transform: scale(1.02);
@@ -307,7 +307,7 @@ body {
   box-shadow: none !important;
 }
 
-/* Tutorials remain easy to find, but read as supporting information. */
+ 
 .tutorial-chooser {
   margin-top: -5px !important;
   background: rgba(8, 11, 18, 0.76) !important;
@@ -342,7 +342,7 @@ body {
   text-shadow: none !important;
 }
 
-/* Satvrn setup help becomes an editorial note instead of a warning alarm. */
+ 
 .satvrn {
   margin: -4px 0 28px !important;
   border: 1px solid rgba(0, 245, 255, 0.18) !important;

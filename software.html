@@ -42,7 +42,7 @@
   .notice .n-body b { color:var(--cyan); text-shadow:0 0 8px rgba(0,245,255,.5); }
   .notice .pw { font-family:'Share Tech Mono',monospace; background:rgba(0,245,255,.1); border:1px solid rgba(0,245,255,.3); padding:1px 7px; color:var(--cyan); letter-spacing:.1em; }
 
-  /* Satvrn Tutorials — glowing red box under README */
+   
   .satvrn { margin:-8px 0 26px; border:1px solid #ff2d2d; background:rgba(30,0,0,.55); position:relative; overflow:hidden;
     animation:satvrnPulse 2.4s ease-in-out infinite; }
   @keyframes satvrnPulse {
@@ -511,7 +511,7 @@
 <script>
 function toggleVendor(btn){ btn.parentElement.classList.toggle('open'); }
 
-// ══ auto-generate YouTube tutorial search links for every item ══
+
 function addYouTubeLinks(){
   document.querySelectorAll('.vendor').forEach(vendor=>{
     const vendorName = vendor.querySelector('.vendor-name')?.textContent.trim() || '';

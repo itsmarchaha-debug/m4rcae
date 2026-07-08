@@ -1,0 +1,457 @@
+/*
+  V3LTRA editorial refinement
+  Shared visual overrides only: existing page structure, links, and scripts stay untouched.
+*/
+
+:root {
+  --card-bg: rgba(7, 10, 17, 0.88);
+}
+
+/* Keep the city visible, but make foreground text the first thing you see. */
+#bg-image {
+  filter: blur(2px) brightness(0.48) saturate(0.82) !important;
+  transform: scale(1.02);
+}
+
+#glow-canvas { opacity: 0.2 !important; }
+#particle-canvas { opacity: 0.11 !important; }
+#markers-canvas { opacity: 0.08 !important; }
+.scanlines { opacity: 0.16; }
+.vignette {
+  background:
+    linear-gradient(rgba(3, 5, 10, 0.28), rgba(3, 5, 10, 0.56)),
+    radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.76) 100%) !important;
+}
+.glitch-strip { display: none !important; }
+
+html,
+body {
+  color: #e8edf2;
+  line-height: 1.5;
+}
+
+.page { padding-top: 46px; }
+
+.nav {
+  gap: 7px !important;
+  margin-bottom: 36px !important;
+}
+
+.nav a,
+.type-tab,
+.folder-cta,
+.section-label,
+.card-title,
+.vendor-name,
+.vendor-tag,
+.tutorial-chooser > summary,
+.tutorial-prompt,
+.tutorial-plugin,
+.dl-btn,
+.tool-link,
+.yt-btn,
+.satvrn-dl {
+  letter-spacing: 0.055em !important;
+}
+
+.nav a {
+  background: rgba(5, 8, 13, 0.78) !important;
+  border-color: rgba(0, 245, 255, 0.16) !important;
+  text-shadow: none !important;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease !important;
+}
+
+.nav a:hover,
+.nav a.active {
+  color: var(--cyan) !important;
+  border-color: rgba(0, 245, 255, 0.48) !important;
+  background: rgba(0, 245, 255, 0.055) !important;
+  box-shadow: none !important;
+}
+
+.phead {
+  margin-bottom: 28px !important;
+}
+
+.phead h1,
+.name {
+  text-shadow: 0 0 12px rgba(0, 245, 255, 0.22) !important;
+}
+
+.phead h1 {
+  letter-spacing: 0.045em !important;
+  text-transform: none !important;
+}
+
+.phead .sub,
+.tagline,
+.domain-status {
+  letter-spacing: 0.065em !important;
+  color: #bac6ce !important;
+  background: rgba(4, 7, 12, 0.72) !important;
+  text-shadow: none !important;
+}
+
+.name::before,
+.name::after {
+  animation: none !important;
+  display: none !important;
+}
+
+.avatar-ring svg,
+.domain-status::before,
+.lounge-banner::before,
+.pulse-bar::after,
+.satvrn,
+.satvrn > summary::before,
+.folder-cta::before,
+.link-card::before,
+.dl-btn::before,
+.yt-btn::before,
+.tutorial-chooser > summary::before,
+.tool-link::before,
+.master-folder::before,
+.locked-files-banner::before {
+  animation: none !important;
+}
+
+.link-card,
+.vendor,
+.tool-card,
+.stat,
+.notice,
+.search-wrap input,
+.type-tab,
+.folder-cta,
+.master-folder,
+.locked-files-banner {
+  background: rgba(7, 10, 17, 0.88) !important;
+  border-color: rgba(0, 245, 255, 0.16) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(8px);
+}
+
+.links { gap: 14px !important; }
+
+.link-card {
+  padding: 18px 20px !important;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: border-color 160ms ease, background 160ms ease !important;
+}
+
+.link-card:hover,
+.vendor:hover,
+.tool-card:hover {
+  border-color: rgba(0, 245, 255, 0.46) !important;
+  background: rgba(9, 14, 22, 0.94) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.link-card::before,
+.link-card::after,
+.card-corner-bl,
+.vendor-corner-bl,
+.tutorial-card::before {
+  display: none !important;
+}
+
+.card-icon {
+  filter: none !important;
+  opacity: 0.9;
+}
+
+.card-title {
+  color: #f4f7f9 !important;
+  font-size: 17px !important;
+  text-transform: none !important;
+  text-shadow: none !important;
+}
+
+.card-sub,
+.vendor-desc,
+.tutorial-note,
+.tutorial-mini {
+  color: #9caab3 !important;
+  letter-spacing: 0.025em !important;
+  text-shadow: none !important;
+}
+
+.card-arrow {
+  opacity: 0.55 !important;
+  transform: none !important;
+  text-shadow: none !important;
+}
+
+.lounge-banner {
+  background: rgba(7, 10, 17, 0.8) !important;
+  border-color: rgba(0, 245, 255, 0.14) !important;
+  box-shadow: none !important;
+  text-align: left !important;
+}
+
+.lounge-banner::before { display: none !important; }
+.lounge-banner .card-title { color: #e8edf2 !important; }
+.lounge-banner .card-sub { color: #8fa1ab !important; }
+
+.pulse-bar {
+  opacity: 0.38;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent) !important;
+}
+
+.notice {
+  padding: 16px 18px !important;
+  color: #c8d1d7 !important;
+  border-left: 2px solid rgba(0, 245, 255, 0.5) !important;
+}
+
+.stats {
+  gap: 10px !important;
+  margin-bottom: 24px !important;
+}
+
+.stat { padding: 12px 14px !important; }
+
+.search-wrap {
+  margin-bottom: 28px !important;
+}
+
+.search-wrap input {
+  min-height: 46px;
+  color: #f2f5f7 !important;
+  border-color: rgba(0, 245, 255, 0.22) !important;
+  transition: border-color 160ms ease, background 160ms ease !important;
+}
+
+.search-wrap input:focus {
+  border-color: rgba(0, 245, 255, 0.62) !important;
+  background: rgba(7, 12, 19, 0.96) !important;
+  box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.07) !important;
+}
+
+.vendors { gap: 13px !important; }
+
+.vendor,
+.tool-card {
+  border-radius: 4px;
+  overflow: hidden;
+  transition: border-color 160ms ease, background 160ms ease !important;
+}
+
+.vendor-head { padding: 17px 18px !important; }
+
+.vendor-name {
+  color: #eef3f6 !important;
+  text-transform: none !important;
+  text-shadow: none !important;
+}
+
+.vendor-tag,
+.type-badge {
+  color: #84dce0 !important;
+  background: rgba(0, 245, 255, 0.045) !important;
+  border-color: rgba(0, 245, 255, 0.24) !important;
+  text-shadow: none !important;
+}
+
+.item-list {
+  color: #c2cbd1;
+  line-height: 1.65 !important;
+}
+
+.dl-btn,
+.tool-link,
+.yt-btn,
+.yt-link,
+.tutorial-link,
+.folder-cta,
+.locked-files-action {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease !important;
+}
+
+.dl-btn,
+.tool-link:not(.yt),
+.tutorial-link:not(.yt) {
+  color: #92e8ec !important;
+  border-color: rgba(0, 245, 255, 0.32) !important;
+  background: rgba(0, 245, 255, 0.045) !important;
+}
+
+.dl-btn:hover,
+.tool-link:hover,
+.tutorial-link:hover,
+.folder-cta:hover,
+.locked-files-action:hover {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.yt-btn,
+.yt-link,
+.tool-link.yt,
+.tutorial-link.yt {
+  color: #e8edf2 !important;
+  border-color: rgba(255, 45, 149, 0.3) !important;
+  background: rgba(255, 45, 149, 0.04) !important;
+}
+
+.yt-btn:hover,
+.yt-link:hover,
+.tool-link.yt:hover,
+.tutorial-link.yt:hover {
+  border-color: rgba(255, 45, 149, 0.58) !important;
+  background: rgba(255, 45, 149, 0.075) !important;
+  box-shadow: none !important;
+}
+
+/* Tutorials remain easy to find, but read as supporting information. */
+.tutorial-chooser {
+  margin-top: -5px !important;
+  background: rgba(8, 11, 18, 0.76) !important;
+  border-color: rgba(0, 245, 255, 0.14) !important;
+  box-shadow: none !important;
+}
+
+.tutorial-chooser[open] {
+  border-color: rgba(0, 245, 255, 0.3) !important;
+  box-shadow: none !important;
+}
+
+.tutorial-chooser > summary {
+  justify-content: flex-start !important;
+  color: #d8e1e6 !important;
+  text-transform: none !important;
+  text-shadow: none !important;
+}
+
+.tutorial-chooser > summary::before { display: none !important; }
+.tutorial-content { background: rgba(2, 5, 9, 0.28) !important; }
+.tutorial-card {
+  background: rgba(6, 9, 15, 0.7) !important;
+  border-color: rgba(0, 245, 255, 0.11) !important;
+}
+.tutorial-plugin {
+  color: #e6ecef !important;
+  text-transform: none !important;
+}
+.tutorial-prompt {
+  color: #8ad9dd !important;
+  text-shadow: none !important;
+}
+
+/* Satvrn setup help becomes an editorial note instead of a warning alarm. */
+.satvrn {
+  margin: -4px 0 28px !important;
+  border: 1px solid rgba(0, 245, 255, 0.18) !important;
+  border-left: 2px solid rgba(0, 245, 255, 0.54) !important;
+  background: rgba(7, 10, 17, 0.84) !important;
+  box-shadow: none !important;
+}
+
+.satvrn > summary {
+  color: #dce5e9 !important;
+  text-shadow: none !important;
+}
+
+.satvrn > summary::before { display: none !important; }
+
+.satvrn > summary .s-dot {
+  width: 7px !important;
+  height: 7px !important;
+  background: var(--cyan) !important;
+  box-shadow: none !important;
+}
+
+.satvrn > summary .s-chev { color: #84dce0 !important; }
+
+.satvrn-body {
+  color: #b8c3ca !important;
+  border-color: rgba(0, 245, 255, 0.1) !important;
+}
+
+.satvrn-dl {
+  color: #a6e8eb !important;
+  border-color: rgba(0, 245, 255, 0.28) !important;
+  background: rgba(0, 245, 255, 0.04) !important;
+  text-shadow: none !important;
+}
+
+.satvrn-dl:hover {
+  background: rgba(0, 245, 255, 0.075) !important;
+  box-shadow: none !important;
+}
+
+.satvrn-list li {
+  color: #aebac1 !important;
+  border-color: rgba(255, 255, 255, 0.055) !important;
+}
+
+.satvrn-list li::before { color: var(--cyan) !important; }
+
+.type-tabs { gap: 8px !important; }
+
+.type-tab {
+  text-shadow: none !important;
+  transition: border-color 160ms ease, background 160ms ease !important;
+}
+
+.type-tab:hover,
+.type-tab.active {
+  border-color: rgba(0, 245, 255, 0.48) !important;
+  background: rgba(0, 245, 255, 0.055) !important;
+  box-shadow: none !important;
+}
+
+.locked-files-banner,
+.master-folder {
+  border-left: 2px solid rgba(0, 245, 255, 0.5) !important;
+  color: #dce4e8 !important;
+}
+
+.footer {
+  color: rgba(180, 205, 211, 0.48) !important;
+  letter-spacing: 0.08em !important;
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 32px 16px 58px !important;
+  }
+
+  .nav a {
+    padding: 8px 10px !important;
+    font-size: 10px !important;
+  }
+
+  .link-card {
+    padding: 16px !important;
+  }
+
+  .card-header {
+    gap: 11px !important;
+  }
+
+  .card-title {
+    font-size: 16px !important;
+  }
+
+  .vendor-head {
+    padding: 15px !important;
+  }
+
+  .stats {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}

@@ -476,3 +476,119 @@ body {
   color: #d9fbfd;
   text-decoration-color: var(--cyan);
 }
+
+
+:root {
+  --ui-red: #f04455;
+  --ui-red-deep: #8f2230;
+  --ui-red-wash: rgba(240, 68, 85, 0.08);
+  --ui-panel: rgba(6, 8, 11, 0.9);
+}
+
+.phead h1 {
+  display: inline-block;
+  color: #08090b !important;
+  background: var(--ui-red);
+  padding: 6px 14px 5px;
+  text-shadow: none !important;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%);
+}
+
+.section-label {
+  color: #f6dce0 !important;
+  background: var(--ui-panel) !important;
+  border: 1px solid rgba(240, 68, 85, 0.64);
+  border-left: 3px solid var(--ui-red);
+  padding: 5px 9px !important;
+  text-shadow: none !important;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%);
+}
+
+.nav a:hover,
+.nav a.active,
+.type-tab:hover,
+.type-tab.active {
+  color: #fff !important;
+  border-color: rgba(240, 68, 85, 0.66) !important;
+  background: var(--ui-red-wash) !important;
+  box-shadow: inset 3px 0 0 var(--ui-red) !important;
+}
+
+.link-card,
+.vendor,
+.tool-card,
+.stat,
+.notice,
+.master-folder,
+.locked-files-banner {
+  border-color: rgba(240, 68, 85, 0.2) !important;
+  border-left: 2px solid rgba(240, 68, 85, 0.68) !important;
+}
+
+.link-card:hover,
+.vendor:hover,
+.tool-card:hover {
+  border-color: rgba(240, 68, 85, 0.55) !important;
+  background: rgba(15, 9, 13, 0.94) !important;
+}
+
+.card-icon,
+.card-arrow,
+.s-icon,
+.vendor-chevron,
+.tutorial-chevron {
+  color: var(--ui-red) !important;
+}
+
+.pulse-bar {
+  background: linear-gradient(90deg, transparent, var(--ui-red), transparent) !important;
+}
+
+.search-wrap input:focus {
+  border-color: rgba(240, 68, 85, 0.7) !important;
+  box-shadow: 0 0 0 3px rgba(240, 68, 85, 0.08) !important;
+}
+
+.satvrn,
+.tutorial-chooser {
+  border-color: rgba(240, 68, 85, 0.24) !important;
+  border-left-color: var(--ui-red) !important;
+}
+
+.satvrn > summary .s-dot {
+  background: var(--ui-red) !important;
+}
+
+.satvrn > summary .s-chev,
+.tutorial-chooser > summary,
+.tutorial-prompt {
+  color: #e9a8b0 !important;
+}
+
+.type-badge.extension,
+.yt-btn,
+.yt-link,
+.tool-link.yt,
+.tutorial-link.yt {
+  border-color: rgba(240, 68, 85, 0.42) !important;
+  background: rgba(240, 68, 85, 0.055) !important;
+}
+
+.locked-files-banner,
+.master-folder,
+.notice {
+  border-left-color: var(--ui-red) !important;
+}
+
+.help-card {
+  border-color: rgba(240, 68, 85, 0.48) !important;
+  background: linear-gradient(110deg, rgba(240, 68, 85, 0.1), rgba(7, 10, 17, 0.92) 58%) !important;
+}
+
+.help-card .card-title {
+  color: #fff !important;
+}
+
+.help-card .card-sub {
+  color: #d9a0a7 !important;
+}

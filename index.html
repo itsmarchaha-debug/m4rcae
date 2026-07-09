@@ -133,6 +133,8 @@
   @keyframes bar-sweep{0%{left:-50%}100%{left:150%}}
 
   .footer{ font-family:'Share Tech Mono',monospace;font-size:9px; color:rgba(0,245,255,.4);letter-spacing:.2em;text-align:center;line-height:2; }
+  .footer a{color:#e9a8b0;text-decoration:underline;text-decoration-color:rgba(240,68,85,.45);text-underline-offset:3px}
+  .footer a:hover{color:#fff;text-decoration-color:#f04455}
 
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
@@ -228,6 +230,17 @@
         <div class="card-arrow">&#8594;</div>
       </div>
     </a>
+    <a class="link-card" href="guides.html">
+      <div class="card-corner-bl"></div>
+      <div class="card-header">
+        <div class="card-icon" style="color:#f04455;">&#9635;</div>
+        <div>
+          <div class="card-title">Guides</div>
+          <div class="card-sub">Windows guides + macOS guides</div>
+        </div>
+        <div class="card-arrow">&#8594;</div>
+      </div>
+    </a>
     <a class="link-card help-card" href="https://discord.gg/8vpA6nHdt" target="_blank" rel="noopener noreferrer">
       <div class="card-corner-bl"></div>
       <div class="card-header">
@@ -248,7 +261,7 @@
   </div>
 
   <div class="pulse-bar"></div>
-  <div class="footer"><div>made by an editor who got tired of messy folders</div></div>
+  <div class="footer"><div>made by an editor who got tired of messy folders</div><div><a href="mailto:vltralegal@gmail.com">Legal inquiries</a></div></div>
 </div>
 
 <script>

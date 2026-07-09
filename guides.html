@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#05030a">
+<meta name="description" content="V3LTRA.xyz guides for Windows and macOS plugin, software, and Adobe app troubleshooting tutorials.">
+<title>V3LTRA.xyz — Guides</title>
+<link rel="preload" href="bg.webp" as="image" type="image/webp">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --amber:#d4922e;--gold:#fff0a0;--cyan:#00f5ff;--magenta:#ff2d95;--rust:#a03010;--dim:#4a3418;--card-bg:rgba(6,4,12,0.80); }
+  html, body { min-height:100%; background:#05030a; font-family:'Rajdhani',sans-serif; color:var(--gold); overflow-x:hidden; }
+  #bg-image { position:fixed; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+  .scanlines { position:fixed; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.07) 3px,rgba(0,0,0,0.07) 4px); pointer-events:none; z-index:4; }
+  .vignette { position:fixed; inset:0; background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,0.78) 100%); pointer-events:none; z-index:5; }
+  .page { position:relative; z-index:10; max-width:720px; margin:0 auto; padding:40px 20px 90px; }
+  .nav { display:flex; align-items:center; gap:8px; margin-bottom:30px; flex-wrap:wrap; }
+  .nav a { font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:#fff; text-decoration:none; padding:8px 14px; border:1px solid rgba(0,245,255,.25); background:rgba(0,0,0,.5); transition:all .2s; text-shadow:0 0 8px rgba(0,245,255,.4); }
+  .nav a:hover { border-color:var(--cyan); background:rgba(0,245,255,.08); }
+  .nav a.active { border-color:var(--cyan); color:var(--cyan); background:rgba(0,245,255,.06); }
+  .nav a:first-child { border-color:rgba(255,45,149,.45); color:#fff; background:linear-gradient(135deg,rgba(255,45,149,.12),rgba(0,245,255,.08)); text-shadow:0 0 10px rgba(0,245,255,.55); }
+  .phead { margin-bottom:26px; }
+  .phead h1 { font-size:clamp(30px,7vw,42px); font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#fff; text-shadow:0 0 22px rgba(0,245,255,.6),0 0 44px rgba(255,45,149,.35),0 2px 0 rgba(0,0,0,1); position:relative; display:inline-block; }
+  .phead .sub { font-family:'Share Tech Mono',monospace; font-size:11px; color:#fff; letter-spacing:.14em; margin-top:10px; background:rgba(0,0,0,.5); display:inline-block; padding:3px 8px; text-shadow:0 0 10px rgba(0,245,255,.6); }
+  .notice { border:1px solid rgba(212,146,46,.4); background:rgba(20,10,0,.6); padding:14px 16px; margin-bottom:26px; position:relative; }
+  .notice .n-title { font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:.2em; color:var(--amber); text-transform:uppercase; margin-bottom:6px; text-shadow:0 0 6px var(--amber); }
+  .notice .n-body { font-size:14px; line-height:1.6; color:#f0e0c0; }
+  .guide-jump { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-bottom:26px; }
+  .jump-card { display:block; text-decoration:none; color:#fff; border:1px solid rgba(240,68,85,.36); background:rgba(7,10,17,.88); padding:16px; transition:border-color .18s,background .18s; }
+  .jump-card:hover { border-color:rgba(240,68,85,.7); background:rgba(15,9,13,.94); }
+  .jump-card strong { display:block; font-size:18px; letter-spacing:.06em; }
+  .jump-card span { display:block; margin-top:4px; font-family:'Share Tech Mono',monospace; font-size:10px; color:#d9a0a7; letter-spacing:.08em; }
+  .guide-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+  .guide-panel { border:1px solid rgba(240,68,85,.24); border-left:2px solid rgba(240,68,85,.68); background:rgba(7,10,17,.88); padding:18px; }
+  .guide-panel h2 { font-size:24px; color:#fff; letter-spacing:.06em; margin-bottom:6px; }
+  .guide-panel p { color:#b8c3ca; line-height:1.55; margin-bottom:14px; }
+  .guide-list { display:flex; flex-direction:column; gap:10px; }
+  .guide-link { display:flex; align-items:center; justify-content:space-between; gap:14px; min-height:50px; color:#e8edf2; text-decoration:none; border:1px solid rgba(240,68,85,.3); background:rgba(240,68,85,.045); padding:12px 14px; transition:border-color .18s,background .18s; }
+  .guide-link:hover { border-color:rgba(240,68,85,.66); background:rgba(240,68,85,.09); }
+  .guide-link strong { display:block; font-size:16px; letter-spacing:.04em; }
+  .guide-link span { font-family:'Share Tech Mono',monospace; font-size:10px; color:#d9a0a7; letter-spacing:.08em; white-space:nowrap; }
+  .fix-panel { margin-top:16px; border:1px solid rgba(0,245,255,.16); background:rgba(7,10,17,.82); padding:16px; }
+  .fix-panel strong { display:block; color:#fff; font-size:18px; margin-bottom:6px; }
+  .fix-panel p { color:#b8c3ca; line-height:1.55; }
+  .footer { font-family:'Share Tech Mono',monospace; font-size:9px; color:rgba(180,205,211,.48); letter-spacing:.08em; text-align:center; line-height:2; margin-top:40px; }
+  .legal-link { color:#e9a8b0; text-decoration:underline; text-decoration-color:rgba(240,68,85,.45); text-underline-offset:3px; }
+  .legal-link:hover { color:#fff; text-decoration-color:#f04455; }
+  @media (max-width:700px) { .page { padding:32px 16px 58px; } .guide-grid, .guide-jump { grid-template-columns:1fr; } .nav a { padding:8px 10px; font-size:10px; } .guide-link { align-items:flex-start; flex-direction:column; gap:4px; } }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+<link rel="stylesheet" href="curated.css">
+</head>
+<body>
+<img id="bg-image" src="bg.webp" alt="" decoding="async" fetchpriority="high">
+<div class="scanlines"></div>
+<div class="vignette"></div>
+<div class="page">
+  <div class="nav">
+    <a href="index.html" aria-label="V3LTRA.xyz home">← BACK HOME</a>
+    <a href="plugins.html">PLUGINS (WIN)</a>
+    <a href="software.html">SOFTWARE (WIN)</a>
+    <a href="extensions.html">EXTENSIONS</a>
+    <a href="plugins-mac.html">PLUGINS (MAC)</a>
+    <a href="software-mac.html">SOFTWARE (MAC)</a>
+    <a class="active" href="guides.html">GUIDES</a>
+  </div>
+
+  <div class="phead">
+    <h1 data-text="Guides">Guides</h1>
+    <div class="sub">Windows guides and macOS guides in one place</div>
+  </div>
+
+  <div class="notice">
+    <div class="n-title">START HERE</div>
+    <div class="n-body">Pick your platform first, then open the folder or video that matches what you are installing or fixing.</div>
+  </div>
+
+  <div class="guide-jump" aria-label="Guide sections">
+    <a class="jump-card" href="#windows-guides"><strong>Windows Guides</strong><span>Plugins, software, Adobe fixes</span></a>
+    <a class="jump-card" href="#macos-guides"><strong>macOS Guides</strong><span>Plugins, software, Adobe fixes</span></a>
+  </div>
+
+  <div class="guide-grid">
+    <section class="guide-panel" id="windows-guides" aria-labelledby="windows-guides-title">
+      <h2 id="windows-guides-title">Windows Guides</h2>
+      <p>Use these when you are installing or troubleshooting on a Windows PC.</p>
+      <div class="guide-list">
+        <a class="guide-link" href="https://mega.nz/folder/UAVFAZhR#se9HWGCtU87jRb6lmj-nDA" target="_blank" rel="noopener noreferrer"><strong>Windows plugin tutorials</strong><span>Open folder ↗</span></a>
+        <a class="guide-link" href="https://mega.nz/folder/4FFy2R7S#kKqTHrsU_s3NyN67sznRFg" target="_blank" rel="noopener noreferrer"><strong>Windows software tutorials</strong><span>Open folder ↗</span></a>
+        <a class="guide-link" href="https://youtu.be/hTASdL0oVi4?si=JeGUXHPvx-3Of2eN" target="_blank" rel="noopener noreferrer"><strong>Adobe unlicensed app fix</strong><span>Watch video ↗</span></a>
+        <a class="guide-link" href="https://youtu.be/JkO9uWe97rA?si=6N-1DRTVPK4OqSEC" target="_blank" rel="noopener noreferrer"><strong>Alternative Windows fix</strong><span>Watch video ↗</span></a>
+      </div>
+    </section>
+
+    <section class="guide-panel" id="macos-guides" aria-labelledby="macos-guides-title">
+      <h2 id="macos-guides-title">macOS Guides</h2>
+      <p>Use these when you are installing or troubleshooting on a Mac.</p>
+      <div class="guide-list">
+        <a class="guide-link" href="https://mega.nz/folder/9BMiQI4A#7IJdi1JAhf9BjBJVphd5uw" target="_blank" rel="noopener noreferrer"><strong>macOS plugin tutorials</strong><span>Open folder ↗</span></a>
+        <a class="guide-link" href="https://mega.nz/folder/1FEQyCpZ#KnMlyJGX2WNTsaB39YbXjg" target="_blank" rel="noopener noreferrer"><strong>macOS software tutorials</strong><span>Open folder ↗</span></a>
+        <a class="guide-link" href="https://youtu.be/G1KsdUkblEg?si=s2-hEpwUO628AU7p" target="_blank" rel="noopener noreferrer"><strong>Adobe unlicensed app fix</strong><span>Watch video ↗</span></a>
+        <a class="guide-link" href="https://youtu.be/jBDyh_KJSNY?si=AnA2f7DiHbuPzQwW" target="_blank" rel="noopener noreferrer"><strong>Alternative macOS fix</strong><span>Watch video ↗</span></a>
+      </div>
+    </section>
+  </div>
+
+  <div class="fix-panel">
+    <strong>Still not working?</strong>
+    <p>Reinstalling the app, plugin, or preset can also fix weird errors after setup.</p>
+  </div>
+
+  <div class="footer">
+    <div>V3LTRA.xyz · guides · sorted by hand</div>
+    <div><a class="legal-link" href="mailto:vltralegal@gmail.com">Legal inquiries</a></div>
+  </div>
+</div>
+</body>
+</html>

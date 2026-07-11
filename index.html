@@ -142,14 +142,9 @@
 </head>
 <body>
 <img id="bg-image" src="bg.webp" alt="">
-<canvas id="glow-canvas"></canvas>
-<canvas id="particle-canvas"></canvas>
-<canvas id="markers-canvas"></canvas>
-<div class="scanlines"></div>
 <div class="vignette"></div>
-<div class="glitch-strip"></div>
 
-<div class="page">
+<div class="page home-page">
   <div class="header">
     <div class="avatar-ring">
       <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -163,9 +158,186 @@
       <div class="avatar-inner">V<span>3</span></div>
     </div>
     <div class="name" data-text="V3LTRA.xyz"><span class="core">V3LTRA</span><span class="ext">.xyz</span></div>
-    <div class="tagline">plugins, apps, and little things that save the edit <span class="cursor">_</span></div>
-    <div class="domain-status">cracked softwares, plugins, etc are virus free.</div>
+    <div class="tagline">A cleaner stash for plugins, apps, guides, and assets when the edit is already running late <span class="cursor">_</span></div>
+    <div class="domain-status">Find the thing, pick your platform, keep cutting.</div>
   </div>
+
+  <section class="home-control-panel" aria-label="Search and platform controls">
+    <button class="home-search" type="button" data-command-open aria-label="Search all V3LTRA resources">
+      <span class="home-search-icon" aria-hidden="true">&#8981;</span>
+      <span class="home-search-copy">
+        <strong>Search the whole archive</strong>
+        <small>plugins, software, scripts, guides, assets...</small>
+      </span>
+      <span class="home-search-open" aria-hidden="true">Open</span>
+    </button>
+    <div class="platform-control-row">
+      <span class="platform-label">Filter by platform:</span>
+      <span class="os-detect-chip" data-os-detected aria-live="polite">Detecting OS...</span>
+      <div class="platform-tabs" role="group" aria-label="Platform preference">
+        <button class="platform-tab active" type="button" data-platform="windows" aria-pressed="true">
+          <span aria-hidden="true">&#9638;</span>
+          Windows
+          <em data-detected-label>Detected</em>
+        </button>
+        <button class="platform-tab" type="button" data-platform="mac" aria-pressed="false">
+          <span aria-hidden="true">&#63743;</span>
+          MacOS
+          <em data-detected-label></em>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-browse" aria-labelledby="browse-title">
+    <div class="home-section-label">Browse</div>
+    <div class="home-browse-grid">
+      <article class="browse-tile browse-tile-platform" data-platform-card="windows">
+        <div class="tile-top">
+          <h2 id="browse-title">Windows</h2>
+          <span class="tile-badge" data-platform-badge="windows">Detected</span>
+        </div>
+        <p class="tile-copy">Software, plugins, presets, and setup notes for Windows editors.</p>
+        <div class="tile-actions" aria-label="Windows resources">
+          <a href="plugins.html">Plugins</a>
+          <a href="software.html">Software</a>
+        </div>
+      </article>
+
+      <article class="browse-tile browse-tile-platform" data-platform-card="mac">
+        <div class="tile-top">
+          <h2>MacOS</h2>
+          <span class="tile-badge" data-platform-badge="mac">Switch</span>
+        </div>
+        <p class="tile-copy">Mac plugins, creative apps, Apple Silicon notes, and Rosetta checks.</p>
+        <div class="tile-actions" aria-label="Mac resources">
+          <a href="plugins-mac.html">Plugins</a>
+          <a href="software-mac.html">Software</a>
+        </div>
+      </article>
+
+      <a class="browse-tile" href="beginners-guide.html">
+        <span class="tile-arrow" aria-hidden="true">&#8594;</span>
+        <h2>Beginner's Guide</h2>
+        <p class="tile-copy">Start with folders, install habits, archive passwords, and AE basics.</p>
+      </a>
+
+      <a class="browse-tile" href="extensions.html">
+        <span class="tile-arrow" aria-hidden="true">&#8594;</span>
+        <h2>Extensions &amp; Scripts</h2>
+        <p class="tile-copy">Panels, scripts, helper tools, and platform notes kept as listed.</p>
+      </a>
+
+      <a class="browse-tile" href="guides.html">
+        <span class="tile-arrow" aria-hidden="true">&#8594;</span>
+        <h2>Guides</h2>
+        <p class="tile-copy">Written setup notes, troubleshooting, plugin locations, and fixes.</p>
+      </a>
+
+      <a class="browse-tile" href="free-assets.html">
+        <span class="tile-arrow" aria-hidden="true">&#8594;</span>
+        <h2>Free Assets</h2>
+        <p class="tile-copy">Fonts, SFX, LUTs, overlays, footage, 3D, icons, and converters.</p>
+      </a>
+
+      <a class="browse-tile browse-tile-live" href="new-drops.html">
+        <span class="tile-live-dot" aria-hidden="true"></span>
+        <span class="tile-arrow" aria-hidden="true">&#8594;</span>
+        <h2>New Drops</h2>
+        <p class="tile-copy">Latest additions, polish passes, and update notes as the archive changes.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="home-intel-grid" aria-label="Popular tools and guides">
+    <section class="home-panel popular-panel" aria-labelledby="popular-tools-title">
+      <div class="home-panel-head">
+        <span>Signal Boost</span>
+        <a href="plugins.html">View all &#8594;</a>
+      </div>
+      <h2 id="popular-tools-title">Popular Tools</h2>
+      <div class="popular-list">
+        <article class="popular-row">
+          <span class="tool-mark tool-mark-ae">AE</span>
+          <div class="popular-copy">
+            <h3>After Effects</h3>
+            <p>Motion graphics and compositing core app.</p>
+          </div>
+          <div class="platform-pills" aria-label="After Effects platform links">
+            <a href="software.html">Win</a>
+            <a href="software-mac.html">Mac</a>
+          </div>
+        </article>
+        <article class="popular-row">
+          <span class="tool-mark">SAPP</span>
+          <div class="popular-copy">
+            <h3>Boris FX / Sapphire</h3>
+            <p>Sapphire, Continuum, and Mocha Pro are in the archive.</p>
+          </div>
+          <div class="platform-pills" aria-label="Boris FX platform links">
+            <a href="plugins.html">Win</a>
+            <a href="plugins-mac.html">Mac</a>
+          </div>
+        </article>
+        <article class="popular-row">
+          <span class="tool-mark">RG</span>
+          <div class="popular-copy">
+            <h3>Maxon / Red Giant</h3>
+            <p>Magic Bullet, Trapcode, VFX Suite, Universe, and more.</p>
+          </div>
+          <div class="platform-pills" aria-label="Red Giant platform links">
+            <a href="plugins.html">Win</a>
+            <a href="plugins-mac.html">Mac</a>
+          </div>
+        </article>
+        <article class="popular-row">
+          <span class="tool-mark">VC</span>
+          <div class="popular-copy">
+            <h3>Video Copilot</h3>
+            <p>Element 3D, Saber, Optical Flares, Twitch, and classics.</p>
+          </div>
+          <div class="platform-pills" aria-label="Video Copilot platform links">
+            <a href="plugins.html">Win</a>
+            <a href="plugins-mac.html">Mac</a>
+          </div>
+        </article>
+        <article class="popular-row">
+          <span class="tool-mark">TWIX</span>
+          <div class="popular-copy">
+            <h3>RE:Vision FX</h3>
+            <p>Twixtor Pro, RSMB, Effections, and retiming tools.</p>
+          </div>
+          <div class="platform-pills" aria-label="RE:Vision FX platform links">
+            <a href="plugins.html">Win</a>
+            <a href="plugins-mac.html">Mac</a>
+          </div>
+        </article>
+        <article class="popular-row">
+          <span class="tool-mark">MOT</span>
+          <div class="popular-copy">
+            <h3>Motion Bro + FX Console</h3>
+            <p>Workflow panels and helpers from the extensions shelf.</p>
+          </div>
+          <div class="platform-pills" aria-label="Extension shelf link">
+            <a href="extensions.html">Open</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="home-panel guide-panel-empty" aria-labelledby="recent-guides-title">
+      <div class="home-panel-head">
+        <span>Guide Shelf</span>
+        <a href="guides.html">Open guides &#8594;</a>
+      </div>
+      <h2 id="recent-guides-title">Recent Guides</h2>
+      <div class="guide-empty-state">
+        <span class="guide-empty-icon" aria-hidden="true">//</span>
+        <h3>Nothing featured yet</h3>
+        <p>Guide cards will live here once the real walkthroughs are written and checked.</p>
+      </div>
+    </section>
+  </section>
 
   <div class="divider">
     <div class="divider-line"></div>
@@ -173,8 +345,166 @@
     <div class="divider-line"></div>
   </div>
 
-  <div class="section-label">Browse the archive</div>
-  <div class="links">
+  <div class="home-groups" aria-label="Browse the V3LTRA archive">
+    <section class="home-group">
+      <div class="section-label">Windows shelf</div>
+      <div class="links">
+        <a class="link-card" href="plugins.html">
+          <div class="card-corner-bl"></div>
+          <div class="card-header">
+            <div class="card-icon" style="color:#00f5ff;">&#11041;</div>
+            <div>
+              <div class="card-title">Plugins &amp; Presets - Windows</div>
+              <div class="card-sub">84 plugins from 25 vendors</div>
+            </div>
+            <div class="card-arrow">&#8594;</div>
+          </div>
+        </a>
+        <a class="link-card" href="software.html">
+          <div class="card-corner-bl"></div>
+          <div class="card-header">
+            <div class="card-icon" style="color:#d4922e;">&#9638;</div>
+            <div>
+              <div class="card-title">Software &amp; Configs - Windows</div>
+              <div class="card-sub">13 apps and 24 builds</div>
+            </div>
+            <div class="card-arrow">&#8594;</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="home-group">
+      <div class="section-label">Mac shelf</div>
+      <div class="links">
+        <a class="link-card" href="plugins-mac.html">
+          <div class="card-corner-bl"></div>
+          <div class="card-header">
+            <div class="card-icon" style="color:#ff2d95;">&#11041;</div>
+            <div>
+              <div class="card-title">Plugins &amp; Presets - Mac</div>
+              <div class="card-sub">85 plugins from 16 vendors</div>
+            </div>
+            <div class="card-arrow">&#8594;</div>
+          </div>
+        </a>
+        <a class="link-card" href="software-mac.html">
+          <div class="card-corner-bl"></div>
+          <div class="card-header">
+            <div class="card-icon" style="color:#fff0a0;">&#9638;</div>
+            <div>
+              <div class="card-title">Software - Mac</div>
+              <div class="card-sub">8 apps and 29 builds</div>
+            </div>
+            <div class="card-arrow">&#8594;</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="home-group">
+      <div class="section-label">Shared tools</div>
+      <div class="links">
+        <a class="link-card" href="extensions.html">
+          <div class="card-corner-bl"></div>
+          <div class="card-header">
+            <div class="card-icon" style="color:#ff2d95;">&#9672;</div>
+            <div>
+              <div class="card-title">Extensions &amp; Scripts</div>
+              <div class="card-sub">51 extensions + 40 scripts, platform notes kept as listed</div>
+            </div>
+            <div class="card-arrow">&#8594;</div>
+          </div>
+        </a>
+        <a class="link-card" href="guides.html">
+          <div class="card-corner-bl"></div>
+          <div class="card-header">
+            <div class="card-icon" style="color:#00f5ff;">&#9635;</div>
+            <div>
+              <div class="card-title">Guides</div>
+              <div class="card-sub">Windows guides + macOS guides</div>
+            </div>
+            <div class="card-arrow">&#8594;</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="home-group">
+      <div class="section-label">Shelves being labeled</div>
+      <div class="links compact-links">
+        <a class="link-card" href="free-assets.html">
+          <div class="card-corner-bl"></div>
+          <div class="card-header">
+            <div class="card-icon" style="color:#75ffb0;">&#9633;</div>
+            <div>
+              <div class="card-title">Free Assets</div>
+              <div class="card-sub">fonts, SFX, LUTs, footage, icons, 3D</div>
+            </div>
+            <div class="card-arrow">&#8594;</div>
+          </div>
+        </a>
+        <a class="link-card" href="tutorials.html">
+          <div class="card-corner-bl"></div>
+          <div class="card-header">
+            <div class="card-icon" style="color:#00f5ff;">&#9702;</div>
+            <div>
+              <div class="card-title">Tutorials</div>
+              <div class="card-sub">video and written walkthroughs coming next</div>
+            </div>
+            <div class="card-arrow">&#8594;</div>
+          </div>
+        </a>
+        <a class="link-card" href="new-drops.html">
+          <div class="card-corner-bl"></div>
+          <div class="card-header">
+            <div class="card-icon" style="color:#ff2d95;">&#9671;</div>
+            <div>
+              <div class="card-title">New Drops</div>
+              <div class="card-sub">latest additions feed</div>
+            </div>
+            <div class="card-arrow">&#8594;</div>
+          </div>
+        </a>
+        <a class="link-card" href="status.html">
+          <div class="card-corner-bl"></div>
+          <div class="card-header">
+            <div class="card-icon" style="color:#75ffb0;">&#9673;</div>
+            <div>
+              <div class="card-title">Status &amp; Changelog</div>
+              <div class="card-sub">updates, checks, and maintenance notes</div>
+            </div>
+            <div class="card-arrow">&#8594;</div>
+          </div>
+        </a>
+        <a class="link-card" href="faq.html">
+          <div class="card-corner-bl"></div>
+          <div class="card-header">
+            <div class="card-icon" style="color:#d4922e;">?</div>
+            <div>
+              <div class="card-title">FAQ</div>
+              <div class="card-sub">passwords, requests, and broken-link notes</div>
+            </div>
+            <div class="card-arrow">&#8594;</div>
+          </div>
+        </a>
+        <a class="link-card help-card" href="https://discord.gg/v3ltra" target="_blank" rel="noopener noreferrer">
+          <div class="card-corner-bl"></div>
+          <div class="card-header">
+            <div class="card-icon" style="color:#ff2d95;">?</div>
+            <div>
+              <div class="card-title">Need Help? Join the <b>DISCORD</b></div>
+              <div class="card-sub">Questions, updates &amp; resources - boosts help the server grow</div>
+            </div>
+            <div class="card-arrow">&#8599;</div>
+          </div>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <div class="section-label legacy-home-label">Browse the archive</div>
+  <div class="links legacy-home-links">
     <a class="link-card" href="plugins.html">
       <div class="card-corner-bl"></div>
       <div class="card-header">
@@ -255,8 +585,8 @@
   </div>
   <div class="lounge-banner">
     <div class="lounge-copy">
-      <div class="card-title">Made for the 2 A.M. Edit</div>
-      <div class="card-sub">organized by an actual editor</div>
+      <div class="card-title">Built for the late-night edit</div>
+      <div class="card-sub">organized by an editor who knows folders get messy</div>
     </div>
   </div>
 
@@ -264,7 +594,7 @@
   <div class="footer"><div>made by an editor who got tired of messy folders</div><div><a href="mailto:vltralegal@gmail.com">Legal inquiries</a></div></div>
 </div>
 
-<script>
+<script type="text/plain" data-disabled="background-effects">
 
 
 
@@ -506,5 +836,6 @@ function mkLoop(ts){
 }
 requestAnimationFrame(mkLoop);
 </script>
+<script src="v3ltra.js" defer></script>
 </body>
 </html>

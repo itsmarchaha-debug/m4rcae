@@ -143,5 +143,6 @@ function loop(ts){requestAnimationFrame(loop);if(reduceMotion||document.hidden||
 sizeCanvases();if(bgImg.complete)initBG();else bgImg.onload=initBG;requestAnimationFrame(loop);
 let resizeTimer;addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{sizeCanvases();initBG()},160)},{passive:true});motionQuery.addEventListener?.('change',e=>{reduceMotion=e.matches;if(!reduceMotion)initBG()});
 </script>
+<script src="v3ltra.js" defer></script>
 </body>
 </html>

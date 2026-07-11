@@ -105,6 +105,95 @@
     });
   }
 
+  function initDiscordButton() {
+    document.documentElement.classList.add("v3-discord-ready");
+    if (!document.getElementById("discord-top-button-style")) {
+      const style = document.createElement("style");
+      style.id = "discord-top-button-style";
+      style.textContent = `
+        .discord-top-button {
+          position: fixed;
+          top: 14px;
+          right: 14px;
+          z-index: 80;
+          min-height: 38px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 0 13px;
+          border: 1px solid rgba(252, 238, 9, 0.48);
+          border-radius: 5px;
+          background:
+            linear-gradient(100deg, rgba(252, 238, 9, 0.16), rgba(140, 236, 255, 0.12)),
+            rgba(4, 8, 8, 0.9);
+          color: #f7fbef;
+          text-decoration: none;
+          font: 700 10px "Share Tech Mono", monospace;
+          letter-spacing: 0.09em;
+          text-transform: uppercase;
+          box-shadow: 0 0 18px rgba(252, 238, 9, 0.14), inset 0 0 16px rgba(140, 236, 255, 0.06);
+          backdrop-filter: blur(10px);
+          transition: border-color 170ms ease, background 170ms ease, color 170ms ease, transform 170ms ease;
+        }
+
+        .discord-top-button:hover,
+        .discord-top-button:focus-visible {
+          border-color: rgba(140, 236, 255, 0.72);
+          color: #fcee09;
+          background:
+            linear-gradient(100deg, rgba(252, 238, 9, 0.22), rgba(140, 236, 255, 0.18)),
+            rgba(6, 14, 15, 0.95);
+          transform: translateY(-1px);
+        }
+
+        .discord-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #8cecff;
+          box-shadow: 0 0 13px rgba(140, 236, 255, 0.86);
+          flex: 0 0 auto;
+        }
+
+        .discord-open {
+          color: #8cecff;
+        }
+
+        .v3-discord-ready .nav {
+          padding-right: 128px;
+        }
+
+        @media (max-width: 640px) {
+          .discord-top-button {
+            top: 10px;
+            right: 10px;
+            min-height: 34px;
+            padding: 0 10px;
+            font-size: 9px;
+          }
+
+          .discord-open {
+            display: none;
+          }
+
+          .v3-discord-ready .nav {
+            padding-right: 94px;
+          }
+        }
+      `;
+      document.head.append(style);
+    }
+    if (document.querySelector(".discord-top-button")) return;
+    const link = document.createElement("a");
+    link.className = "discord-top-button";
+    link.href = "https://discord.com/invite/v3ltra";
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.setAttribute("aria-label", "Join the V3LTRA Discord server");
+    link.innerHTML = '<span class="discord-dot" aria-hidden="true"></span><span>Discord</span><span class="discord-open" aria-hidden="true">Open</span>';
+    document.body.append(link);
+  }
+
   function toast(message) {
     let hub = document.querySelector(".toast-hub");
     if (!hub) {
@@ -334,6 +423,7 @@
 
   function boot() {
     document.documentElement.classList.add("v3-js");
+    initDiscordButton();
     ensureNav();
     initCopy();
     initEmptyStates();

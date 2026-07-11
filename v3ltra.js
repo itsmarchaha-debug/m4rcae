@@ -105,6 +105,99 @@
     });
   }
 
+  function initGlobalNavPolish() {
+    document.documentElement.classList.add("v3-nav-polish");
+    if (document.getElementById("v3-nav-polish-style")) return;
+    const style = document.createElement("style");
+    style.id = "v3-nav-polish-style";
+    style.textContent = `
+      .v3-nav-polish .nav {
+        width: 100%;
+        min-height: 54px;
+        gap: 10px !important;
+        padding: 8px 44px 11px 10px !important;
+        margin: 0 0 30px !important;
+        border: 1px solid rgba(252, 238, 9, 0.28);
+        border-radius: 8px;
+        background:
+          linear-gradient(90deg, rgba(252, 238, 9, 0.1), rgba(140, 236, 255, 0.08)),
+          rgba(4, 8, 8, 0.84);
+        box-shadow: inset 0 -1px 0 rgba(140, 236, 255, 0.16), 0 0 20px rgba(252, 238, 9, 0.08);
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-color: rgba(252, 238, 9, 0.62) rgba(4, 8, 8, 0.62);
+        scrollbar-width: thin;
+        scroll-snap-type: x proximity;
+        mask-image: linear-gradient(90deg, transparent 0, #000 30px, #000 calc(100% - 42px), transparent 100%);
+        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 30px, #000 calc(100% - 42px), transparent 100%);
+      }
+
+      .v3-discord-ready.v3-nav-polish .nav {
+        padding-right: 360px !important;
+      }
+
+      .v3-nav-polish .nav::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .v3-nav-polish .nav::-webkit-scrollbar-track {
+        background: rgba(4, 8, 8, 0.62);
+      }
+
+      .v3-nav-polish .nav::-webkit-scrollbar-thumb {
+        background: linear-gradient(90deg, rgba(252, 238, 9, 0.72), rgba(140, 236, 255, 0.64));
+        border-radius: 999px;
+      }
+
+      .v3-nav-polish .nav a {
+        flex: 0 0 auto;
+        min-height: 38px;
+        padding: 10px 14px !important;
+        border-color: rgba(252, 238, 9, 0.3) !important;
+        border-radius: 5px;
+        background: rgba(7, 17, 17, 0.84) !important;
+        color: #f3f8ef !important;
+        font-size: 11px !important;
+        font-weight: 700;
+        letter-spacing: 0.08em !important;
+        line-height: 1;
+        scroll-snap-align: start;
+      }
+
+      .v3-nav-polish .nav a:hover,
+      .v3-nav-polish .nav a:focus-visible,
+      .v3-nav-polish .nav a.active {
+        border-color: rgba(140, 236, 255, 0.68) !important;
+        background: rgba(140, 236, 255, 0.1) !important;
+        color: #fcee09 !important;
+        box-shadow: inset 0 -2px 0 rgba(252, 238, 9, 0.82) !important;
+      }
+
+      @media (max-width: 760px) {
+        .v3-nav-polish .nav {
+          min-height: 50px;
+          padding: 8px 36px 10px 8px !important;
+          margin-bottom: 24px !important;
+          mask-image: linear-gradient(90deg, transparent 0, #000 22px, #000 calc(100% - 30px), transparent 100%);
+          -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22px, #000 calc(100% - 30px), transparent 100%);
+        }
+
+        .v3-discord-ready.v3-nav-polish .nav,
+        .v3-discord-ready.v3-nav-polish .beginner-guide-page > .nav {
+          padding-right: 126px !important;
+        }
+
+        .v3-nav-polish .nav a {
+          min-height: 36px;
+          padding: 9px 11px !important;
+          font-size: 10px !important;
+        }
+      }
+    `;
+    document.head.append(style);
+  }
+
   function initDiscordButton() {
     document.documentElement.classList.add("v3-discord-ready");
     if (!document.getElementById("discord-top-button-style")) {
@@ -480,6 +573,7 @@
   function boot() {
     document.documentElement.classList.add("v3-js");
     initDiscordButton();
+    initGlobalNavPolish();
     ensureNav();
     initCopy();
     initEmptyStates();

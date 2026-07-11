@@ -3,18 +3,436 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#302b2a">
-<meta name="description" content="V3LTRA.xyz beginner guide for editor setup, install habits, platform choices, and common After Effects resource basics.">
+<meta name="theme-color" content="#050604">
+<meta name="description" content="V3LTRA.xyz beginner guide for After Effects hardware, version choice, plugins, composition basics, workflow, shortcuts, and starter resources.">
 <title>V3LTRA.xyz - Beginner's Guide</title>
 <link rel="preload" href="bg.webp" as="image" type="image/webp">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="curated.css">
+<style>
+  .beginner-guide-page {
+    width: min(100% - 24px, 1180px);
+    max-width: 1180px !important;
+  }
+
+  .guide-hero {
+    width: 100%;
+    margin-bottom: 18px;
+    padding: clamp(20px, 4vw, 34px);
+    border: 1px solid rgba(252, 238, 9, 0.32);
+    border-left: 3px solid rgba(140, 236, 255, 0.74);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgba(252, 238, 9, 0.12), rgba(140, 236, 255, 0.09) 58%, rgba(4, 8, 8, 0.72)),
+      rgba(4, 8, 8, 0.84);
+    box-shadow: 0 0 28px rgba(252, 238, 9, 0.12), inset 0 0 22px rgba(140, 236, 255, 0.06);
+  }
+
+  .guide-kicker,
+  .guide-eyebrow,
+  .rail-label,
+  .mini-label,
+  .video-label {
+    color: #fcee09;
+    font: 700 11px "Share Tech Mono", monospace;
+    text-transform: uppercase;
+  }
+
+  .guide-hero h2 {
+    max-width: 820px;
+    margin: 10px 0 12px;
+    color: #f7fbef;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 0.95;
+    text-shadow: 0 0 18px rgba(252, 238, 9, 0.2), 0 0 24px rgba(140, 236, 255, 0.15);
+  }
+
+  .guide-hero p {
+    max-width: 850px;
+    color: #d4e4de;
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.45;
+  }
+
+  .guide-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .guide-stat {
+    min-height: 86px;
+    padding: 13px;
+    border: 1px solid rgba(252, 238, 9, 0.2);
+    border-radius: 6px;
+    background: rgba(4, 8, 8, 0.66);
+  }
+
+  .guide-stat strong,
+  .guide-stat span {
+    display: block;
+  }
+
+  .guide-stat strong {
+    color: #8cecff;
+    font: 700 12px "Share Tech Mono", monospace;
+    text-transform: uppercase;
+  }
+
+  .guide-stat span {
+    margin-top: 7px;
+    color: #f7fbef;
+    font-size: 20px;
+    line-height: 1.1;
+  }
+
+  .beginner-layout {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    align-items: start;
+    gap: 22px;
+  }
+
+  .guide-rail {
+    position: sticky;
+    top: 88px;
+    z-index: 9;
+    padding: 12px;
+    border: 1px solid rgba(252, 238, 9, 0.22);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(252, 238, 9, 0.055), rgba(140, 236, 255, 0.035)),
+      rgba(4, 8, 8, 0.82);
+    backdrop-filter: blur(12px);
+  }
+
+  .rail-label {
+    display: block;
+    margin: 0 0 10px 2px;
+    color: rgba(247, 251, 239, 0.58);
+  }
+
+  .guide-rail a {
+    min-height: 43px;
+    display: flex;
+    align-items: center;
+    padding: 10px 13px;
+    border-left: 2px solid transparent;
+    color: #c8d7d3;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: color 170ms ease, background 170ms ease, border-color 170ms ease;
+  }
+
+  .guide-rail a:hover,
+  .guide-rail a:focus-visible,
+  .guide-rail a.is-active {
+    border-left-color: #fcee09;
+    color: #fcee09;
+    background: rgba(252, 238, 9, 0.08);
+  }
+
+  .guide-content {
+    min-width: 0;
+    display: grid;
+    gap: 18px;
+  }
+
+  .guide-section,
+  .guide-card,
+  .guide-note,
+  .video-card,
+  .shortcut-table,
+  .starter-list {
+    border: 1px solid rgba(252, 238, 9, 0.22);
+    border-left: 2px solid rgba(140, 236, 255, 0.62);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgba(252, 238, 9, 0.055), rgba(140, 236, 255, 0.06)),
+      rgba(4, 8, 8, 0.82);
+    box-shadow: inset 0 0 18px rgba(140, 236, 255, 0.045);
+  }
+
+  .guide-section {
+    scroll-margin-top: 96px;
+    padding: clamp(20px, 4vw, 32px);
+  }
+
+  .guide-section:target {
+    border-color: rgba(140, 236, 255, 0.58);
+    box-shadow: 0 0 26px rgba(252, 238, 9, 0.12), inset 0 0 18px rgba(140, 236, 255, 0.06);
+  }
+
+  .guide-section h2 {
+    margin: 7px 0 16px;
+    color: #f7fbef;
+    font-size: clamp(27px, 3.4vw, 44px);
+    line-height: 1.02;
+  }
+
+  .guide-section h3 {
+    margin: 0 0 8px;
+    color: #f7fbef;
+    font-size: 23px;
+    line-height: 1.15;
+  }
+
+  .guide-section p,
+  .guide-section li {
+    color: #c6d4cf;
+    font-size: 17px;
+    line-height: 1.68;
+  }
+
+  .guide-section p + p {
+    margin-top: 14px;
+  }
+
+  .quick-answer {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(260px, 1.05fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .guide-card {
+    padding: 18px;
+  }
+
+  .spec-list,
+  .clean-list {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .spec-list li,
+  .clean-list li {
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .spec-list li::before,
+  .clean-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fcee09;
+    box-shadow: 0 0 12px rgba(252, 238, 9, 0.72);
+  }
+
+  .hardware-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .guide-note {
+    margin-top: 18px;
+    padding: 18px;
+    border-left-color: #fcee09;
+    background:
+      linear-gradient(135deg, rgba(252, 238, 9, 0.11), rgba(140, 236, 255, 0.055)),
+      rgba(8, 12, 10, 0.88);
+  }
+
+  .video-card {
+    margin-top: 22px;
+    padding: 18px;
+  }
+
+  .video-card h3 {
+    margin-top: 5px;
+  }
+
+  .guide-video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-top: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(140, 236, 255, 0.34);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.46);
+  }
+
+  .guide-video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .inline-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .inline-links a {
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 11px;
+    border: 1px solid rgba(140, 236, 255, 0.34);
+    border-radius: 5px;
+    background: rgba(140, 236, 255, 0.055);
+    color: #c8f8ff;
+    font: 10px "Share Tech Mono", monospace;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .inline-links a:hover,
+  .inline-links a:focus-visible {
+    border-color: rgba(252, 238, 9, 0.68);
+    color: #fcee09;
+  }
+
+  .shortcut-table {
+    width: 100%;
+    margin-top: 14px;
+    overflow: hidden;
+    border-collapse: collapse;
+  }
+
+  .shortcut-table th,
+  .shortcut-table td {
+    padding: 13px 14px;
+    border-bottom: 1px solid rgba(252, 238, 9, 0.12);
+    color: #c6d4cf;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .shortcut-table th {
+    color: #fcee09;
+    font: 700 10px "Share Tech Mono", monospace;
+    text-transform: uppercase;
+  }
+
+  .shortcut-table td:first-child {
+    color: #f7fbef;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .starter-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 16px;
+    overflow: hidden;
+  }
+
+  .starter-list div {
+    min-height: 110px;
+    padding: 16px;
+    border-right: 1px solid rgba(252, 238, 9, 0.12);
+    border-bottom: 1px solid rgba(252, 238, 9, 0.12);
+  }
+
+  .starter-list strong,
+  .starter-list span {
+    display: block;
+  }
+
+  .starter-list strong {
+    color: #f7fbef;
+    font-size: 19px;
+  }
+
+  .starter-list span {
+    margin-top: 6px;
+    color: #b7c8c9;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 920px) {
+    .guide-stats,
+    .hardware-grid,
+    .quick-answer,
+    .starter-list {
+      grid-template-columns: 1fr;
+    }
+
+    .beginner-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .guide-rail {
+      position: relative;
+      top: auto;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 10px;
+      scrollbar-width: thin;
+    }
+
+    .rail-label {
+      display: none;
+    }
+
+    .guide-rail a {
+      flex: 0 0 auto;
+      min-height: 38px;
+      border-left: 0;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+    }
+
+    .guide-rail a:hover,
+    .guide-rail a:focus-visible,
+    .guide-rail a.is-active {
+      border-left-color: transparent;
+      border-bottom-color: #fcee09;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .beginner-guide-page {
+      width: min(100% - 18px, 100%);
+    }
+
+    .guide-hero,
+    .guide-section {
+      padding: 18px;
+    }
+
+    .guide-hero h2 {
+      font-size: 36px;
+    }
+
+    .guide-section p,
+    .guide-section li {
+      font-size: 16px;
+    }
+
+    .shortcut-table td:first-child {
+      white-space: normal;
+    }
+  }
+</style>
 </head>
 <body>
 <img id="bg-image" src="bg.webp" alt="" decoding="async" fetchpriority="high">
 <div class="scanlines"></div>
 <div class="vignette"></div>
-<main class="page building-page">
+<main class="page building-page beginner-guide-page">
   <nav class="nav" aria-label="Main navigation">
     <a href="index.html" aria-label="V3LTRA.xyz home">BACK HOME</a>
     <a class="active" href="beginners-guide.html">START HERE</a>
@@ -25,27 +443,208 @@
     <a href="extensions.html">EXTENSIONS</a>
     <a href="guides.html">GUIDES</a>
   </nav>
+
   <header class="phead">
     <h1 data-text="Beginner's Guide">Beginner's Guide</h1>
-    <div class="sub">the first shelf before you start installing everything at 2 A.M.</div>
+    <div class="sub">start clean before the edit is already on fire</div>
   </header>
-  <section class="building-panel">
-    <div class="section-label">starter route</div>
-    <h2>// begin clean</h2>
-    <p>This page is the short path for editors who are new to V3LTRA: pick your platform, learn where files usually go, then use the deeper guides when something needs a fix.</p>
-    <div class="building-grid">
-      <article class="building-card"><h3>Pick a platform</h3><p>Windows and Mac resources are split so you do not have to guess which archive applies.</p></article>
-      <article class="building-card"><h3>Know the folders</h3><p>After Effects plugins, scripts, presets, and extensions usually live in different places.</p></article>
-      <article class="building-card"><h3>Check compatibility</h3><p>Match plugin builds to your AE version and watch for Apple Silicon or Rosetta notes on Mac.</p></article>
-      <article class="building-card"><h3>Use the guides</h3><p>When something breaks, jump to the written guide shelf before reinstalling random files.</p></article>
-    </div>
-    <div class="tile-actions starter-actions" aria-label="Beginner guide shortcuts">
-      <a href="guides.html">Open Guides</a>
-      <a href="plugins.html">Windows Plugins</a>
-      <a href="plugins-mac.html">Mac Plugins</a>
+
+  <section class="guide-hero" aria-labelledby="guide-hero-title">
+    <div class="guide-kicker">Beginner guide</div>
+    <h2 id="guide-hero-title">After Effects setup without the mystery fog.</h2>
+    <p>This starter shelf explains the computer you actually want, the After Effects version decision, basic plugin logic, composition habits, workflow fixes, shortcuts, and the first resources worth grabbing.</p>
+    <div class="guide-stats" aria-label="Recommended beginner setup summary">
+      <div class="guide-stat"><strong>Comfort RAM</strong><span>32GB</span></div>
+      <div class="guide-stat"><strong>GPU target</strong><span>8GB VRAM</span></div>
+      <div class="guide-stat"><strong>Storage</strong><span>SSD cache</span></div>
+      <div class="guide-stat"><strong>Footage</strong><span>1080p first</span></div>
     </div>
   </section>
-  <footer class="footer"><div>V3LTRA.xyz - starter shelf</div><div><a href="mailto:vltralegal@gmail.com">Legal inquiries</a></div></footer>
+
+  <div class="beginner-layout">
+    <aside class="guide-rail" aria-label="Beginner guide sections">
+      <span class="rail-label">Sections</span>
+      <a class="is-active" href="#hardware">Hardware</a>
+      <a href="#ae-version">AE Version</a>
+      <a href="#plugins">Plugins</a>
+      <a href="#composition">Composition</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#shortcuts">Shortcuts</a>
+      <a href="#editing-pack">Editing Pack</a>
+      <a href="#watch">Watch</a>
+    </aside>
+
+    <div class="guide-content">
+      <section class="guide-section" id="hardware">
+        <div class="guide-eyebrow">Hardware</div>
+        <h2>What kind of computer do you actually need for After Effects?</h2>
+        <p>After Effects can technically open on a fairly basic computer, but opening the program and comfortably editing inside it are two completely different things. Your CPU, memory, storage, graphics card, footage, effects, and project size all affect how smoothly it runs.</p>
+        <p>A powerful graphics card can help with certain effects, 3D features, and rendering tasks, but it cannot make up for a slow processor, insufficient RAM, or a nearly full storage drive.</p>
+
+        <div class="quick-answer" id="quick-answer">
+          <article class="guide-card">
+            <div class="mini-label">The quick answer</div>
+            <h3>A comfortable starting point</h3>
+            <p>For most beginner editors working with 1080p footage, this is the setup that keeps After Effects from feeling like a punishment.</p>
+          </article>
+          <article class="guide-card">
+            <ul class="spec-list">
+              <li>A reasonably modern processor with at least six cores.</li>
+              <li>32GB of RAM for regular editing and plugin use.</li>
+              <li>A graphics card with at least 4GB of VRAM, preferably 8GB.</li>
+              <li>An SSD for After Effects, project files, and disk cache.</li>
+              <li>Enough free storage that your cache is not constantly filling the drive.</li>
+            </ul>
+          </article>
+        </div>
+
+        <p>You can use After Effects with 16GB of RAM, especially for simple projects, but previews will usually be shorter and larger projects can become frustrating much faster.</p>
+        <p>Adobe's baseline specs are useful as a floor, not the comfort zone: 16GB can launch the app, 32GB or more is much better for 4K work, supported GPUs need real VRAM, and a fast internal SSD helps the app and cache breathe.</p>
+
+        <div class="hardware-grid">
+          <article class="guide-card">
+            <h3>Processor</h3>
+            <p>Your processor does more than most beginners realize. It helps calculate effects, build frames, process expressions, manage previews, and render compositions.</p>
+            <p>A newer processor with strong individual cores will usually feel better while actively working. Additional cores can help After Effects process several frames through Multi-Frame Rendering.</p>
+            <p>Good to know: low GPU usage does not automatically mean something is wrong. Many After Effects tasks lean more heavily on the CPU and RAM.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Memory</h3>
+            <p>RAM controls how much After Effects can keep ready. The app stores rendered preview frames in memory, so more RAM usually means longer previews before older frames get removed.</p>
+            <p>16GB can handle basic projects if you keep the project simple. 32GB is a much more comfortable starting point for regular editing, plugins, 1080p compositions, and some 4K work.</p>
+            <p>64GB or more becomes useful for large compositions, heavy plugins, long previews, 3D work, and editors who keep several Adobe apps open at once.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Graphics card</h3>
+            <p>The GPU matters, but it is not the entire computer. After Effects uses the graphics card for supported effects, color processing, some previews, Advanced 3D features, and other accelerated tasks.</p>
+            <ul class="clean-list">
+              <li>GPU-accelerated effects.</li>
+              <li>Advanced 3D and Element 3D style plugins.</li>
+              <li>High-resolution footage and displays.</li>
+              <li>AI-assisted tools and heavier preview work.</li>
+            </ul>
+            <p>For ordinary motion graphics and short social edits, a balanced computer is more useful than spending the entire budget on the GPU.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Storage and cache</h3>
+            <p>After Effects creates temporary cache files so it does not have to recalculate every frame repeatedly. These files can take up a surprising amount of space.</p>
+            <p>Keep After Effects and its disk cache on an SSD whenever possible. An NVMe SSD is ideal, but a normal SATA SSD is still much better than an older mechanical hard drive.</p>
+            <p>A clean setup can use one drive for your system and apps, one for footage and project files, and a separate fast drive for disk cache. Beginners do not need three drives immediately, but avoid putting everything on a nearly full system drive.</p>
+          </article>
+        </div>
+
+        <div class="guide-note">
+          <div class="mini-label">V3LTRA note</div>
+          <p>Do not shop for an "After Effects computer" by looking at one specification. CPU performance, RAM, GPU memory, storage speed, project resolution, footage format, and plugins all work together.</p>
+        </div>
+      </section>
+
+      <section class="guide-section" id="ae-version">
+        <div class="guide-eyebrow">Version choice</div>
+        <h2>Which After Effects version should you use?</h2>
+        <p>Start with the newest version your system can run well. Newer releases bring bug fixes, format support, and features that older tutorials may not cover. If your device is low-end or a plugin you rely on is unstable, stepping back one or two versions can be a reasonable tradeoff.</p>
+        <p>Project compatibility is the biggest thing to understand. After Effects can usually open projects made in the same or older versions, but older versions cannot reliably open projects saved in newer versions. If you need to share work with someone on an older release, use <strong>File &gt; Save As &gt; Save a Copy As</strong> for the target version when available.</p>
+        <p>If you are on Apple Silicon, plugin compatibility matters as much as the After Effects version itself. Some tools are native, some still need Rosetta, and some older plugins are not worth building a workflow around.</p>
+        <div class="guide-note">
+          <p>Do not choose a version because it is popular on TikTok. Choose the newest version that runs reliably with your plugins and hardware.</p>
+        </div>
+      </section>
+
+      <section class="guide-section" id="plugins">
+        <div class="guide-eyebrow">Plugins</div>
+        <h2>What are plugins, and which ones are common?</h2>
+        <p>Plugins are add-ons that expand what After Effects can do. Some add new visual effects, some add color tools, some make 3D work possible, and some are just workflow panels that save time.</p>
+        <p>Beginners usually run into a few big categories first: effect suites, retiming tools, 3D plugins, color tools, transitions, preset packs, and workflow panels. Common archive names include Boris FX / Sapphire, Maxon / Red Giant, Video Copilot, RE:Vision FX, Motion Bro, and FX Console.</p>
+        <p>Do not install everything at once. Add one tool, test it, learn what it does, then move on. A messy plugin folder can make troubleshooting much harder later.</p>
+        <div class="inline-links" aria-label="Plugin archive links">
+          <a href="plugins.html">Windows plugins</a>
+          <a href="plugins-mac.html">Mac plugins</a>
+          <a href="extensions.html">Extensions &amp; scripts</a>
+        </div>
+      </section>
+
+      <section class="guide-section" id="composition">
+        <div class="guide-eyebrow">Composition</div>
+        <h2>Composition settings are the project map.</h2>
+        <p>A composition is the timeline space where your edit, animation, effects, and layers live. Before adding a stack of plugins, check the basics: resolution, frame rate, duration, and background color.</p>
+        <p>For beginners, 1920x1080 is the easiest starting point. It is lighter than 4K, matches most tutorial workflows, and lets you learn effects without every preview becoming painfully slow.</p>
+        <p>Keep your frame rate consistent with the footage or platform you are building for. Mixing random frame rates can create odd motion, timing issues, and preview confusion.</p>
+        <div class="guide-note">
+          <p>Good habit: name your comps clearly. "final_final_v7" feels funny until you have six precomps and no idea which one actually renders.</p>
+        </div>
+      </section>
+
+      <section class="guide-section" id="workflow">
+        <div class="guide-eyebrow">Workflow</div>
+        <h2>Make After Effects easier before blaming the computer.</h2>
+        <p>A faster workflow is not only about hardware. Preview resolution, cache location, footage format, plugin stacks, precomps, and how many apps are open can all change how After Effects feels.</p>
+        <ul class="clean-list">
+          <li>Use half or quarter preview resolution while building heavy scenes.</li>
+          <li>Clear cache when previews behave strangely or storage gets tight.</li>
+          <li>Precompose sections when a timeline gets too crowded.</li>
+          <li>Close apps you are not using when working with 16GB or 32GB RAM.</li>
+          <li>Keep project files, footage, and exports organized before the folder turns into soup.</li>
+        </ul>
+        <div class="video-card" id="watch">
+          <div class="video-label">Workflow tutorial</div>
+          <h3>Watch: make After Effects run faster</h3>
+          <p>This video fits the performance side of the beginner guide: GPU acceleration, Multi-Frame Rendering, external SSDs, preview resolution, and avoiding lag.</p>
+          <div class="guide-video">
+            <iframe src="https://www.youtube-nocookie.com/embed/_YYzftHRB54" title="How to make After Effects run faster" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section class="guide-section" id="shortcuts">
+        <div class="guide-eyebrow">Shortcuts</div>
+        <h2>Shortcuts worth learning first.</h2>
+        <p>You do not need to memorize the entire keyboard. Start with the keys that reveal layer properties, control the work area, and help you preview faster.</p>
+        <table class="shortcut-table" aria-label="After Effects beginner shortcuts">
+          <thead><tr><th>Shortcut</th><th>Use it for</th></tr></thead>
+          <tbody>
+            <tr><td>P / S / R / T</td><td>Reveal Position, Scale, Rotation, and Opacity for the selected layer.</td></tr>
+            <tr><td>U</td><td>Show animated properties and keyframes on selected layers.</td></tr>
+            <tr><td>B / N</td><td>Set the beginning and end of the work area.</td></tr>
+            <tr><td>Space</td><td>Preview playback in many current After Effects setups.</td></tr>
+            <tr><td>Ctrl or Cmd + K</td><td>Open composition settings.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="guide-section" id="editing-pack">
+        <div class="guide-eyebrow">Editing starter pack</div>
+        <h2>The first shelf to build.</h2>
+        <p>A good starter setup is not a thousand files. It is a small, clean kit you understand well enough to use under pressure.</p>
+        <div class="starter-list">
+          <div><strong>After Effects</strong><span>Install a version your hardware and plugins can run reliably.</span></div>
+          <div><strong>Project folder</strong><span>Keep footage, project files, exports, fonts, and audio separated.</span></div>
+          <div><strong>Cache space</strong><span>Give After Effects a fast SSD location with room to breathe.</span></div>
+          <div><strong>Core plugins</strong><span>Add common tools slowly: Sapphire, Red Giant, Video Copilot, RE:Vision, and workflow panels.</span></div>
+          <div><strong>Audio and assets</strong><span>Build a small folder for SFX, risers, impacts, LUTs, overlays, and fonts.</span></div>
+          <div><strong>Help channel</strong><span>Use the V3LTRA Discord when links, versions, installs, or plugins get weird.</span></div>
+        </div>
+        <div class="inline-links" aria-label="Starter pack links">
+          <a href="free-assets.html">Free assets</a>
+          <a href="tutorials.html">Tutorials</a>
+          <a href="https://discord.com/invite/v3ltra" target="_blank" rel="noopener noreferrer">Discord help</a>
+        </div>
+      </section>
+
+      <section class="guide-section">
+        <div class="guide-eyebrow">Specs tutorial</div>
+        <h2>Watch the full computer-spec explanation.</h2>
+        <p>This is the best fit for the hardware section: RAM, processors, GPUs, storage, Windows versus Mac, and laptops versus desktops for After Effects.</p>
+        <div class="guide-video">
+          <iframe src="https://www.youtube-nocookie.com/embed/xU9tHrJH6KM" title="After Effects computer specifications explained" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer class="footer"><div>V3LTRA.xyz - beginner shelf</div><div><a href="mailto:vltralegal@gmail.com">Legal inquiries</a></div></footer>
 </main>
 <script src="v3ltra.js" defer></script>
 </body>

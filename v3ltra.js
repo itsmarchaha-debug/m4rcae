@@ -832,43 +832,6 @@
     });
   }
 
-  function initMacSoftwareTutorialMirrors() {
-    if (fileName() !== "software-mac.html") return;
-    const body = document.querySelector(".satvrn .satvrn-body");
-    const setup = body?.querySelector(".satvrn-dl[href]");
-    if (!body || !setup || body.querySelector(".satvrn-resource-grid")) return;
-
-    const mirrors = [
-      ["AFTER EFFECTS GOFILE TUTS", "https://gofile.io/d/fdG8lj"],
-      ["MEDIA ENCODER GOFILE TUTS", "https://gofile.io/d/vl2qvI"],
-      ["PHOTOSHOP MAC GOFILE TUTS", "https://gofile.io/d/F53iST"],
-      ["PREMIERE PRO GOFILE TUTS", "https://gofile.io/d/f4GUnB"],
-      ["TOPAZ LABS GOFILE TUTS", "https://gofile.io/d/CKq15a"],
-      ["TOUCHDESIGNER GOFILE TUTS", "https://gofile.io/d/ixWddT"],
-      ["UNSORTED GOFILE TUTS", "https://gofile.io/d/mLMrso"]
-    ];
-    const list = body.querySelector(".satvrn-list");
-    const grid = document.createElement("div");
-    grid.className = "satvrn-resource-grid";
-    setup.classList.add("satvrn-resource-button", "satvrn-primary-resource");
-    const arrow = setup.querySelector(".dl-arrow");
-    if (arrow) arrow.innerHTML = "&#8599;";
-
-    const mirrorLinks = mirrors.map(([label, href]) => {
-      const link = document.createElement("a");
-      link.className = "gofile-btn satvrn-resource-button";
-      link.href = href;
-      link.target = "_blank";
-      link.rel = "noopener";
-      link.setAttribute("aria-label", label.replace(" TUTS", " tutorials"));
-      link.innerHTML = `<span>${label}</span><span class="dl-arrow" aria-hidden="true">&#8599;</span>`;
-      return link;
-    });
-
-    grid.append(setup, ...mirrorLinks);
-    body.insertBefore(grid, list || body.firstChild);
-  }
-
   function initArchivePolishPass() {
     document.documentElement.classList.add("v3-archive-polish-pass");
     document.querySelectorAll("img:not(#bg-image):not([loading])").forEach((img) => {
@@ -950,40 +913,6 @@
         height: 46px;
       }
 
-      .satvrn-resource-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-        margin: 14px 0 4px;
-      }
-
-      .satvrn-resource-grid .satvrn-resource-button {
-        width: 100%;
-        min-height: 45px;
-        margin: 0 !important;
-      }
-
-      .satvrn-resource-grid .gofile-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 13px 16px;
-        border: 1px solid rgba(255, 49, 49, 0.52);
-        background: rgba(255, 49, 49, 0.08);
-        color: #ff5a5a;
-        font: 700 12px "Share Tech Mono", monospace;
-        letter-spacing: 0.12em;
-        text-align: center;
-        text-decoration: none;
-        text-transform: uppercase;
-      }
-
-      @media (max-width: 560px) {
-        .satvrn-resource-grid {
-          grid-template-columns: 1fr;
-        }
-      }
     `;
     document.head.append(style);
   }
@@ -997,7 +926,6 @@
     ensureNav();
     initArchivePolishPass();
     initBrandLogos();
-    initMacSoftwareTutorialMirrors();
     initCopy();
     initEmptyStates();
     initReveal();

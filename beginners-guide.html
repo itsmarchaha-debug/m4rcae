@@ -15,6 +15,81 @@
     max-width: 1180px !important;
   }
 
+  .beginner-guide-page > .nav {
+    width: 100%;
+    min-height: 54px;
+    gap: 10px !important;
+    padding: 8px 44px 11px 10px !important;
+    margin: 0 0 30px !important;
+    border: 1px solid rgba(252, 238, 9, 0.28);
+    border-radius: 8px;
+    background:
+      linear-gradient(90deg, rgba(252, 238, 9, 0.1), rgba(140, 236, 255, 0.08)),
+      rgba(4, 8, 8, 0.84);
+    box-shadow: inset 0 -1px 0 rgba(140, 236, 255, 0.16), 0 0 20px rgba(252, 238, 9, 0.08);
+    mask-image: linear-gradient(90deg, transparent 0, #000 30px, #000 calc(100% - 42px), transparent 100%);
+    overflow-x: auto;
+    scrollbar-color: rgba(252, 238, 9, 0.62) rgba(4, 8, 8, 0.62);
+    scrollbar-width: thin;
+  }
+
+  .v3-discord-ready .beginner-guide-page > .nav {
+    padding-right: 360px !important;
+  }
+
+  .beginner-guide-page > .nav::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .beginner-guide-page > .nav::-webkit-scrollbar-track {
+    background: rgba(4, 8, 8, 0.62);
+  }
+
+  .beginner-guide-page > .nav::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, rgba(252, 238, 9, 0.7), rgba(140, 236, 255, 0.62));
+    border-radius: 999px;
+  }
+
+  .beginner-guide-page > .nav a {
+    min-height: 38px;
+    padding: 10px 14px !important;
+    border-color: rgba(252, 238, 9, 0.3) !important;
+    border-radius: 5px;
+    background: rgba(7, 17, 17, 0.82) !important;
+    color: #f3f8ef !important;
+    font-size: 11px !important;
+    font-weight: 700;
+    letter-spacing: 0.08em !important;
+  }
+
+  .beginner-guide-page > .nav a:hover,
+  .beginner-guide-page > .nav a:focus-visible,
+  .beginner-guide-page > .nav a.active {
+    border-color: rgba(140, 236, 255, 0.68) !important;
+    background: rgba(140, 236, 255, 0.1) !important;
+    color: #fcee09 !important;
+    box-shadow: inset 0 -2px 0 rgba(252, 238, 9, 0.82) !important;
+  }
+
+  .beginner-guide-page .phead {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 18px;
+    margin-bottom: 26px !important;
+  }
+
+  .beginner-guide-page .phead h1 {
+    margin: 0;
+    line-height: 0.95;
+  }
+
+  .beginner-guide-page .phead .sub {
+    margin: 0;
+    align-self: center;
+  }
+
   .guide-hero {
     width: 100%;
     margin-bottom: 18px;
@@ -97,15 +172,20 @@
 
   .guide-rail {
     position: sticky;
-    top: 88px;
+    top: 102px;
     z-index: 9;
+    align-self: start;
+    max-height: calc(100vh - 124px);
+    overflow-y: auto;
     padding: 12px;
-    border: 1px solid rgba(252, 238, 9, 0.22);
+    border: 1px solid rgba(252, 238, 9, 0.26);
     border-radius: 8px;
     background:
-      linear-gradient(180deg, rgba(252, 238, 9, 0.055), rgba(140, 236, 255, 0.035)),
-      rgba(4, 8, 8, 0.82);
+      linear-gradient(180deg, rgba(252, 238, 9, 0.07), rgba(140, 236, 255, 0.045)),
+      rgba(4, 8, 8, 0.9);
+    box-shadow: 0 0 20px rgba(252, 238, 9, 0.08), inset 0 0 18px rgba(140, 236, 255, 0.05);
     backdrop-filter: blur(12px);
+    scrollbar-width: thin;
   }
 
   .rail-label {
@@ -157,7 +237,7 @@
   }
 
   .guide-section {
-    scroll-margin-top: 96px;
+    scroll-margin-top: 118px;
     padding: clamp(20px, 4vw, 32px);
   }
 
@@ -374,12 +454,15 @@
     }
 
     .guide-rail {
-      position: relative;
-      top: auto;
+      position: sticky;
+      top: 78px;
       display: flex;
       gap: 6px;
+      max-height: none;
       overflow-x: auto;
+      overflow-y: hidden;
       padding: 10px;
+      mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 32px), transparent 100%);
       scrollbar-width: thin;
     }
 
@@ -400,6 +483,20 @@
     .guide-rail a.is-active {
       border-left-color: transparent;
       border-bottom-color: #fcee09;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .v3-discord-ready .beginner-guide-page > .nav {
+      padding-right: 126px !important;
+    }
+
+    .beginner-guide-page .phead {
+      display: block;
+    }
+
+    .beginner-guide-page .phead .sub {
+      margin-top: 9px;
     }
   }
 
@@ -545,11 +642,70 @@
       <section class="guide-section" id="ae-version">
         <div class="guide-eyebrow">Version choice</div>
         <h2>Which After Effects version should you use?</h2>
-        <p>Start with the newest version your system can run well. Newer releases bring bug fixes, format support, and features that older tutorials may not cover. If your device is low-end or a plugin you rely on is unstable, stepping back one or two versions can be a reasonable tradeoff.</p>
-        <p>Project compatibility is the biggest thing to understand. After Effects can usually open projects made in the same or older versions, but older versions cannot reliably open projects saved in newer versions. If you need to share work with someone on an older release, use <strong>File &gt; Save As &gt; Save a Copy As</strong> for the target version when available.</p>
-        <p>If you are on Apple Silicon, plugin compatibility matters as much as the After Effects version itself. Some tools are native, some still need Rosetta, and some older plugins are not worth building a workflow around.</p>
+        <p>The best After Effects version is usually the newest stable release that runs well on your computer and supports the plugins, scripts, and extensions you need.</p>
+        <p>Newer versions can include performance improvements, bug fixes, updated format support, and new features. However, updating immediately is not always the best decision. A version that works reliably with your current setup can be more useful than the newest release available.</p>
+
+        <div class="quick-answer">
+          <article class="guide-card">
+            <div class="mini-label">The quick answer</div>
+            <h3>Choose stability over popularity</h3>
+            <p>Start with the newest stable version your system can comfortably handle. Avoid choosing a version just because it is popular on TikTok, used in a tutorial, or recommended without any explanation.</p>
+          </article>
+          <article class="guide-card">
+            <ul class="spec-list">
+              <li>The newest release runs poorly on your computer.</li>
+              <li>An important plugin does not support it yet.</li>
+              <li>You experience frequent crashes or rendering problems.</li>
+              <li>You need to work with someone using an older version.</li>
+              <li>A project or template was created for a specific release.</li>
+            </ul>
+          </article>
+        </div>
+
+        <p>You usually do not need to move back several years. Going back one or two major versions is often enough to avoid compatibility or performance issues without losing too many newer features.</p>
+
+        <div class="hardware-grid">
+          <article class="guide-card">
+            <h3>Plugin compatibility</h3>
+            <p>Plugin compatibility is one of the biggest reasons editors stay on older versions of After Effects.</p>
+            <p>When Adobe releases a major update, plugin developers may need time to update their software. Until then, a plugin might fail to appear in the Effects menu, display an error while After Effects launches, crash when applied, work incorrectly during previews or exports, or open as a missing effect in older projects.</p>
+            <p>Scripts and extensions can have similar problems, especially when they depend on older Adobe systems that are no longer supported.</p>
+            <p>Some older plugins are eventually abandoned completely. In that situation, you may need to remain on an older After Effects version or replace the plugin with a newer alternative.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>Project compatibility</h3>
+            <p>After Effects can normally open projects created in the same version or an older version. The opposite direction is more limited.</p>
+            <p>Once a project has been saved in a newer major version, an older release may no longer be able to open it. After Effects sometimes provides an option to save a copy for the previous version, but newer effects and features may not transfer correctly.</p>
+            <p>Always duplicate important project files before opening them in another version. This gives you an untouched copy in case the project is converted or something does not carry over properly.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>System performance</h3>
+            <p>Newer does not always mean faster. New releases are generally designed for newer operating systems, processors, graphics cards, and drivers.</p>
+            <p>An older computer may technically be able to install the newest version while still struggling to run it smoothly.</p>
+            <ul class="clean-list">
+              <li>Slower previews than before.</li>
+              <li>Longer startup times.</li>
+              <li>Frequent freezing or crashing.</li>
+              <li>High memory usage during simple projects.</li>
+              <li>Plugins taking longer to load.</li>
+              <li>Worse performance compared with your previous version.</li>
+            </ul>
+          </article>
+
+          <article class="guide-card">
+            <h3>Updating safely</h3>
+            <p>Do not update during an important project unless you are trying to fix a specific issue. Updating can change plugin compatibility, project files, preferences, cache behavior, and rendering results.</p>
+            <p>Keep your current version installed while testing the new one. Open a copied project, test your main plugins and scripts, preview several compositions, and complete a short export before fully switching.</p>
+            <p>Keep backups of your presets, workspaces, scripts, and project files. Do not assume everything will automatically transfer into the new installation.</p>
+          </article>
+        </div>
+
         <div class="guide-note">
-          <p>Do not choose a version because it is popular on TikTok. Choose the newest version that runs reliably with your plugins and hardware.</p>
+          <div class="mini-label">V3LTRA note</div>
+          <p>Use the newest stable version that works properly with your computer and the tools your projects depend on.</p>
+          <p>There is no single version that is best for every editor. A slightly older release that runs smoothly and supports all of your plugins is better than a newer version that constantly creates compatibility problems.</p>
         </div>
       </section>
 

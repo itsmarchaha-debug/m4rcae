@@ -211,6 +211,154 @@
     document.head.append(style);
   }
 
+  function initSmoothMode() {
+    document.documentElement.classList.add("v3-smooth-mode");
+    if (document.getElementById("v3-smooth-mode-style")) return;
+    const style = document.createElement("style");
+    style.id = "v3-smooth-mode-style";
+    style.textContent = `
+      .v3-smooth-mode,
+      .v3-smooth-mode body {
+        scroll-behavior: auto !important;
+      }
+
+      .v3-smooth-mode body::before,
+      .v3-smooth-mode #glow-canvas,
+      .v3-smooth-mode #particle-canvas,
+      .v3-smooth-mode #markers-canvas,
+      .v3-smooth-mode .scanlines,
+      .v3-smooth-mode .glitch-strip {
+        display: none !important;
+        animation: none !important;
+      }
+
+      .v3-smooth-mode #bg-image {
+        opacity: 0.9 !important;
+        filter: brightness(0.88) saturate(1.05) contrast(1.04) !important;
+        transform: none !important;
+        will-change: auto !important;
+      }
+
+      .v3-smooth-mode .vignette {
+        background:
+          linear-gradient(180deg, rgba(5, 6, 4, 0.1), rgba(5, 6, 4, 0.22) 70%, rgba(5, 6, 4, 0.52)),
+          radial-gradient(ellipse at center, transparent 48%, rgba(5, 6, 4, 0.46) 100%) !important;
+      }
+
+      .v3-smooth-mode .nav,
+      .v3-smooth-mode .discord-top-button,
+      .v3-smooth-mode .cmd-backdrop,
+      .v3-smooth-mode .link-card,
+      .v3-smooth-mode .vendor,
+      .v3-smooth-mode .tool-card,
+      .v3-smooth-mode .stat,
+      .v3-smooth-mode .notice,
+      .v3-smooth-mode .master-folder,
+      .v3-smooth-mode .locked-files-banner,
+      .v3-smooth-mode .folder-cta,
+      .v3-smooth-mode .guide-panel,
+      .v3-smooth-mode .jump-card,
+      .v3-smooth-mode .guide-link,
+      .v3-smooth-mode .fix-panel,
+      .v3-smooth-mode .building-panel,
+      .v3-smooth-mode .building-card,
+      .v3-smooth-mode .home-search,
+      .v3-smooth-mode .browse-tile,
+      .v3-smooth-mode .home-panel,
+      .v3-smooth-mode .lounge-banner,
+      .v3-smooth-mode .search-wrap input {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+      }
+
+      .v3-smooth-mode .discord-top-button,
+      .v3-smooth-mode .home-panel,
+      .v3-smooth-mode .lounge-banner,
+      .v3-smooth-mode .tool-mark,
+      .v3-smooth-mode .os-detect-chip,
+      .v3-smooth-mode .guide-empty-icon,
+      .v3-smooth-mode .tile-live-dot {
+        box-shadow: none !important;
+      }
+
+      .v3-smooth-mode .building-panel::after,
+      .v3-smooth-mode .lounge-banner::before,
+      .v3-smooth-mode .pulse-bar::after,
+      .v3-smooth-mode .domain-status::before,
+      .v3-smooth-mode .cursor,
+      .v3-smooth-mode .avatar-ring svg,
+      .v3-smooth-mode .name::before,
+      .v3-smooth-mode .name::after {
+        animation: none !important;
+      }
+
+      .v3-smooth-mode .building-panel::after,
+      .v3-smooth-mode .lounge-banner::before,
+      .v3-smooth-mode .name::before,
+      .v3-smooth-mode .name::after {
+        display: none !important;
+      }
+
+      .v3-smooth-mode .home-search,
+      .v3-smooth-mode .browse-tile,
+      .v3-smooth-mode .link-card,
+      .v3-smooth-mode .vendor,
+      .v3-smooth-mode .tool-card,
+      .v3-smooth-mode .guide-link,
+      .v3-smooth-mode .jump-card,
+      .v3-smooth-mode .building-cta,
+      .v3-smooth-mode .platform-tab,
+      .v3-smooth-mode .type-tab,
+      .v3-smooth-mode .dl-btn,
+      .v3-smooth-mode .tool-link,
+      .v3-smooth-mode .tutorial-link,
+      .v3-smooth-mode .folder-cta,
+      .v3-smooth-mode .locked-files-action,
+      .v3-smooth-mode .cmd-result,
+      .v3-smooth-mode .cmd-trigger {
+        transition: color 130ms ease, border-color 130ms ease, background 130ms ease, opacity 130ms ease !important;
+      }
+
+      .v3-smooth-mode .home-search:hover,
+      .v3-smooth-mode .home-search:focus-visible,
+      .v3-smooth-mode .browse-tile:hover,
+      .v3-smooth-mode .browse-tile:focus-visible,
+      .v3-smooth-mode .link-card:hover,
+      .v3-smooth-mode .vendor:hover,
+      .v3-smooth-mode .tool-card:hover,
+      .v3-smooth-mode .guide-link:hover,
+      .v3-smooth-mode .jump-card:hover,
+      .v3-smooth-mode .building-cta:hover,
+      .v3-smooth-mode .tile-arrow,
+      .v3-smooth-mode .card-arrow {
+        transform: none !important;
+      }
+
+      .v3-smooth-mode .reveal,
+      .v3-smooth-mode .reveal.visible {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: color 130ms ease, border-color 130ms ease, background 130ms ease !important;
+      }
+
+      .v3-smooth-mode .cmd-backdrop {
+        background: rgba(1, 2, 6, 0.78) !important;
+      }
+
+      .v3-smooth-mode .cmd-box {
+        box-shadow: none !important;
+      }
+
+      @media (max-width: 760px) {
+        .v3-smooth-mode #bg-image {
+          opacity: 0.82 !important;
+          filter: brightness(0.82) saturate(1.02) contrast(1.02) !important;
+        }
+      }
+    `;
+    document.head.append(style);
+  }
+
   function initDiscordButton() {
     document.documentElement.classList.add("v3-discord-ready");
     if (!document.getElementById("discord-top-button-style")) {
@@ -403,19 +551,10 @@
 
   function initReveal() {
     const targets = document.querySelectorAll(".link-card, .vendor, .tool-card, .notice, .stat, .guide-panel, .guide-link, .building-panel, .building-card, .fix-panel");
-    targets.forEach((target) => target.classList.add("reveal"));
-    if (reduce.matches || !("IntersectionObserver" in window)) {
-      targets.forEach((target) => target.classList.add("visible"));
-      return;
-    }
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.08 });
-    targets.forEach((target) => observer.observe(target));
+    targets.forEach((target) => {
+      target.classList.add("reveal");
+      target.classList.add("visible");
+    });
   }
 
   function buildPalette() {
@@ -587,6 +726,7 @@
     document.documentElement.classList.add("v3-js");
     initDiscordButton();
     initGlobalNavPolish();
+    initSmoothMode();
     ensureNav();
     initCopy();
     initEmptyStates();

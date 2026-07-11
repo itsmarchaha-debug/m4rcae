@@ -22,7 +22,7 @@
     ["software.html", "WIN SOFTWARE"],
     ["plugins-mac.html", "MAC PLUGINS"],
     ["software-mac.html", "MAC SOFTWARE"],
-    ["beginners-guide.html", "START HERE"],
+    ["beginners-guide.html", "BEGINNER'S GUIDE"],
     ["extensions.html", "EXTENSIONS"],
     ["guides.html", "GUIDES"],
     ["free-assets.html", "FREE ASSETS"],
@@ -92,7 +92,11 @@
     document.querySelectorAll(".nav").forEach((bar) => {
       if (!bar.getAttribute("aria-label")) bar.setAttribute("aria-label", "Main navigation");
       nav.forEach(([url, label]) => {
-        if (bar.querySelector(`a[href="${url}"]`)) return;
+        const existing = bar.querySelector(`a[href="${url}"]`);
+        if (existing) {
+          if (url === "beginners-guide.html") existing.textContent = label;
+          return;
+        }
         const link = document.createElement("a");
         link.href = url;
         link.textContent = label;
@@ -112,10 +116,16 @@
     style.id = "v3-nav-polish-style";
     style.textContent = `
       .v3-nav-polish .nav {
+        box-sizing: border-box;
         width: 100%;
+        max-width: 100%;
         min-height: 54px;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center;
+        justify-content: flex-start !important;
         gap: 10px !important;
-        padding: 8px 44px 11px 10px !important;
+        padding: 8px 34px 11px 10px !important;
         margin: 0 0 30px !important;
         border: 1px solid rgba(252, 238, 9, 0.28);
         border-radius: 8px;
@@ -128,9 +138,11 @@
         -webkit-overflow-scrolling: touch;
         scrollbar-color: rgba(252, 238, 9, 0.62) rgba(4, 8, 8, 0.62);
         scrollbar-width: thin;
+        scroll-padding-inline: 10px;
         scroll-snap-type: x proximity;
-        mask-image: linear-gradient(90deg, transparent 0, #000 30px, #000 calc(100% - 42px), transparent 100%);
-        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 30px, #000 calc(100% - 42px), transparent 100%);
+        white-space: nowrap;
+        mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 18px), transparent 100%);
+        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 18px), transparent 100%);
       }
 
       .v3-discord-ready.v3-nav-polish .nav {
@@ -146,7 +158,7 @@
       }
 
       .v3-nav-polish .nav::-webkit-scrollbar-thumb {
-        background: linear-gradient(90deg, rgba(252, 238, 9, 0.72), rgba(140, 236, 255, 0.64));
+        background: linear-gradient(90deg, rgba(252, 238, 9, 0.7), rgba(140, 236, 255, 0.62));
         border-radius: 999px;
       }
 
@@ -156,13 +168,14 @@
         padding: 10px 14px !important;
         border-color: rgba(252, 238, 9, 0.3) !important;
         border-radius: 5px;
-        background: rgba(7, 17, 17, 0.84) !important;
+        background: rgba(7, 17, 17, 0.82) !important;
         color: #f3f8ef !important;
         font-size: 11px !important;
         font-weight: 700;
         letter-spacing: 0.08em !important;
         line-height: 1;
         scroll-snap-align: start;
+        white-space: nowrap;
       }
 
       .v3-nav-polish .nav a:hover,
@@ -177,10 +190,10 @@
       @media (max-width: 760px) {
         .v3-nav-polish .nav {
           min-height: 50px;
-          padding: 8px 36px 10px 8px !important;
+          padding: 8px 24px 10px 8px !important;
           margin-bottom: 24px !important;
-          mask-image: linear-gradient(90deg, transparent 0, #000 22px, #000 calc(100% - 30px), transparent 100%);
-          -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22px, #000 calc(100% - 30px), transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 10px, #000 calc(100% - 12px), transparent 100%);
+          -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10px, #000 calc(100% - 12px), transparent 100%);
         }
 
         .v3-discord-ready.v3-nav-polish .nav,

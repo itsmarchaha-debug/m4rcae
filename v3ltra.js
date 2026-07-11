@@ -722,12 +722,282 @@
     });
   }
 
+  const brandLogos = [
+    { re: /after effects|adobe after effects|\bae\b/i, label: "Ae", name: "After Effects", srcs: ["https://cdn.simpleicons.org/adobeaftereffects/9999ff", "https://www.google.com/s2/favicons?domain=adobe.com&sz=64"] },
+    { re: /media encoder/i, label: "Me", name: "Media Encoder", srcs: ["https://cdn.simpleicons.org/adobe/ff0000", "https://www.google.com/s2/favicons?domain=adobe.com&sz=64"] },
+    { re: /premiere/i, label: "Pr", name: "Premiere Pro", srcs: ["https://cdn.simpleicons.org/adobepremierepro/9999ff", "https://www.google.com/s2/favicons?domain=adobe.com&sz=64"] },
+    { re: /photoshop/i, label: "Ps", name: "Photoshop", srcs: ["https://cdn.simpleicons.org/adobephotoshop/31a8ff", "https://www.google.com/s2/favicons?domain=adobe.com&sz=64"] },
+    { re: /illustrator/i, label: "Ai", name: "Illustrator", srcs: ["https://cdn.simpleicons.org/adobeillustrator/ff9a00", "https://www.google.com/s2/favicons?domain=adobe.com&sz=64"] },
+    { re: /indesign/i, label: "Id", name: "InDesign", srcs: ["https://cdn.simpleicons.org/adobeindesign/ff3366", "https://www.google.com/s2/favicons?domain=adobe.com&sz=64"] },
+    { re: /lightroom/i, label: "Lr", name: "Lightroom", srcs: ["https://cdn.simpleicons.org/adobelightroomclassic/31a8ff", "https://www.google.com/s2/favicons?domain=adobe.com&sz=64"] },
+    { re: /davinci|resolve|blackmagic/i, label: "DR", name: "DaVinci Resolve", srcs: ["https://cdn.simpleicons.org/davinciresolve/ff6a3d", "https://www.google.com/s2/favicons?domain=blackmagicdesign.com&sz=64"] },
+    { re: /topaz/i, label: "TZ", name: "Topaz Labs", srcs: ["https://cdn.simpleicons.org/topazlabs/3dfff0", "https://www.google.com/s2/favicons?domain=topazlabs.com&sz=64"] },
+    { re: /touchdesigner|derivative/i, label: "TD", name: "TouchDesigner", srcs: ["https://cdn.simpleicons.org/touchdesigner/c0c0c0", "https://www.google.com/s2/favicons?domain=derivative.ca&sz=64"] },
+    { re: /cinema 4d|c4d/i, label: "C4D", name: "Cinema 4D", srcs: ["https://cdn.simpleicons.org/maxon/5a9dff", "https://www.google.com/s2/favicons?domain=maxon.net&sz=64"] },
+    { re: /fl studio|image-line/i, label: "FL", name: "FL Studio", srcs: ["https://cdn.simpleicons.org/flstudio/ff8c00", "https://www.google.com/s2/favicons?domain=image-line.com&sz=64"] },
+    { re: /vegas|magix/i, label: "V", name: "VEGAS Pro", srcs: ["https://www.google.com/s2/favicons?domain=vegascreativesoftware.com&sz=64", "https://www.google.com/s2/favicons?domain=magix.com&sz=64"] },
+    { re: /boris|sapphire|continuum|mocha/i, label: "BFX", name: "Boris FX", srcs: ["https://www.google.com/s2/favicons?domain=borisfx.com&sz=64"] },
+    { re: /maxon|red giant|magic bullet|trapcode|universe/i, label: "Mx", name: "Maxon", srcs: ["https://cdn.simpleicons.org/maxon/ff3b3b", "https://www.google.com/s2/favicons?domain=maxon.net&sz=64"] },
+    { re: /video copilot|saber|element 3d|optical flares|twitch/i, label: "VC", name: "Video Copilot", srcs: ["https://www.google.com/s2/favicons?domain=videocopilot.net&sz=64"] },
+    { re: /re:?vision|revision|twixtor|rsmb/i, label: "RV", name: "RE:Vision FX", srcs: ["https://www.google.com/s2/favicons?domain=revisionfx.com&sz=64"] },
+    { re: /motion bro/i, label: "MB", name: "Motion Bro", srcs: ["https://www.google.com/s2/favicons?domain=motionbro.com&sz=64"] },
+    { re: /fx console/i, label: "FX", name: "FX Console", srcs: ["https://www.google.com/s2/favicons?domain=videocopilot.net&sz=64"] },
+    { re: /aescripts/i, label: "Ae", name: "aescripts", srcs: ["https://www.google.com/s2/favicons?domain=aescripts.com&sz=64"] },
+    { re: /autokroma|aftercodecs|influx/i, label: "AK", name: "Autokroma", srcs: ["https://www.google.com/s2/favicons?domain=autokroma.com&sz=64"] },
+    { re: /filmconvert/i, label: "FC", name: "FilmConvert", srcs: ["https://www.google.com/s2/favicons?domain=filmconvert.com&sz=64"] },
+    { re: /neat video/i, label: "NV", name: "Neat Video", srcs: ["https://www.google.com/s2/favicons?domain=neatvideo.com&sz=64"] },
+    { re: /adobe|unsorted/i, label: "A", name: "Adobe", srcs: ["https://cdn.simpleicons.org/adobe/ff0000", "https://www.google.com/s2/favicons?domain=adobe.com&sz=64"] }
+  ];
+
+  function findBrandLogo(name) {
+    return brandLogos.find((brand) => brand.re.test(name || ""));
+  }
+
+  function hydrateLogo(slot, brand) {
+    if (!slot || !brand || slot.dataset.logoReady) return;
+    slot.dataset.logoReady = "true";
+    slot.classList.add("has-brand-logo");
+    slot.setAttribute("aria-label", `${brand.name} logo`);
+    slot.title = brand.name;
+    slot.textContent = "";
+
+    const fallback = document.createElement("span");
+    fallback.className = "brand-logo-fallback";
+    fallback.textContent = brand.label;
+    fallback.hidden = true;
+
+    const img = document.createElement("img");
+    img.className = "brand-logo-img";
+    img.alt = "";
+    img.decoding = "async";
+    img.loading = "lazy";
+    let srcIndex = 0;
+    img.onerror = () => {
+      srcIndex += 1;
+      if (srcIndex < brand.srcs.length) {
+        img.src = brand.srcs[srcIndex];
+        return;
+      }
+      img.remove();
+      fallback.hidden = false;
+    };
+    img.src = brand.srcs[srcIndex];
+    slot.append(img, fallback);
+  }
+
+  function initBrandLogos() {
+    document.querySelectorAll(".sw-badge").forEach((badge) => {
+      const row = badge.closest(".vendor-title-row");
+      const card = badge.closest(".vendor");
+      const name = row?.querySelector(".vendor-name")?.textContent || card?.dataset.name || badge.textContent;
+      hydrateLogo(badge, findBrandLogo(name));
+    });
+
+    document.querySelectorAll(".tool-mark").forEach((mark) => {
+      const row = mark.closest(".popular-row");
+      const name = row?.querySelector("h3")?.textContent || mark.textContent;
+      hydrateLogo(mark, findBrandLogo(name));
+    });
+
+    document.querySelectorAll(".vendor-title-row").forEach((row) => {
+      if (row.querySelector(".sw-badge, .vendor-logo")) return;
+      const card = row.closest(".vendor");
+      const name = row.querySelector(".vendor-name")?.textContent || card?.dataset.name || "";
+      const brand = findBrandLogo(name);
+      if (!brand) return;
+      const logo = document.createElement("span");
+      logo.className = "vendor-logo";
+      hydrateLogo(logo, brand);
+      row.prepend(logo);
+    });
+  }
+
+  function initCanvasLoopKillSwitch() {
+    if (window.__v3CanvasLoopKillSwitch) return;
+    const canvases = document.querySelectorAll("#glow-canvas, #particle-canvas, #markers-canvas");
+    if (!canvases.length) return;
+    window.__v3CanvasLoopKillSwitch = true;
+    const nativeRAF = window.requestAnimationFrame.bind(window);
+    window.requestAnimationFrame = (callback) => {
+      const name = typeof callback === "function" ? callback.name : "";
+      if (name === "loop" || name === "ml") {
+        return nativeRAF(() => {});
+      }
+      return nativeRAF(callback);
+    };
+    canvases.forEach((canvas) => {
+      canvas.width = 1;
+      canvas.height = 1;
+      canvas.setAttribute("aria-hidden", "true");
+    });
+  }
+
+  function initMacSoftwareTutorialMirrors() {
+    if (fileName() !== "software-mac.html") return;
+    const body = document.querySelector(".satvrn .satvrn-body");
+    const setup = body?.querySelector(".satvrn-dl[href]");
+    if (!body || !setup || body.querySelector(".satvrn-resource-grid")) return;
+
+    const list = body.querySelector(".satvrn-list");
+    const grid = document.createElement("div");
+    grid.className = "satvrn-resource-grid";
+    setup.classList.add("satvrn-resource-button", "satvrn-primary-resource");
+    const arrow = setup.querySelector(".dl-arrow");
+    if (arrow) arrow.innerHTML = "&#8599;";
+
+    const pending = document.createElement("div");
+    pending.className = "gofile-btn satvrn-resource-button mirror-pending";
+    pending.setAttribute("role", "note");
+    pending.setAttribute("aria-disabled", "true");
+    pending.innerHTML = '<span>ALT MIRROR SLOT READY</span><small>Waiting on link</small>';
+
+    grid.append(setup, pending);
+    body.insertBefore(grid, list || body.firstChild);
+  }
+
+  function initArchivePolishPass() {
+    document.documentElement.classList.add("v3-archive-polish-pass");
+    document.querySelectorAll("img:not(#bg-image):not([loading])").forEach((img) => {
+      img.loading = "lazy";
+      img.decoding = "async";
+    });
+    if (document.getElementById("v3-archive-polish-pass-style")) return;
+    const style = document.createElement("style");
+    style.id = "v3-archive-polish-pass-style";
+    style.textContent = `
+      .v3-archive-polish-pass .vendor:not([open]):not(.open) {
+        content-visibility: auto;
+        contain-intrinsic-size: 88px;
+      }
+
+      .v3-archive-polish-pass .vendor[open],
+      .v3-archive-polish-pass .vendor.open {
+        content-visibility: visible;
+      }
+
+      .v3-archive-polish-pass .vendor-body,
+      .v3-archive-polish-pass .tutorial-chooser,
+      .v3-archive-polish-pass .tutorial-card,
+      .v3-archive-polish-pass .satvrn,
+      .v3-archive-polish-pass .locked-files-banner {
+        transition: color 130ms ease, border-color 130ms ease, background 130ms ease, opacity 130ms ease !important;
+      }
+
+      .v3-archive-polish-pass .satvrn,
+      .v3-archive-polish-pass .satvrn > summary::before,
+      .v3-archive-polish-pass .locked-files-banner,
+      .v3-archive-polish-pass .locked-files-banner::before,
+      .v3-archive-polish-pass .dl-btn::before,
+      .v3-archive-polish-pass .gofile-btn::before,
+      .v3-archive-polish-pass .yt-btn::before,
+      .v3-archive-polish-pass .tutorial-chooser > summary::before {
+        animation: none !important;
+      }
+
+      .brand-logo-img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+        filter: drop-shadow(0 0 8px rgba(140, 236, 255, 0.24));
+      }
+
+      .brand-logo-fallback {
+        color: #f7fbef;
+        font: 700 11px "Share Tech Mono", monospace;
+        letter-spacing: 0.02em;
+      }
+
+      .sw-badge.has-brand-logo,
+      .tool-mark.has-brand-logo,
+      .vendor-logo {
+        display: grid !important;
+        place-items: center;
+        padding: 7px;
+        border: 1px solid rgba(140, 236, 255, 0.34) !important;
+        border-radius: 7px;
+        background:
+          radial-gradient(circle at 35% 20%, rgba(252, 238, 9, 0.16), transparent 55%),
+          rgba(4, 8, 8, 0.88) !important;
+        color: #f7fbef !important;
+        box-shadow: inset 0 0 15px rgba(140, 236, 255, 0.08) !important;
+        font-size: 0 !important;
+        overflow: hidden;
+      }
+
+      .vendor-logo {
+        flex: 0 0 38px;
+        width: 38px;
+        height: 38px;
+      }
+
+      .tool-mark.has-brand-logo {
+        width: 46px;
+        height: 46px;
+      }
+
+      .satvrn-resource-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin: 14px 0 4px;
+      }
+
+      .satvrn-resource-grid .satvrn-resource-button {
+        width: 100%;
+        min-height: 45px;
+        margin: 0 !important;
+      }
+
+      .satvrn-resource-grid .gofile-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 13px 16px;
+        border: 1px solid rgba(255, 49, 49, 0.52);
+        background: rgba(255, 49, 49, 0.08);
+        color: #ff5a5a;
+        font: 700 12px "Share Tech Mono", monospace;
+        letter-spacing: 0.12em;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .satvrn-resource-grid .mirror-pending {
+        cursor: not-allowed;
+        opacity: 0.72;
+        border-style: dashed;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .satvrn-resource-grid .mirror-pending small {
+        color: #f3d6d6;
+        font: 9px "Share Tech Mono", monospace;
+        letter-spacing: 0.1em;
+      }
+
+      @media (max-width: 560px) {
+        .satvrn-resource-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    `;
+    document.head.append(style);
+  }
+
   function boot() {
     document.documentElement.classList.add("v3-js");
+    initCanvasLoopKillSwitch();
     initDiscordButton();
     initGlobalNavPolish();
     initSmoothMode();
     ensureNav();
+    initArchivePolishPass();
+    initBrandLogos();
+    initMacSoftwareTutorialMirrors();
     initCopy();
     initEmptyStates();
     initReveal();

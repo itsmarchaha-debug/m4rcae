@@ -1104,7 +1104,7 @@ function filterVendors(){
     const match = q==='' || hay.indexOf(q) !== -1;
     c.style.display = match ? '' : 'none';
     if (match) shown++;
-    if (q!=='' && match) { if ('open' in c) c.open = true; else c.classList.add('open'); } else if(q==='') { if ('open' in c) c.open = false; else c.classList.remove('open'); }
+    if (q==='' || !match) { if ('open' in c) c.open = false; else c.classList.remove('open'); }
   });
   document.getElementById('noResults').style.display = shown===0 ? 'block' : 'none';
 }

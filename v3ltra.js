@@ -838,6 +838,15 @@
     const setup = body?.querySelector(".satvrn-dl[href]");
     if (!body || !setup || body.querySelector(".satvrn-resource-grid")) return;
 
+    const mirrors = [
+      ["AFTER EFFECTS GOFILE TUTS", "https://gofile.io/d/fdG8lj"],
+      ["MEDIA ENCODER GOFILE TUTS", "https://gofile.io/d/vl2qvI"],
+      ["PHOTOSHOP MAC GOFILE TUTS", "https://gofile.io/d/F53iST"],
+      ["PREMIERE PRO GOFILE TUTS", "https://gofile.io/d/f4GUnB"],
+      ["TOPAZ LABS GOFILE TUTS", "https://gofile.io/d/CKq15a"],
+      ["TOUCHDESIGNER GOFILE TUTS", "https://gofile.io/d/ixWddT"],
+      ["UNSORTED GOFILE TUTS", "https://gofile.io/d/mLMrso"]
+    ];
     const list = body.querySelector(".satvrn-list");
     const grid = document.createElement("div");
     grid.className = "satvrn-resource-grid";
@@ -845,13 +854,18 @@
     const arrow = setup.querySelector(".dl-arrow");
     if (arrow) arrow.innerHTML = "&#8599;";
 
-    const pending = document.createElement("div");
-    pending.className = "gofile-btn satvrn-resource-button mirror-pending";
-    pending.setAttribute("role", "note");
-    pending.setAttribute("aria-disabled", "true");
-    pending.innerHTML = '<span>ALT MIRROR SLOT READY</span><small>Waiting on link</small>';
+    const mirrorLinks = mirrors.map(([label, href]) => {
+      const link = document.createElement("a");
+      link.className = "gofile-btn satvrn-resource-button";
+      link.href = href;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.setAttribute("aria-label", label.replace(" TUTS", " tutorials"));
+      link.innerHTML = `<span>${label}</span><span class="dl-arrow" aria-hidden="true">&#8599;</span>`;
+      return link;
+    });
 
-    grid.append(setup, pending);
+    grid.append(setup, ...mirrorLinks);
     body.insertBefore(grid, list || body.firstChild);
   }
 
@@ -963,20 +977,6 @@
         text-align: center;
         text-decoration: none;
         text-transform: uppercase;
-      }
-
-      .satvrn-resource-grid .mirror-pending {
-        cursor: not-allowed;
-        opacity: 0.72;
-        border-style: dashed;
-        flex-direction: column;
-        gap: 3px;
-      }
-
-      .satvrn-resource-grid .mirror-pending small {
-        color: #f3d6d6;
-        font: 9px "Share Tech Mono", monospace;
-        letter-spacing: 0.1em;
       }
 
       @media (max-width: 560px) {

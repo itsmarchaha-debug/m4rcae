@@ -11,7 +11,7 @@
     { url: "extensions.html", title: "Extensions & Scripts", group: "Shared Tools", detail: "Panels, scripts, and helper tools with tutorial search." },
     { url: "guides.html", title: "Guides", group: "Guides", detail: "Windows and macOS setup folders and fix videos." },
     { url: "free-assets.html", title: "Free Assets", group: "Building", detail: "Fonts, SFX, LUTs, footage, icons, 3D, and converters." },
-    { url: "new-drops.html", title: "New Drops", group: "Building", detail: "Latest additions feed." },
+    { url: "new-drops.html", title: "Recently Added", group: "Building", detail: "Latest additions feed." },
     { url: "status.html", title: "Status & Changelog", group: "Building", detail: "Update notes and link-check status." },
     { url: "faq.html", title: "FAQ", group: "Building", detail: "Passwords, platform notes, requests, and broken links." }
   ];
@@ -26,7 +26,7 @@
     ["extensions.html", "EXTENSIONS"],
     ["guides.html", "GUIDES"],
     ["free-assets.html", "FREE ASSETS"],
-    ["new-drops.html", "DROPS"],
+    ["new-drops.html", "RECENTLY ADDED"],
     ["status.html", "STATUS"],
     ["faq.html", "FAQ"]
   ];
@@ -94,7 +94,7 @@
       nav.forEach(([url, label]) => {
         const existing = bar.querySelector(`a[href="${url}"]`);
         if (existing) {
-          if (url === "beginners-guide.html") existing.textContent = label;
+          if (url === "beginners-guide.html" || url === "new-drops.html") existing.textContent = label;
           return;
         }
         const link = document.createElement("a");
@@ -499,8 +499,8 @@
     link.href = "https://discord.com/invite/v3ltra";
     link.target = "_blank";
     link.rel = "noopener noreferrer";
-    link.setAttribute("aria-label", "Join the V3LTRA community on Discord for help, tutorials, audio packs, resources, requests, updates, and new drops.");
-    link.innerHTML = '<span class="discord-logo" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.618-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.028C.533 9.046-.319 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.027c.462-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.042-.106 13.107 13.107 0 0 1-1.872-.891.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.011c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.01c.12.099.246.198.373.292a.077.077 0 0 1-.007.128 12.299 12.299 0 0 1-1.873.89.077.077 0 0 0-.041.107c.36.698.772 1.363 1.225 1.993a.076.076 0 0 0 .084.029 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .031-.056c.5-5.177-.838-9.674-3.548-13.66a.061.061 0 0 0-.031-.029zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.333-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.086-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.333-.946 2.419-2.157 2.419z"></path></svg></span><span class="discord-copy"><strong>Join our Discord</strong><small>Help, tutorials, audio packs, resources, requests &amp; drops.</small></span><span class="discord-open" aria-hidden="true">&#8599;</span>';
+    link.setAttribute("aria-label", "Join the V3LTRA community on Discord for help, tutorials, audio packs, resources, requests, updates, and recently added resources.");
+    link.innerHTML = '<span class="discord-logo" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.618-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.028C.533 9.046-.319 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.027c.462-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.042-.106 13.107 13.107 0 0 1-1.872-.891.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.011c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.01c.12.099.246.198.373.292a.077.077 0 0 1-.007.128 12.299 12.299 0 0 1-1.873.89.077.077 0 0 0-.041.107c.36.698.772 1.363 1.225 1.993a.076.076 0 0 0 .084.029 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .031-.056c.5-5.177-.838-9.674-3.548-13.66a.061.061 0 0 0-.031-.029zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.333-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.086-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.333-.946 2.419-2.157 2.419z"></path></svg></span><span class="discord-copy"><strong>Join our Discord</strong><small>Help, tutorials, audio packs, resources, requests &amp; updates.</small></span><span class="discord-open" aria-hidden="true">&#8599;</span>';
     document.body.append(link);
   }
 
@@ -917,6 +917,634 @@
     document.head.append(style);
   }
 
+  function initArchiveFooter() {
+    const footerHTML = '<div>&copy; 2025 V3LTRA Archive. All rights reserved.</div><div>Built for editors, by editors. <a href="mailto:vltralegal@gmail.com">Inquiries</a></div>';
+    document.querySelectorAll(".footer").forEach((footer) => {
+      footer.innerHTML = footerHTML;
+    });
+  }
+
+  function initVeltraArchiveLook() {
+    document.documentElement.classList.add("v3-veltra-archive");
+    if (document.getElementById("v3-veltra-archive-look")) return;
+    const style = document.createElement("style");
+    style.id = "v3-veltra-archive-look";
+    style.textContent = `
+      .v3-veltra-archive {
+        --archive-bg: #050804;
+        --archive-panel: rgba(7, 15, 13, 0.82);
+        --archive-panel-strong: rgba(8, 18, 16, 0.94);
+        --archive-line: rgba(247, 236, 20, 0.34);
+        --archive-line-soft: rgba(247, 236, 20, 0.18);
+        --archive-cyan: #8cecff;
+        --archive-yellow: #f7ec14;
+        --archive-green: #93f05d;
+        --archive-text: #f8faed;
+        --archive-muted: #c9d3ca;
+        --archive-radius: 8px;
+      }
+
+      .v3-veltra-archive body {
+        color: var(--archive-text) !important;
+        background:
+          radial-gradient(circle at 22% 2%, rgba(247, 236, 20, 0.24), transparent 28%),
+          radial-gradient(circle at 72% 18%, rgba(140, 236, 255, 0.16), transparent 32%),
+          linear-gradient(180deg, rgba(247, 236, 20, 0.09), rgba(5, 8, 4, 0.88) 64%),
+          var(--archive-bg) !important;
+      }
+
+      .v3-veltra-archive body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        background:
+          linear-gradient(180deg, rgba(5, 8, 4, 0.08), rgba(5, 8, 4, 0.48) 72%, rgba(5, 8, 4, 0.86)),
+          radial-gradient(ellipse at 48% 20%, transparent 12%, rgba(5, 8, 4, 0.38) 74%);
+        mix-blend-mode: multiply;
+      }
+
+      .v3-veltra-archive #bg-image {
+        opacity: 0.88 !important;
+        object-position: 68% top !important;
+        filter: blur(1.5px) brightness(0.76) saturate(1.14) contrast(1.08) !important;
+        transform: scale(1.018) !important;
+      }
+
+      .v3-veltra-archive .vignette {
+        background:
+          linear-gradient(180deg, rgba(2, 4, 3, 0.16), rgba(2, 4, 3, 0.34) 66%, rgba(2, 4, 3, 0.84)),
+          linear-gradient(90deg, rgba(2, 4, 3, 0.4), transparent 48%, rgba(2, 4, 3, 0.54)),
+          radial-gradient(ellipse at center, transparent 36%, rgba(2, 4, 3, 0.64) 100%) !important;
+      }
+
+      .v3-veltra-archive .page {
+        width: min(100% - 28px, 920px);
+        max-width: 920px !important;
+        padding: 26px 0 64px !important;
+      }
+
+      .v3-veltra-archive .home-page {
+        align-items: stretch;
+      }
+
+      .v3-veltra-archive .home-page .header {
+        width: 100%;
+        margin: 0 0 16px !important;
+        text-align: left !important;
+      }
+
+      .v3-veltra-archive .avatar-ring {
+        display: none !important;
+      }
+
+      .v3-veltra-archive .brand-line {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .v3-veltra-archive .home-page .name {
+        color: #fff !important;
+        font-size: clamp(46px, 9vw, 72px) !important;
+        font-style: italic;
+        letter-spacing: 0 !important;
+        line-height: 0.9;
+        text-shadow: 0 0 24px rgba(255, 255, 255, 0.2), 0 0 34px rgba(247, 236, 20, 0.18) !important;
+      }
+
+      .v3-veltra-archive .home-page .name .core,
+      .v3-veltra-archive .home-page .name .ext {
+        color: #fff !important;
+        background: none !important;
+        -webkit-background-clip: initial !important;
+        background-clip: initial !important;
+        filter: none !important;
+      }
+
+      .v3-veltra-archive .home-page .name .ext {
+        color: var(--archive-yellow) !important;
+      }
+
+      .v3-veltra-archive .brand-chip {
+        min-height: 30px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 13px;
+        border: 1px solid rgba(247, 236, 20, 0.72);
+        border-radius: 5px;
+        background: rgba(247, 236, 20, 0.06);
+        color: var(--archive-yellow);
+        font: 700 11px "Share Tech Mono", monospace;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .v3-veltra-archive .home-page .tagline,
+      .v3-veltra-archive .home-page .domain-status,
+      .v3-veltra-archive .phead .sub {
+        max-width: 620px;
+        margin-top: 12px;
+        padding: 0 !important;
+        border: 0 !important;
+        background: transparent !important;
+        color: var(--archive-text) !important;
+        font-size: 14px !important;
+        letter-spacing: 0.01em !important;
+        line-height: 1.45;
+      }
+
+      .v3-veltra-archive .home-page .domain-status {
+        justify-content: flex-start;
+        color: var(--archive-muted) !important;
+        font-size: 12px !important;
+      }
+
+      .v3-veltra-archive .nav {
+        width: 100%;
+        min-height: 54px;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center;
+        gap: 6px !important;
+        margin: 0 0 22px !important;
+        padding: 7px !important;
+        border: 1px solid rgba(247, 236, 20, 0.32);
+        border-radius: var(--archive-radius);
+        background:
+          linear-gradient(120deg, rgba(247, 236, 20, 0.08), rgba(140, 236, 255, 0.05)),
+          rgba(5, 9, 8, 0.78) !important;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.035) !important;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: thin;
+        mask-image: none !important;
+        -webkit-mask-image: none !important;
+      }
+
+      .v3-veltra-archive .nav a,
+      .v3-veltra-archive .nav button {
+        flex: 0 0 auto;
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 13px !important;
+        border: 1px solid transparent !important;
+        border-radius: 5px;
+        background: transparent !important;
+        color: var(--archive-text) !important;
+        font: 700 11px "Rajdhani", sans-serif !important;
+        letter-spacing: 0.02em !important;
+        line-height: 1;
+        text-decoration: none;
+        text-transform: none !important;
+        text-shadow: none !important;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+
+      .v3-veltra-archive .nav a.active,
+      .v3-veltra-archive .nav a:hover,
+      .v3-veltra-archive .nav a:focus-visible,
+      .v3-veltra-archive .nav button:hover,
+      .v3-veltra-archive .nav button:focus-visible {
+        border-color: rgba(247, 236, 20, 0.45) !important;
+        background: rgba(247, 236, 20, 0.1) !important;
+        color: var(--archive-yellow) !important;
+        box-shadow: none !important;
+      }
+
+      .v3-veltra-archive .home-top-nav {
+        margin-bottom: 26px !important;
+      }
+
+      .v3-veltra-archive .discord-top-button {
+        top: 18px !important;
+        right: 18px !important;
+        width: 46px !important;
+        min-height: 46px !important;
+        grid-template-columns: 1fr !important;
+        padding: 7px !important;
+        border-color: rgba(247, 236, 20, 0.42) !important;
+        border-radius: 8px !important;
+        background: rgba(5, 9, 8, 0.86) !important;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.24) !important;
+      }
+
+      .v3-veltra-archive .discord-copy,
+      .v3-veltra-archive .discord-open {
+        display: none !important;
+      }
+
+      .v3-veltra-archive .discord-logo {
+        width: 30px !important;
+        height: 30px !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+
+      .v3-veltra-archive.v3-discord-ready .nav {
+        padding-right: 60px !important;
+      }
+
+      .v3-veltra-archive .home-control-panel {
+        margin-bottom: 24px;
+      }
+
+      .v3-veltra-archive .home-search,
+      .v3-veltra-archive .search-wrap input {
+        min-height: 58px;
+        border: 1px solid rgba(247, 236, 20, 0.38) !important;
+        border-radius: var(--archive-radius);
+        background: rgba(8, 13, 11, 0.78) !important;
+        color: var(--archive-text) !important;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03) !important;
+      }
+
+      .v3-veltra-archive .home-search-open {
+        min-width: 46px;
+        min-height: 38px;
+        border-radius: 5px;
+        border-color: rgba(247, 236, 20, 0.86) !important;
+        background: var(--archive-yellow) !important;
+        color: #090b04 !important;
+        font-size: 0;
+      }
+
+      .v3-veltra-archive .home-search-open::after {
+        content: "->";
+        font: 700 15px "Share Tech Mono", monospace;
+      }
+
+      .v3-veltra-archive .home-search-copy strong {
+        color: var(--archive-text) !important;
+      }
+
+      .v3-veltra-archive .home-search-copy small,
+      .v3-veltra-archive .tile-copy,
+      .v3-veltra-archive .card-sub,
+      .v3-veltra-archive .vendor-desc,
+      .v3-veltra-archive .popular-copy p,
+      .v3-veltra-archive .guide-empty-state p,
+      .v3-veltra-archive .building-card p {
+        color: var(--archive-muted) !important;
+      }
+
+      .v3-veltra-archive .platform-control-row {
+        gap: 10px;
+      }
+
+      .v3-veltra-archive .os-detect-chip {
+        min-height: 34px;
+        border-color: rgba(147, 240, 93, 0.34);
+        border-radius: 999px;
+        background: rgba(147, 240, 93, 0.14);
+        color: #d9ffc4;
+      }
+
+      .v3-veltra-archive .platform-tabs {
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        gap: 8px;
+      }
+
+      .v3-veltra-archive .platform-tab {
+        min-height: 34px;
+        border: 1px solid rgba(247, 236, 20, 0.22) !important;
+        border-radius: 5px;
+        background: rgba(9, 15, 13, 0.72) !important;
+        color: var(--archive-text) !important;
+      }
+
+      .v3-veltra-archive .platform-tab.active {
+        border-color: var(--archive-yellow) !important;
+        background: var(--archive-yellow) !important;
+        color: #070804 !important;
+      }
+
+      .v3-veltra-archive .platform-tab:not(.active) em {
+        display: none !important;
+      }
+
+      .v3-veltra-archive .home-browse,
+      .v3-veltra-archive .home-intel-grid,
+      .v3-veltra-archive .home-groups {
+        width: 100%;
+      }
+
+      .v3-veltra-archive .home-section-label,
+      .v3-veltra-archive .section-label,
+      .v3-veltra-archive .home-panel-head span,
+      .v3-veltra-archive .cmd-line span,
+      .v3-veltra-archive .cmd-group {
+        color: var(--archive-yellow) !important;
+      }
+
+      .v3-veltra-archive .home-browse-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        border: 0 !important;
+        background: transparent !important;
+      }
+
+      .v3-veltra-archive .browse-tile,
+      .v3-veltra-archive .home-panel,
+      .v3-veltra-archive .link-card,
+      .v3-veltra-archive .vendor,
+      .v3-veltra-archive .tool-card,
+      .v3-veltra-archive .stat,
+      .v3-veltra-archive .notice,
+      .v3-veltra-archive .master-folder,
+      .v3-veltra-archive .locked-files-banner,
+      .v3-veltra-archive .folder-cta,
+      .v3-veltra-archive .guide-panel,
+      .v3-veltra-archive .jump-card,
+      .v3-veltra-archive .guide-link,
+      .v3-veltra-archive .fix-panel,
+      .v3-veltra-archive .building-panel,
+      .v3-veltra-archive .building-card,
+      .v3-veltra-archive .tutorial-chooser,
+      .v3-veltra-archive .tutorial-card,
+      .v3-veltra-archive .satvrn,
+      .v3-veltra-archive .cmd-box,
+      .v3-veltra-archive .cmd-trigger {
+        border: 1px solid var(--archive-line-soft) !important;
+        border-radius: var(--archive-radius) !important;
+        background:
+          linear-gradient(135deg, rgba(247, 236, 20, 0.05), rgba(140, 236, 255, 0.05)),
+          var(--archive-panel) !important;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.028), 0 18px 40px rgba(0, 0, 0, 0.18) !important;
+        backdrop-filter: blur(8px);
+      }
+
+      .v3-veltra-archive .browse-tile {
+        min-height: 142px;
+        padding: 22px;
+        gap: 12px;
+      }
+
+      .v3-veltra-archive .browse-tile-live {
+        grid-column: 1 / -1;
+        min-height: 96px;
+      }
+
+      .v3-veltra-archive .browse-tile:hover,
+      .v3-veltra-archive .browse-tile:focus-visible,
+      .v3-veltra-archive .browse-tile.is-active-platform,
+      .v3-veltra-archive .home-panel:hover,
+      .v3-veltra-archive .link-card:hover,
+      .v3-veltra-archive .vendor:hover,
+      .v3-veltra-archive .tool-card:hover,
+      .v3-veltra-archive .guide-link:hover,
+      .v3-veltra-archive .jump-card:hover {
+        border-color: rgba(247, 236, 20, 0.46) !important;
+        background:
+          linear-gradient(135deg, rgba(247, 236, 20, 0.085), rgba(140, 236, 255, 0.075)),
+          var(--archive-panel-strong) !important;
+        transform: none !important;
+      }
+
+      .v3-veltra-archive .browse-tile h2,
+      .v3-veltra-archive .home-panel h2,
+      .v3-veltra-archive .popular-copy h3,
+      .v3-veltra-archive .guide-empty-state h3,
+      .v3-veltra-archive .card-title,
+      .v3-veltra-archive .vendor-name,
+      .v3-veltra-archive .phead h1,
+      .v3-veltra-archive .building-card h3 {
+        color: var(--archive-text) !important;
+        text-shadow: none !important;
+      }
+
+      .v3-veltra-archive .tile-arrow,
+      .v3-veltra-archive .card-arrow,
+      .v3-veltra-archive .home-search-icon,
+      .v3-veltra-archive .vendor-chevron,
+      .v3-veltra-archive .tutorial-chevron,
+      .v3-veltra-archive .guide-empty-icon {
+        color: var(--archive-yellow) !important;
+        text-shadow: 0 0 14px rgba(247, 236, 20, 0.24) !important;
+      }
+
+      .v3-veltra-archive .tile-badge,
+      .v3-veltra-archive .vendor-tag,
+      .v3-veltra-archive .type-badge,
+      .v3-veltra-archive .compat-badge {
+        border-color: rgba(247, 236, 20, 0.34) !important;
+        color: var(--archive-yellow) !important;
+        background: rgba(247, 236, 20, 0.08) !important;
+      }
+
+      .v3-veltra-archive .tile-actions a,
+      .v3-veltra-archive .platform-pills a,
+      .v3-veltra-archive .dl-btn,
+      .v3-veltra-archive .tool-link,
+      .v3-veltra-archive .tutorial-link,
+      .v3-veltra-archive .building-cta,
+      .v3-veltra-archive .folder-cta,
+      .v3-veltra-archive .locked-files-action {
+        border-color: rgba(140, 236, 255, 0.34) !important;
+        border-radius: 5px;
+        background: rgba(140, 236, 255, 0.06) !important;
+        color: #d6fbff !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+      }
+
+      .v3-veltra-archive .tile-actions a:hover,
+      .v3-veltra-archive .platform-pills a:hover,
+      .v3-veltra-archive .dl-btn:hover,
+      .v3-veltra-archive .tool-link:hover,
+      .v3-veltra-archive .tutorial-link:hover,
+      .v3-veltra-archive .building-cta:hover,
+      .v3-veltra-archive .folder-cta:hover,
+      .v3-veltra-archive .locked-files-action:hover {
+        border-color: rgba(247, 236, 20, 0.7) !important;
+        color: var(--archive-yellow) !important;
+      }
+
+      .v3-veltra-archive .home-intel-grid {
+        grid-template-columns: minmax(0, 1.04fr) minmax(300px, 0.96fr);
+        gap: 14px;
+      }
+
+      .v3-veltra-archive .home-panel {
+        padding: 18px;
+      }
+
+      .v3-veltra-archive .popular-row {
+        grid-template-columns: 48px minmax(0, 1fr) auto;
+        gap: 12px;
+        padding: 12px 0;
+        border-top-color: rgba(247, 236, 20, 0.12);
+      }
+
+      .v3-veltra-archive .tool-mark,
+      .v3-veltra-archive .tool-mark.has-brand-logo,
+      .v3-veltra-archive .sw-badge.has-brand-logo,
+      .v3-veltra-archive .vendor-logo {
+        border-color: rgba(247, 236, 20, 0.26) !important;
+        border-radius: 7px;
+        background:
+          radial-gradient(circle at 30% 16%, rgba(247, 236, 20, 0.18), transparent 54%),
+          rgba(7, 15, 13, 0.9) !important;
+        box-shadow: none !important;
+      }
+
+      .v3-veltra-archive .brand-logo-img {
+        filter: drop-shadow(0 0 8px rgba(247, 236, 20, 0.2));
+      }
+
+      .v3-veltra-archive .phead {
+        margin-bottom: 24px !important;
+      }
+
+      .v3-veltra-archive .phead h1 {
+        font-size: clamp(34px, 7vw, 54px) !important;
+        letter-spacing: 0.01em !important;
+        text-transform: none !important;
+      }
+
+      .v3-veltra-archive .stats {
+        gap: 10px !important;
+      }
+
+      .v3-veltra-archive .item-list {
+        color: var(--archive-muted) !important;
+      }
+
+      .v3-veltra-archive .footer {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px 18px;
+        margin-top: 28px !important;
+        padding-top: 18px;
+        border-top: 1px solid rgba(247, 236, 20, 0.18);
+        color: rgba(248, 250, 237, 0.72) !important;
+        font: 11px "Rajdhani", sans-serif !important;
+        letter-spacing: 0.01em !important;
+        line-height: 1.4 !important;
+        text-align: left !important;
+      }
+
+      .v3-veltra-archive .footer a {
+        color: var(--archive-yellow) !important;
+        text-decoration-color: rgba(247, 236, 20, 0.48) !important;
+        text-underline-offset: 3px;
+      }
+
+      .v3-veltra-archive .cmd-trigger {
+        width: 42px;
+        min-height: 42px;
+        right: 18px;
+        bottom: 18px;
+        justify-content: center;
+        padding: 0 !important;
+        font-size: 0 !important;
+      }
+
+      .v3-veltra-archive .cmd-trigger span {
+        display: none;
+      }
+
+      .v3-veltra-archive .cmd-trigger::before {
+        content: "\\2315";
+        color: var(--archive-yellow) !important;
+        font: 700 18px "Share Tech Mono", monospace;
+      }
+
+      @media (min-width: 980px) {
+        .v3-veltra-archive .home-page {
+          padding-top: 24px !important;
+        }
+
+        .v3-veltra-archive .home-page .header {
+          padding-right: 80px;
+        }
+      }
+
+      @media (max-width: 860px) {
+        .v3-veltra-archive .home-browse-grid,
+        .v3-veltra-archive .home-intel-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .v3-veltra-archive .browse-tile,
+        .v3-veltra-archive .browse-tile-live {
+          min-height: 132px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .v3-veltra-archive .page {
+          width: min(100% - 22px, 920px);
+          padding-bottom: 70px !important;
+        }
+
+        .v3-veltra-archive .home-page .name {
+          font-size: clamp(44px, 15vw, 62px) !important;
+        }
+
+        .v3-veltra-archive .nav {
+          min-height: 48px;
+          padding: 6px !important;
+        }
+
+        .v3-veltra-archive .nav a,
+        .v3-veltra-archive .nav button {
+          min-height: 34px;
+          padding: 0 10px !important;
+          font-size: 10px !important;
+        }
+
+        .v3-veltra-archive .discord-top-button {
+          top: 10px !important;
+          right: 10px !important;
+          width: 40px !important;
+          min-height: 40px !important;
+        }
+
+        .v3-veltra-archive.v3-discord-ready .nav {
+          padding-right: 52px !important;
+        }
+
+        .v3-veltra-archive .home-search {
+          grid-template-columns: auto minmax(0, 1fr) auto;
+          padding: 10px !important;
+        }
+
+        .v3-veltra-archive .home-search-open {
+          display: inline-flex;
+          min-width: 40px;
+        }
+
+        .v3-veltra-archive .popular-row {
+          grid-template-columns: 44px minmax(0, 1fr);
+        }
+
+        .v3-veltra-archive .platform-pills {
+          grid-column: 2;
+          justify-content: flex-start;
+        }
+
+        .v3-veltra-archive .footer {
+          display: grid;
+        }
+      }
+    `;
+    document.head.append(style);
+  }
+
   function boot() {
     document.documentElement.classList.add("v3-js");
     initCanvasLoopKillSwitch();
@@ -932,6 +1560,8 @@
     buildPalette();
     initPlatformToggle();
     initKeys();
+    initArchiveFooter();
+    initVeltraArchiveLook();
   }
 
   if (document.readyState === "loading") {

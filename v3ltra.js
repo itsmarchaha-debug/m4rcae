@@ -924,8 +924,22 @@
     });
   }
 
+  function initBackToTopButton() {
+    if (document.querySelector(".back-top-button")) return;
+    const button = document.createElement("button");
+    button.className = "back-top-button";
+    button.type = "button";
+    button.setAttribute("aria-label", "Back to top");
+    button.innerHTML = '<span aria-hidden="true">&#8593;</span>';
+    button.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reduce.matches ? "auto" : "smooth" }));
+    document.body.append(button);
+  }
+
   function initVeltraArchiveLook() {
     document.documentElement.classList.add("v3-veltra-archive");
+    if (document.querySelector(".beginner-guide-page")) {
+      document.documentElement.classList.add("v3-beginner-guide-page");
+    }
     if (document.getElementById("v3-veltra-archive-look")) return;
     const style = document.createElement("style");
     style.id = "v3-veltra-archive-look";
@@ -947,10 +961,17 @@
       .v3-veltra-archive body {
         color: var(--archive-text) !important;
         background:
-          radial-gradient(circle at 22% 2%, rgba(247, 236, 20, 0.24), transparent 28%),
-          radial-gradient(circle at 72% 18%, rgba(140, 236, 255, 0.16), transparent 32%),
-          linear-gradient(180deg, rgba(247, 236, 20, 0.09), rgba(5, 8, 4, 0.88) 64%),
+          radial-gradient(circle at 22% 2%, rgba(247, 236, 20, 0.28), transparent 30%),
+          radial-gradient(circle at 72% 18%, rgba(140, 236, 255, 0.18), transparent 34%),
+          linear-gradient(180deg, rgba(247, 236, 20, 0.12), rgba(5, 8, 4, 0.76) 66%),
           var(--archive-bg) !important;
+        animation: none !important;
+      }
+
+      .v3-veltra-archive.v3-beginner-guide-page,
+      .v3-veltra-archive.v3-beginner-guide-page body {
+        overflow-x: clip !important;
+        overflow-y: visible !important;
       }
 
       .v3-veltra-archive body::before {
@@ -960,23 +981,23 @@
         z-index: 2;
         pointer-events: none;
         background:
-          linear-gradient(180deg, rgba(5, 8, 4, 0.08), rgba(5, 8, 4, 0.48) 72%, rgba(5, 8, 4, 0.86)),
-          radial-gradient(ellipse at 48% 20%, transparent 12%, rgba(5, 8, 4, 0.38) 74%);
+          linear-gradient(180deg, rgba(5, 8, 4, 0.04), rgba(5, 8, 4, 0.34) 72%, rgba(5, 8, 4, 0.72)),
+          radial-gradient(ellipse at 48% 20%, transparent 14%, rgba(5, 8, 4, 0.26) 76%);
         mix-blend-mode: multiply;
       }
 
       .v3-veltra-archive #bg-image {
-        opacity: 0.88 !important;
+        opacity: 0.94 !important;
         object-position: 68% top !important;
-        filter: blur(1.5px) brightness(0.76) saturate(1.14) contrast(1.08) !important;
+        filter: blur(1.2px) brightness(0.86) saturate(1.16) contrast(1.06) !important;
         transform: scale(1.018) !important;
       }
 
       .v3-veltra-archive .vignette {
         background:
-          linear-gradient(180deg, rgba(2, 4, 3, 0.16), rgba(2, 4, 3, 0.34) 66%, rgba(2, 4, 3, 0.84)),
-          linear-gradient(90deg, rgba(2, 4, 3, 0.4), transparent 48%, rgba(2, 4, 3, 0.54)),
-          radial-gradient(ellipse at center, transparent 36%, rgba(2, 4, 3, 0.64) 100%) !important;
+          linear-gradient(180deg, rgba(2, 4, 3, 0.08), rgba(2, 4, 3, 0.2) 66%, rgba(2, 4, 3, 0.68)),
+          linear-gradient(90deg, rgba(2, 4, 3, 0.3), transparent 48%, rgba(2, 4, 3, 0.4)),
+          radial-gradient(ellipse at center, transparent 40%, rgba(2, 4, 3, 0.48) 100%) !important;
       }
 
       .v3-veltra-archive .page {
@@ -1012,7 +1033,7 @@
         font-style: italic;
         letter-spacing: 0 !important;
         line-height: 0.9;
-        text-shadow: 0 0 24px rgba(255, 255, 255, 0.2), 0 0 34px rgba(247, 236, 20, 0.18) !important;
+        text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9), 0 0 34px rgba(247, 236, 20, 0.2) !important;
       }
 
       .v3-veltra-archive .home-page .name .core,
@@ -1047,19 +1068,26 @@
       .v3-veltra-archive .phead .sub {
         max-width: 620px;
         margin-top: 12px;
-        padding: 0 !important;
-        border: 0 !important;
-        background: transparent !important;
+        padding: 5px 8px !important;
+        border: 1px solid rgba(247, 236, 20, 0.14) !important;
+        border-radius: 5px;
+        background: rgba(4, 9, 8, 0.56) !important;
         color: var(--archive-text) !important;
         font-size: 14px !important;
         letter-spacing: 0.01em !important;
         line-height: 1.45;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.78) !important;
       }
 
       .v3-veltra-archive .home-page .domain-status {
         justify-content: flex-start;
-        color: var(--archive-muted) !important;
+        color: #e4eee5 !important;
         font-size: 12px !important;
+      }
+
+      .v3-veltra-archive .platform-label {
+        color: #f5f9ef !important;
+        text-shadow: 0 2px 9px rgba(0, 0, 0, 0.9);
       }
 
       .v3-veltra-archive .nav {
@@ -1169,16 +1197,21 @@
       .v3-veltra-archive .home-search-open {
         min-width: 46px;
         min-height: 38px;
+        display: inline-grid !important;
+        place-items: center;
+        align-self: center;
         border-radius: 5px;
         border-color: rgba(247, 236, 20, 0.86) !important;
         background: var(--archive-yellow) !important;
         color: #090b04 !important;
         font-size: 0;
+        line-height: 1;
       }
 
       .v3-veltra-archive .home-search-open::after {
-        content: "->";
-        font: 700 15px "Share Tech Mono", monospace;
+        content: "\\2192";
+        font: 700 18px "Share Tech Mono", monospace;
+        line-height: 1;
       }
 
       .v3-veltra-archive .home-search-copy strong {
@@ -1295,6 +1328,27 @@
         min-height: 96px;
       }
 
+      .v3-veltra-archive .browse-tile-live .tile-live-dot {
+        display: none !important;
+      }
+
+      .v3-veltra-archive .browse-tile-live h2 {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding-left: 0 !important;
+      }
+
+      .v3-veltra-archive .browse-tile-live h2::before {
+        content: "";
+        flex: 0 0 8px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--archive-yellow);
+        box-shadow: 0 0 16px rgba(247, 236, 20, 0.78);
+      }
+
       .v3-veltra-archive .browse-tile:hover,
       .v3-veltra-archive .browse-tile:focus-visible,
       .v3-veltra-archive .browse-tile.is-active-platform,
@@ -1345,6 +1399,7 @@
       .v3-veltra-archive .tile-actions a,
       .v3-veltra-archive .platform-pills a,
       .v3-veltra-archive .dl-btn,
+      .v3-veltra-archive .gofile-btn,
       .v3-veltra-archive .tool-link,
       .v3-veltra-archive .tutorial-link,
       .v3-veltra-archive .building-cta,
@@ -1354,13 +1409,30 @@
         border-radius: 5px;
         background: rgba(140, 236, 255, 0.06) !important;
         color: #d6fbff !important;
+        min-height: 44px;
+        padding: 13px 16px !important;
+        font-size: 12px !important;
+        letter-spacing: 0.12em !important;
         box-shadow: none !important;
         text-shadow: none !important;
+      }
+
+      .v3-veltra-archive .dl-btn {
+        border-color: rgba(255, 68, 68, 0.58) !important;
+        background: rgba(255, 68, 68, 0.095) !important;
+        color: #ff7777 !important;
+      }
+
+      .v3-veltra-archive .gofile-btn {
+        border-color: rgba(140, 236, 255, 0.56) !important;
+        background: rgba(140, 236, 255, 0.09) !important;
+        color: #bcefff !important;
       }
 
       .v3-veltra-archive .tile-actions a:hover,
       .v3-veltra-archive .platform-pills a:hover,
       .v3-veltra-archive .dl-btn:hover,
+      .v3-veltra-archive .gofile-btn:hover,
       .v3-veltra-archive .tool-link:hover,
       .v3-veltra-archive .tutorial-link:hover,
       .v3-veltra-archive .building-cta:hover,
@@ -1368,6 +1440,29 @@
       .v3-veltra-archive .locked-files-action:hover {
         border-color: rgba(247, 236, 20, 0.7) !important;
         color: var(--archive-yellow) !important;
+      }
+
+      .v3-veltra-archive .dl-btn:hover {
+        border-color: rgba(255, 94, 94, 0.78) !important;
+        background: rgba(255, 68, 68, 0.14) !important;
+        color: #ff9999 !important;
+      }
+
+      .v3-veltra-archive .gofile-btn:hover {
+        border-color: rgba(140, 236, 255, 0.78) !important;
+        background: rgba(140, 236, 255, 0.14) !important;
+        color: #e5fbff !important;
+      }
+
+      .v3-veltra-archive .guide-rail {
+        position: sticky !important;
+        top: 84px !important;
+        z-index: 60 !important;
+        max-height: calc(100vh - 104px);
+        background:
+          linear-gradient(180deg, rgba(247, 236, 20, 0.08), rgba(140, 236, 255, 0.055)),
+          rgba(5, 11, 10, 0.94) !important;
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28), inset 0 0 0 1px rgba(255, 255, 255, 0.035) !important;
       }
 
       .v3-veltra-archive .home-intel-grid {
@@ -1463,6 +1558,36 @@
         font: 700 18px "Share Tech Mono", monospace;
       }
 
+      .v3-veltra-archive .back-top-button {
+        position: fixed;
+        right: 18px;
+        bottom: 72px;
+        z-index: 70;
+        width: 42px;
+        min-height: 42px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(247, 236, 20, 0.38);
+        border-radius: 8px;
+        background:
+          linear-gradient(135deg, rgba(247, 236, 20, 0.08), rgba(140, 236, 255, 0.06)),
+          rgba(5, 9, 8, 0.88);
+        color: var(--archive-yellow);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.24), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+      }
+
+      .v3-veltra-archive .back-top-button span {
+        font: 700 17px "Share Tech Mono", monospace;
+        line-height: 1;
+      }
+
+      .v3-veltra-archive .back-top-button:hover,
+      .v3-veltra-archive .back-top-button:focus-visible {
+        border-color: rgba(140, 236, 255, 0.7);
+        color: var(--archive-cyan);
+      }
+
       @media (min-width: 980px) {
         .v3-veltra-archive .home-page {
           padding-top: 24px !important;
@@ -1524,8 +1649,14 @@
         }
 
         .v3-veltra-archive .home-search-open {
-          display: inline-flex;
+          display: inline-grid !important;
+          place-items: center;
           min-width: 40px;
+        }
+
+        .v3-veltra-archive .back-top-button {
+          right: 18px;
+          bottom: 72px;
         }
 
         .v3-veltra-archive .popular-row {
@@ -1561,6 +1692,7 @@
     initPlatformToggle();
     initKeys();
     initArchiveFooter();
+    initBackToTopButton();
     initVeltraArchiveLook();
   }
 

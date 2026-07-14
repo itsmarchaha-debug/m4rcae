@@ -917,6 +917,73 @@ body {
   transition: border-color var(--v3-fast), background var(--v3-fast), transform var(--v3-fast);
 }
 
+/* Free assets directory */
+.assets-page { max-width: 1380px; }
+.asset-index {
+  position: sticky;
+  top: 10px;
+  z-index: 25;
+  display: flex;
+  gap: 7px;
+  margin: 0 0 28px;
+  padding: 10px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  background: rgba(5, 3, 10, .94);
+  border: 1px solid rgba(242, 233, 0, .38);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, .4);
+}
+.asset-index a {
+  flex: 0 0 auto;
+  padding: 8px 11px;
+  color: #f2e900;
+  border: 1px solid rgba(242, 233, 0, .28);
+  font: 700 11px/1 "Share Tech Mono", monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color .18s ease, background .18s ease, border-color .18s ease;
+}
+.asset-index a:hover,
+.asset-index a:focus-visible { color: #05030a; background: #f2e900; border-color: #f2e900; }
+.asset-directory { display: grid; gap: 34px; }
+.asset-section {
+  scroll-margin-top: 90px;
+  padding: 26px;
+  background: rgba(5, 3, 10, .82);
+  border: 1px solid rgba(242, 233, 0, .28);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, .28);
+}
+.asset-section h2 {
+  margin: 7px 0 18px;
+  color: #f2e900;
+  font-family: "Share Tech Mono", monospace;
+  font-size: clamp(20px, 2.3vw, 30px);
+  text-transform: uppercase;
+}
+.asset-grid { grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); }
+.asset-card { display: flex; min-height: 178px; flex-direction: column; }
+.asset-card h3 a { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; color: inherit; text-decoration: none; }
+.asset-card h3 a span { color: #f2e900; font-size: 14px; transition: transform .18s ease; }
+.asset-card:hover h3 a span { transform: translate(2px, -2px); }
+.asset-card p { flex: 1; }
+.asset-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.asset-tags span {
+  padding: 4px 7px;
+  color: #f2e900;
+  background: rgba(242, 233, 0, .07);
+  border: 1px solid rgba(242, 233, 0, .24);
+  font: 700 9px/1 "Share Tech Mono", monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+@media (max-width: 640px) {
+  .asset-index { top: 6px; margin-inline: -4px; }
+  .asset-section { padding: 18px 14px; }
+  .asset-grid { grid-template-columns: 1fr; }
+  .asset-card { min-height: 0; }
+}
+
 .pw {
   cursor: pointer;
   border-radius: 3px;

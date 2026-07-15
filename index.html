@@ -7,138 +7,8 @@
 <meta name="description" content="V3LTRA.xyz — plugins, scripts, presets, and creative apps for After Effects editors on Windows and Mac.">
 <title>V3LTRA.xyz</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --amber: #d4922e;
-    --gold:  #fff0a0;
-    --cyan:  #00f5ff;
-    --magenta: #ff2d95;
-    --rust:  #a03010;
-    --dim:   #4a3418;
-    --card-bg: rgba(6, 4, 12, 0.72);
-  }
-  html, body { min-height: 100%; background: #05030a; font-family: 'Rajdhani', sans-serif; color: var(--gold); overflow-x: hidden; }
-
-   
-  #bg-image {
-    position: fixed; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; z-index: 0;
-  }
-   
-  #glow-canvas { position: fixed; inset: 0; width:100%; height:100%; z-index: 1; mix-blend-mode: screen; pointer-events:none; }
-   
-  #particle-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
-  #markers-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 3; opacity: 0.5; }
-
-  .scanlines {
-    position: fixed; inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px);
-    pointer-events: none; z-index: 4;
-  }
-  .vignette {
-    position: fixed; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,0.68) 100%);
-    pointer-events: none; z-index: 5;
-  }
-  .glitch-strip {
-    position: fixed; left: 0; right: 0; height: 2px;
-    background: var(--cyan); opacity: 0; pointer-events: none; z-index: 6;
-    animation: strip-flash 9s infinite;
-  }
-  @keyframes strip-flash { 0%,88%,100%{opacity:0} 89%{opacity:.7;top:28%} 90%{opacity:0} 92%{opacity:.4;top:63%} 93%{opacity:0} }
-
-  .page { position: relative; z-index: 10; max-width: 480px; margin: 0 auto; padding: 56px 22px 80px; display: flex; flex-direction: column; align-items: center; }
-
-  .header { text-align: center; margin-bottom: 36px; }
-  .avatar-ring { width: 88px; height: 88px; margin: 0 auto 18px; position: relative; }
-  .avatar-ring svg { width: 100%; height: 100%; animation: ring-spin 14s linear infinite; }
-  @keyframes ring-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-  .avatar-inner {
-    position: absolute; inset: 11px; border-radius: 50%;
-    background: radial-gradient(circle at 38% 32%, rgba(0,245,255,0.35), rgba(255,45,149,0.35) 50%, rgba(6,3,12,0.95));
-    border: 1px solid var(--cyan);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Share Tech Mono', monospace; font-size: 14px; font-weight: bold;
-    color: #fff; text-shadow: 0 0 8px var(--cyan);
-    box-shadow: inset 0 0 12px rgba(0,245,255,0.25);
-  }
-  .avatar-inner span{color:var(--magenta);text-shadow:0 0 10px var(--magenta)}
-
-  .name {
-    font-size: clamp(34px,9vw,48px); font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; line-height: 1; color: #fff;
-    text-shadow: 0 0 22px rgba(0,245,255,.6), 0 0 44px rgba(255,45,149,.4), 0 2px 0 rgba(0,0,0,1);
-    position: relative; display: inline-block;
-  }
-  .name .core{background:linear-gradient(105deg,#fff 0%,#d8fbff 42%,#ffb3d9 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(0,245,255,.28))}
-  .name .ext{color:var(--cyan);font-weight:300;letter-spacing:.04em;text-shadow:0 0 16px rgba(0,245,255,1),0 0 30px rgba(255,45,149,.35),0 2px 0 rgba(0,0,0,1)}
-  .name::before,.name::after { content: attr(data-text); position: absolute; top:0; left:0; width:100%; overflow:hidden; clip-path:inset(100% 0 0 0); }
-  .name::before { color:var(--cyan); animation:glitch-a 5s infinite steps(1); mix-blend-mode:screen; }
-  .name::after  { color:var(--magenta); animation:glitch-b 5s infinite steps(1); mix-blend-mode:screen; }
-  @keyframes glitch-a { 0%,84%,100%{clip-path:inset(100% 0 0 0);transform:translate(0)} 85%{clip-path:inset(8% 0 62% 0);transform:translate(-3px,1px)} 87%{clip-path:inset(38% 0 32% 0);transform:translate(3px,-1px)} 89%{clip-path:inset(100% 0 0 0)} }
-  @keyframes glitch-b { 0%,86%,100%{clip-path:inset(100% 0 0 0);transform:translate(0)} 87%{clip-path:inset(53% 0 22% 0);transform:translate(4px,0)} 90%{clip-path:inset(18% 0 68% 0);transform:translate(-4px,2px)} 92%{clip-path:inset(100% 0 0 0)} }
-
-  .tagline {
-    font-family:'Share Tech Mono',monospace; font-size:11px; color:#fff;
-    letter-spacing:.18em; margin-top:11px;
-    text-shadow:0 0 10px rgba(0,245,255,.7), 0 1px 4px rgba(0,0,0,1);
-    background:rgba(0,0,0,.55); display:inline-block; padding:3px 8px;
-  }
-  .domain-status{display:flex;align-items:center;justify-content:center;gap:8px;margin:12px auto 0;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--cyan);text-shadow:0 0 8px rgba(0,245,255,.75)}
-  .domain-status::before{content:'';width:6px;height:6px;border-radius:50%;background:#75ffb0;box-shadow:0 0 10px #75ffb0;animation:status-pulse 2s ease-in-out infinite}
-  @keyframes status-pulse{0%,100%{opacity:.45;transform:scale(.75)}50%{opacity:1;transform:scale(1)}}
-  .cursor{animation:blink 1s step-end infinite}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-
-  .divider { width:100%; display:flex; align-items:center; gap:10px; margin-bottom:28px; }
-  .divider-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--cyan),transparent); opacity:.5; }
-  .divider-diamond { width:6px; height:6px; border:1px solid var(--cyan); transform:rotate(45deg); flex-shrink:0; }
-
-  .section-label {
-    font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:.3em;
-    color:#fff; text-shadow:0 0 6px var(--cyan); text-transform:uppercase;
-    align-self:flex-start; margin-bottom:10px; background:rgba(0,0,0,.6); padding:2px 6px;
-  }
-
-  .links { width:100%; display:flex; flex-direction:column; gap:12px; margin-bottom:36px; }
-  .link-card {
-    display:block; position:relative; width:100%; padding:16px 20px;
-    text-decoration:none; color:inherit;
-    border:1px solid rgba(0,245,255,.30); background:var(--card-bg);
-    overflow:hidden; transition:border-color .2s,background .2s;
-  }
-  .link-card::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(0,245,255,.14),transparent); transition:left .45s; }
-  .link-card:hover::before{left:100%}
-  .link-card:hover{border-color:var(--cyan);background:rgba(8,6,18,.85)}
-  .link-card::after { content:''; position:absolute; top:6px; right:6px; width:14px; height:14px; border-top:1px solid var(--cyan); border-right:1px solid var(--cyan); opacity:.5; transition:opacity .2s; }
-  .link-card:hover::after{opacity:1}
-  .card-corner-bl { position:absolute; bottom:6px; left:6px; width:14px; height:14px; border-bottom:1px solid var(--cyan); border-left:1px solid var(--cyan); opacity:.5; pointer-events:none; transition:opacity .2s; }
-  .link-card:hover .card-corner-bl{opacity:1}
-  .card-header{display:flex;align-items:center;gap:14px}
-  .card-icon{font-size:20px;width:26px;text-align:center;flex-shrink:0;filter:drop-shadow(0 0 6px var(--cyan))}
-  .card-title{ font-size:18px;font-weight:700;letter-spacing:.12em;text-transform:uppercase; color:#fff;text-shadow:0 0 12px rgba(0,245,255,.6),0 1px 3px rgba(0,0,0,1); }
-  .card-sub{ font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--cyan); margin-top:4px;letter-spacing:.1em;text-shadow:0 1px 4px rgba(0,0,0,1); }
-  .card-arrow{ margin-left:auto;font-size:16px;color:var(--cyan); opacity:0;transform:translateX(-6px); transition:opacity .2s,transform .2s;flex-shrink:0; text-shadow:0 0 8px var(--cyan); }
-  .link-card:hover .card-arrow{opacity:1;transform:translateX(0)}
-  .lounge-banner{width:100%;margin:8px 0 30px;padding:18px 20px;text-align:center;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(255,45,149,.18),rgba(0,245,255,.12) 52%,rgba(212,146,46,.16));border:1px solid rgba(255,240,160,.28);box-shadow:0 0 26px rgba(255,45,149,.20),inset 0 0 18px rgba(0,245,255,.10)}
-  .lounge-banner::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent);transform:translateX(-100%);animation:lounge-shine 4.5s ease-in-out infinite;pointer-events:none}
-  .lounge-banner .card-title{color:#fff0a0;text-shadow:0 0 14px rgba(255,45,149,.85),0 0 28px rgba(0,245,255,.45),0 1px 4px rgba(0,0,0,1)}
-  .lounge-banner .card-sub{color:#ff9ed1;text-shadow:0 0 10px rgba(255,45,149,.75),0 1px 4px rgba(0,0,0,1)}
-  .lounge-copy{position:relative;z-index:1}
-  @keyframes lounge-shine{0%,45%{transform:translateX(-100%)}70%,100%{transform:translateX(100%)}}
-
-  .pulse-bar { width:100%;height:1px; background:linear-gradient(90deg,transparent,var(--cyan),var(--magenta),var(--amber),transparent); margin-bottom:36px;position:relative;overflow:hidden; }
-  .pulse-bar::after{ content:'';position:absolute;top:0;left:-50%;width:50%;height:100%; background:rgba(255,255,255,.7);animation:bar-sweep 3.5s ease-in-out infinite; }
-  @keyframes bar-sweep{0%{left:-50%}100%{left:150%}}
-
-  .footer{ font-family:'Share Tech Mono',monospace;font-size:9px; color:rgba(0,245,255,.4);letter-spacing:.2em;text-align:center;line-height:2; }
-  .footer a{color:#e9a8b0;text-decoration:underline;text-decoration-color:rgba(240,68,85,.45);text-underline-offset:3px}
-  .footer a:hover{color:#fff;text-decoration-color:#f04455}
-
-  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
-</style>
-<link rel="stylesheet" href="curated.css">
+<link rel="preload" href="curated.css?v=20260715" as="style">
+<link rel="stylesheet" href="curated.css?v=20260715">
 </head>
 <body>
 <img id="bg-image" src="bg.webp" alt="">
@@ -846,6 +716,6 @@ function mkLoop(ts){
 }
 requestAnimationFrame(mkLoop);
 </script>
-<script src="v3ltra.js" defer></script>
+<script src="v3ltra.js?v=20260715" defer></script>
 </body>
 </html>

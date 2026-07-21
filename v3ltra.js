@@ -496,7 +496,7 @@
     if (document.querySelector(".discord-top-button")) return;
     const link = document.createElement("a");
     link.className = "discord-top-button";
-    link.href = "https://discord.com/invite/v3ltra";
+    link.href = "https://discord.gg/ERYCXddTR";
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     link.setAttribute("aria-label", "Join the V3LTRA community on Discord for help, tutorials, audio packs, resources, requests, updates, and recently added resources.");

@@ -41,13 +41,23 @@
   .guide-link:hover { border-color:rgba(240,68,85,.66); background:rgba(240,68,85,.09); }
   .guide-link strong { display:block; font-size:16px; letter-spacing:.04em; }
   .guide-link span { font-family:'Share Tech Mono',monospace; font-size:10px; color:#d9a0a7; letter-spacing:.08em; white-space:nowrap; }
+  .resource-panel { border:1px solid rgba(240,68,85,.28); background:rgba(240,68,85,.04); }
+  .resource-panel > summary { list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; color:#fff; font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; }
+  .resource-panel > summary::-webkit-details-marker { display:none; }
+  .resource-panel[open] > summary { border-bottom:1px solid rgba(240,68,85,.2); }
+  .resource-panel .chev { color:#d9a0a7; transition:transform .18s; }
+  .resource-panel[open] .chev { transform:rotate(90deg); }
+  .resource-grid { display:grid; grid-template-columns:1fr; gap:8px; padding:12px; }
+  .resource-link { display:flex; align-items:center; justify-content:space-between; gap:12px; color:#e8edf2; text-decoration:none; border:1px solid rgba(240,68,85,.24); background:rgba(7,10,17,.72); padding:9px 10px; font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:.06em; transition:border-color .18s,background .18s; }
+  .resource-link:hover { border-color:rgba(240,68,85,.58); background:rgba(240,68,85,.08); }
+  .resource-link span:last-child { color:#d9a0a7; white-space:nowrap; }
   .fix-panel { margin-top:16px; border:1px solid rgba(0,245,255,.16); background:rgba(7,10,17,.82); padding:16px; }
   .fix-panel strong { display:block; color:#fff; font-size:18px; margin-bottom:6px; }
   .fix-panel p { color:#b8c3ca; line-height:1.55; }
   .footer { font-family:'Share Tech Mono',monospace; font-size:9px; color:rgba(180,205,211,.48); letter-spacing:.08em; text-align:center; line-height:2; margin-top:40px; }
   .legal-link { color:#e9a8b0; text-decoration:underline; text-decoration-color:rgba(240,68,85,.45); text-underline-offset:3px; }
   .legal-link:hover { color:#fff; text-decoration-color:#f04455; }
-  @media (max-width:700px) { .page { padding:32px 16px 58px; } .guide-grid, .guide-jump { grid-template-columns:1fr; } .nav a { padding:8px 10px; font-size:10px; } .guide-link { align-items:flex-start; flex-direction:column; gap:4px; } }
+  @media (max-width:700px) { .page { padding:32px 16px 58px; } .guide-grid, .guide-jump { grid-template-columns:1fr; } .nav a { padding:8px 10px; font-size:10px; } .guide-link, .resource-link { align-items:flex-start; flex-direction:column; gap:4px; } }
   @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 <link rel="stylesheet" href="curated.css">
@@ -88,6 +98,36 @@
       <p>Use these when you are installing or troubleshooting on a Windows PC.</p>
       <div class="guide-list">
         <a class="guide-link" href="https://mega.nz/folder/UAVFAZhR#se9HWGCtU87jRb6lmj-nDA" target="_blank" rel="noopener noreferrer"><strong>Windows plugin tutorials</strong><span>Open folder ↗</span></a>
+        <details class="resource-panel">
+          <summary><span>Vendor tutorial/readme files</span><span class="chev">▸</span></summary>
+          <div class="resource-grid">
+            <a class="resource-link" href="https://gofile.io/d/jGm8Dc" target="_blank" rel="noopener noreferrer"><span>Andrew Yang Bundle</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/aTQ3Kp" target="_blank" rel="noopener noreferrer"><span>Auto Chroma</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/A9emCD" target="_blank" rel="noopener noreferrer"><span>BAO</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/EdLJqa" target="_blank" rel="noopener noreferrer"><span>Baskl</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/CPvXGp" target="_blank" rel="noopener noreferrer"><span>BGRA Entertainment</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/u3ZwZx" target="_blank" rel="noopener noreferrer"><span>Blace Plugins</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/AvRy3u" target="_blank" rel="noopener noreferrer"><span>Boris</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/SGvPYM" target="_blank" rel="noopener noreferrer"><span>Crossphere</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/i2LrmM" target="_blank" rel="noopener noreferrer"><span>Dragoy</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/1MG2Dk" target="_blank" rel="noopener noreferrer"><span>Element Supply Co</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/6pAifJ" target="_blank" rel="noopener noreferrer"><span>FilmConvert</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/K3ZRrs" target="_blank" rel="noopener noreferrer"><span>Frischluft</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/fe5Ylq" target="_blank" rel="noopener noreferrer"><span>Irrealix</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/5e7KD4" target="_blank" rel="noopener noreferrer"><span>Maxon</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/9bPF7m" target="_blank" rel="noopener noreferrer"><span>Mettle</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/tZD480" target="_blank" rel="noopener noreferrer"><span>Pixel Sorter Studio</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/GT6Pg5" target="_blank" rel="noopener noreferrer"><span>Plugin Everything</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/hLkMQh" target="_blank" rel="noopener noreferrer"><span>Production Crate</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/j0OE6b" target="_blank" rel="noopener noreferrer"><span>REVisionFX</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/oCoXfA" target="_blank" rel="noopener noreferrer"><span>Rowbyte</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/sZR5wb" target="_blank" rel="noopener noreferrer"><span>Satori</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/2qNc8C" target="_blank" rel="noopener noreferrer"><span>Unsorted</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/fnfz99" target="_blank" rel="noopener noreferrer"><span>Video Copilot</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/Vl7Hyz" target="_blank" rel="noopener noreferrer"><span>Vimager Bundle</span><span>Open ↗</span></a>
+            <a class="resource-link" href="https://gofile.io/d/a39sPm" target="_blank" rel="noopener noreferrer"><span>Zaebects</span><span>Open ↗</span></a>
+          </div>
+        </details>
         <a class="guide-link" href="https://mega.nz/folder/4FFy2R7S#kKqTHrsU_s3NyN67sznRFg" target="_blank" rel="noopener noreferrer"><strong>Windows software tutorials</strong><span>Open folder ↗</span></a>
         <a class="guide-link" href="https://youtu.be/hTASdL0oVi4?si=JeGUXHPvx-3Of2eN" target="_blank" rel="noopener noreferrer"><strong>Adobe unlicensed app fix</strong><span>Watch video ↗</span></a>
         <a class="guide-link" href="https://youtu.be/JkO9uWe97rA?si=6N-1DRTVPK4OqSEC" target="_blank" rel="noopener noreferrer"><strong>Alternative Windows fix</strong><span>Watch video ↗</span></a>
